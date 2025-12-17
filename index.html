@@ -8,25 +8,26 @@
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <script>
       tailwind.config = {
         theme: {
           extend: {
             colors: {
-              glass: "rgba(255, 255, 255, 0.05)",
-              primary: "#6366f1",
-              secondary: "#ec4899",
+              paper: "#fdfdfb",     // 日式和紙色
+              ink: "#1a1a1a",      // 墨色
+              muted: "#717171",    // 灰階
+              accent: "#2c3e50",   // 靛青
+              border: "#e5e5e0",   // 柔和邊框
             },
-            animation: { 'blob': 'blob 7s infinite', 'fade-in': 'fadeIn 0.5s ease-out' },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              serif: ['Noto Serif TC', 'serif'],
+            },
+            animation: { 'fade-in': 'fadeIn 0.8s ease-out' },
             keyframes: {
-              blob: {
-                '0%': { transform: 'translate(0px, 0px) scale(1)' },
-                '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
-                '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
-                '100%': { transform: 'translate(0px, 0px) scale(1)' },
-              },
               fadeIn: {
-                '0%': { opacity: '0', transform: 'translateY(10px)' },
+                '0%': { opacity: '0', transform: 'translateY(15px)' },
                 '100%': { opacity: '1', transform: 'translateY(0)' },
               }
             }
@@ -35,9 +36,29 @@
       }
     </script>
     <style>
-      body { background-color: #020617; color: #f8fafc; font-family: 'Inter', sans-serif; overflow-x: hidden; }
-      .glass-nav { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.1); }
-      .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
+      body { 
+        background-color: #fdfdfb; 
+        color: #1a1a1a; 
+        font-family: 'Inter', sans-serif;
+        /* 增加微妙的紋理感 */
+        background-image: radial-gradient(#e5e5e0 0.5px, transparent 0.5px);
+        background-size: 24px 24px;
+      }
+      .minimal-nav { 
+        background: rgba(253, 253, 251, 0.9); 
+        backdrop-filter: blur(8px); 
+        border-bottom: 1px solid #e5e5e0; 
+      }
+      .minimal-card { 
+        background: #ffffff; 
+        border: 1px solid #e5e5e0; 
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      }
+      .minimal-card:hover {
+        transform: translateY(-4px);
+        border-color: #1a1a1a;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      }
     </style>
 </head>
 <body>
@@ -50,18 +71,110 @@
         const [currentPage, setCurrentPage] = useState('home');
 
         const Navigation = () => (
-          <nav className="fixed top-0 w-full z-50 glass-nav">
-            <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
-              <button onClick={() => setCurrentPage('home')} className="font-bold tracking-tighter text-xl">K.</button>
-              <div className="flex gap-6 text-sm font-medium text-gray-400">
+          <nav className="fixed top-0 w-full z-50 minimal-nav">
+            <div className="max-w-5xl mx-auto px-8 h-20 flex items-center justify-between">
+              <button onClick={() => setCurrentPage('home')} className="font-serif font-bold text-2xl tracking-tighter">K.</button>
+              <div className="flex gap-8 text-xs font-medium uppercase tracking-[0.2em] text-muted">
                 {['Home', 'Blog', 'Portfolio', 'About'].map((item) => (
                   <button 
                     key={item}
                     onClick={() => setCurrentPage(item.toLowerCase())}
-                    className={`hover:text-white transition-colors ${currentPage === item.toLowerCase() ? 'text-primary font-bold' : ''}`}
+                    className={`hover:text-ink transition-colors ${currentPage === item.toLowerCase() ? 'text-ink border-b border-ink' : ''}`}
                   >
                     {item}
                   </button>
                 ))}
               </div>
             </div>
+          </nav>
+        );
+
+        const HomePage = () => (
+          <div className="relative z-10 w-full max-w-2xl text-center animate-fade-in">
+            <div className="mb-12 flex justify-center">
+              <div className="w-32 h-32 rounded-full p-[1px] bg-border">
+                <div className="w-full h-full rounded-full bg-paper overflow-hidden border-[6px] border-white">
+                  <img src="https://kirstenyau.github.io/profile.png" alt="Profile" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" />
+                </div>
+              </div>
+            </div>
+            <h1 className="font-serif text-5xl font-bold mb-6 tracking-tight">Design with Kirsten</h1>
+            <p className="text-muted text-sm tracking-[0.15em] uppercase mb-12">
+              UXUI Design <span className="mx-3 text-border">/</span> 
+              AI tips <span className="mx-3 text-border">/</span> 
+              Tech Lifestyle
+            </p>
+            <div className="grid gap-6 sm:grid-cols-3 px-4">
+              <button onClick={() => setCurrentPage('blog')} className="minimal-card p-6 rounded-sm group">
+                <div className="text-ink mb-2 font-serif italic text-lg opacity-40 group-hover:opacity-100 transition-opacity">01</div>
+                <div className="text-xs font-bold uppercase tracking-widest">View articles</div>
+              </button>
+              <a href="https://www.instagram.com/kirsten_uxui/" target="_blank" className="minimal-card p-6 rounded-sm text-center group">
+                <div className="text-ink mb-2 font-serif italic text-lg opacity-40 group-hover:opacity-100 transition-opacity">02</div>
+                <div className="text-xs font-bold uppercase tracking-widest">Case Study</div>
+              </a>
+              <button onClick={() => setCurrentPage('portfolio')} className="minimal-card p-6 rounded-sm group">
+                <div className="text-ink mb-2 font-serif italic text-lg opacity-40 group-hover:opacity-100 transition-opacity">03</div>
+                <div className="text-xs font-bold uppercase tracking-widest">My Works</div>
+              </button>
+            </div>
+          </div>
+        );
+
+        const PortfolioPage = () => (
+          <div className="relative z-10 w-full max-w-4xl mx-auto animate-fade-in px-6">
+            <header className="text-left mb-16 border-l-4 border-ink pl-6">
+              <h2 className="font-serif text-4xl font-bold mb-2">Selected works</h2>
+              <p className="text-muted text-sm tracking-widest">UXUI design works / Vibe coding project</p>
+            </header>
+            <div className="grid gap-12 md:grid-cols-2">
+              {/* 作品 1 */}
+              <div className="group cursor-pointer" onClick={() => setCurrentPage('home')}>
+                <div className="aspect-[4/3] bg-white border border-border overflow-hidden mb-6">
+                  <div className="w-full h-full flex items-center justify-center bg-[#f9f9f7] group-hover:scale-105 transition-transform duration-700">
+                    <span className="text-xs tracking-[0.3em] text-border uppercase">Current Project</span>
+                  </div>
+                </div>
+                <h3 className="font-serif text-xl font-bold mb-1">Vibe Coding Project</h3>
+                <p className="text-muted text-xs uppercase tracking-widest leading-loose">Portfolio System Design</p>
+              </div>
+              {/* 作品 2 */}
+              <a href="https://www.behance.net/gallery/152258595/UX-UI-project-News-Aggregator-App" target="_blank" className="group">
+                <div className="aspect-[4/3] bg-white border border-border overflow-hidden mb-6">
+                  <div className="w-full h-full flex items-center justify-center bg-[#f9f9f7] group-hover:scale-105 transition-transform duration-700">
+                    <span className="text-4xl">📰</span>
+                  </div>
+                </div>
+                <h3 className="font-serif text-xl font-bold mb-1">News Aggregator App</h3>
+                <p className="text-muted text-xs uppercase tracking-widest leading-loose">Mobile Experience Design</p>
+              </a>
+            </div>
+          </div>
+        );
+
+        return (
+          <div className="min-h-screen flex flex-col items-center justify-center p-6 pt-32 pb-20">
+            <Navigation />
+            
+            {currentPage === 'home' && <HomePage />}
+            {currentPage === 'portfolio' && <PortfolioPage />}
+            {['blog', 'about'].includes(currentPage) && (
+              <div className="z-10 text-center animate-fade-in">
+                <h2 className="font-serif text-3xl font-bold mb-6 italic">{currentPage}</h2>
+                <p className="text-muted text-xs tracking-[0.2em] mb-12">準備中 / UNDER CONSTRUCTION</p>
+                <button onClick={() => setCurrentPage('home')} className="text-ink border-b border-ink pb-1 text-xs font-bold uppercase tracking-widest">Back</button>
+              </div>
+            )}
+
+            <footer className="mt-32 text-center opacity-30">
+                <p className="text-[9px] tracking-[0.5em] uppercase font-medium">© 2025 Kirsten Yau / Tokyo-Inspired Minimal</p>
+            </footer>
+          </div>
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(<App />);
+    </script>
+</body>
+</html>
