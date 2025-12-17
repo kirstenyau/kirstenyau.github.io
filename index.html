@@ -17,13 +17,17 @@
               primary: "#6366f1",
               secondary: "#ec4899",
             },
-            animation: { 'blob': 'blob 7s infinite' },
+            animation: { 'blob': 'blob 7s infinite', 'fade-in': 'fadeIn 0.5s ease-out' },
             keyframes: {
               blob: {
                 '0%': { transform: 'translate(0px, 0px) scale(1)' },
                 '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
                 '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
                 '100%': { transform: 'translate(0px, 0px) scale(1)' },
+              },
+              fadeIn: {
+                '0%': { opacity: '0', transform: 'translateY(10px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
               }
             }
           },
@@ -31,7 +35,7 @@
       }
     </script>
     <style>
-      body { background-color: #020617; color: #f8fafc; font-family: 'Inter', sans-serif; }
+      body { background-color: #020617; color: #f8fafc; font-family: 'Inter', sans-serif; overflow-x: hidden; }
       .glass-nav { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.1); }
       .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
     </style>
@@ -45,142 +49,19 @@
       function App() {
         const [currentPage, setCurrentPage] = useState('home');
 
-        // 導航組件
         const Navigation = () => (
           <nav className="fixed top-0 w-full z-50 glass-nav">
             <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
-              <span className="font-bold tracking-tighter text-xl">K.</span>
+              <button onClick={() => setCurrentPage('home')} className="font-bold tracking-tighter text-xl">K.</button>
               <div className="flex gap-6 text-sm font-medium text-gray-400">
                 {['Home', 'Blog', 'Portfolio', 'About'].map((item) => (
                   <button 
                     key={item}
                     onClick={() => setCurrentPage(item.toLowerCase())}
-                    className={`hover:text-white transition-colors ${currentPage === item.toLowerCase() ? 'text-primary' : ''}`}
+                    className={`hover:text-white transition-colors ${currentPage === item.toLowerCase() ? 'text-primary font-bold' : ''}`}
                   >
                     {item}
                   </button>
                 ))}
               </div>
             </div>
-          </nav>
-        );
-
-        // 主頁內容
-        const HomePage = () => (
-          <div className="relative z-10 w-full max-w-2xl text-center">
-            <div className="mb-8 flex justify-center">
-              {/* Profile Picture Placeholder */}
-              <div className="w-32 h-32 rounded-full p-1 bg-gradient-to-tr from-primary to-secondary">
-                <div className="w-full h-full rounded-full bg-gray-800 overflow-hidden border-4 border-[#020617]">
-                  <img src="https://kirstenyau.github.io/profile.png" alt="Profile" className="w-full h-full object-cover" />
-                </div>
-              </div>
-            </div>
-
-            <h1 className="text-5xl font-bold tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
-              Design with Kirsten
-            </h1>
-            <p className="text-gray-400 text-lg mb-10">
-              UXUI Design <span className="mx-2 text-gray-600">|</span> 
-              AI tips <span className="mx-2 text-gray-600">|</span> 
-              Tech Lifestyle
-            </p>
-
-            <div className="grid gap-4 sm:grid-cols-3">
-              <button onClick={() => setCurrentPage('blog')} className="glass-card p-4 rounded-2xl hover:bg-white/10 transition-all group border-white/5">
-                <div className="text-primary mb-1 text-xl">✍️</div>
-                <div className="text-sm font-semibold">View articles</div>
-              </button>
-
-              <a href="https://www.instagram.com/kirsten_uxui/" target="_blank" className="glass-card p-4 rounded-2xl hover:bg-white/10 transition-all group border-white/5 text-center">
-                <div className="text-secondary mb-1 text-xl">📸</div>
-                <div className="text-sm font-semibold">Case Study</div>
-              </a>
-
-              <button onClick={() => setCurrentPage('portfolio')} className="glass-card p-4 rounded-2xl hover:bg-white/10 transition-all group border-white/5">
-                <div className="text-purple-400 mb-1 text-xl">💼</div>
-                <div className="text-sm font-semibold">My Works</div>
-              </button>
-            </div>
-          </div>
-        );
-
-        return (
-         // ... (之前的代碼保持不變)
-
-        // Portfolio 頁面組件
-        const PortfolioPage = () => (
-          <div className="relative z-10 w-full max-w-4xl mx-auto animate-fade-in">
-            <header className="text-left mb-12">
-              <h2 className="text-4xl font-bold tracking-tight mb-3 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
-                Selected works
-              </h2>
-              <p className="text-gray-400 font-medium italic">
-                UXUI design works <span className="mx-2 text-gray-700">|</span> Vibe coding project
-              </p>
-            </header>
-
-            <div className="grid gap-6 md:grid-cols-2">
-              {/* 作品卡片 1: Vibe Coding Project */}
-              <div className="glass-card rounded-3xl p-6 flex flex-col justify-between hover:border-primary/50 transition-all duration-500 group">
-                <div>
-                  <div className="w-full h-40 rounded-2xl bg-gradient-to-br from-primary/20 to-secondary/20 mb-6 overflow-hidden flex items-center justify-center border border-white/5">
-                    <span className="text-4xl group-hover:scale-110 transition-transform duration-500">✨</span>
-                  </div>
-                  <h3 className="text-xl font-bold mb-2">Vibe Coding Project</h3>
-                  <p className="text-gray-400 text-sm mb-6 leading-relaxed">
-                    Personal portfolio website built with Vibe Coding philosophy. Focuses on minimal tech debt and maximum aesthetic vibe.
-                  </p>
-                </div>
-                <div className="flex items-center text-primary text-sm font-bold tracking-widest uppercase">
-                  (You are here)
-                </div>
-              </div>
-
-              {/* 作品卡片 2: News Aggregator App */}
-              <a 
-                href="https://www.behance.net/gallery/152258595/UX-UI-project-News-Aggregator-App" 
-                target="_blank"
-                className="glass-card rounded-3xl p-6 flex flex-col justify-between hover:bg-white/5 hover:border-secondary/50 transition-all duration-500 group"
-              >
-                <div>
-                  <div className="w-full h-40 rounded-2xl bg-gray-800/50 mb-6 overflow-hidden border border-white/5">
-                    {/* 這裡之後你可以換成 Behance 的封面圖 */}
-                    <div className="w-full h-full bg-gradient-to-tr from-secondary/10 to-purple-500/10 flex items-center justify-center">
-                        <span className="text-4xl group-hover:scale-110 transition-transform duration-500">📰</span>
-                    </div>
-                  </div>
-                  <h3 className="text-xl font-bold mb-2">News Aggregator App</h3>
-                  <p className="text-gray-400 text-sm mb-6 leading-relaxed">
-                    A comprehensive UXUI design project focusing on information architecture and user reading habits.
-                  </p>
-                </div>
-                <div className="flex items-center text-secondary text-sm font-bold tracking-widest uppercase group-hover:translate-x-2 transition-transform">
-                  View Case Study →
-                </div>
-              </a>
-            </div>
-
-            <button 
-              onClick={() => setCurrentPage('home')} 
-              className="mt-12 text-sm text-gray-500 hover:text-white transition-colors"
-            >
-              ← Back to Home
-            </button>
-          </div>
-        );
-
-// ... (最後在 App 的 return 部分確保調用了 {currentPage === 'portfolio' && <PortfolioPage />})
-
-            <footer className="mt-20 text-xs text-gray-600 tracking-widest uppercase">
-              Kirsten Yau · 2025
-            </footer>
-          </div>
-        );
-      }
-
-      const root = ReactDOM.createRoot(document.getElementById('root'));
-      root.render(<App />);
-    </script>
-</body>
-</html>
