@@ -3,30 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kristen's Vibe Page</title>
+    <title>Kristen's Vibe Blog</title>
     <style>
-        body {
-            font-family: sans-serif;
-            background-color: #f0f0f0;
-            color: #333;
-            padding: 20px;
+        :root {
+            --bg-color: #050505;
+            --text-color: #e0e0e0;
+            --accent-color: #00ff88; /* 這是你的 Vibe 主色調，可以隨時改 */
         }
-        .vibe-container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 600px;
+            padding: 40px;
+            text-align: left;
+            border-left: 2px solid var(--accent-color); /* 側邊裝飾線 */
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            letter-spacing: -1px;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .vibe-tag {
+            background: var(--accent-color);
+            color: #000;
+            padding: 2px 8px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .post-list {
+            margin-top: 2rem;
+            list-style: none;
+            padding: 0;
+        }
+
+        .post-item {
+            margin-bottom: 1rem;
+            opacity: 0.7;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .post-item:hover {
+            opacity: 1;
+            padding-left: 10px;
+            color: var(--accent-color);
         }
     </style>
 </head>
 <body>
-    <div class="vibe-container">
-        <h1>✨ Vibe Coding 實驗室 ✨</h1>
-        <p>這是一個基於 GitHub Pages 運行的靜態網頁，完全免費且極速。</p>
-        <p>您現在可以在這個頁面上直接開始您的 CSS 創作了！</p>
-        <p>（未來我們只需要在 `index.html` 內修改內容和 CSS。）</p>
+    <div class="container">
+        <span class="vibe-tag">Vibe Coding</span>
+        <h1>Kristen Yau</h1>
+        <p>這是一個正在進化的 Vibe 實驗室。沒有複雜的後台，只有純粹的代碼與設計。</p>
+        
+        <ul class="post-list">
+            <li class="post-item">01. 關於這場 Vibe Coding 的冒險 →</li>
+            <li class="post-item">02. 為什麼捨棄了那些煩人的工具 →</li>
+            <li class="post-item">03. 未來的實驗清單 →</li>
+        </ul>
     </div>
 </body>
 </html>
