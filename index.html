@@ -2,7 +2,7 @@
 <html lang="zh-Hant" class="scroll-smooth">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Design with Kirsten</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
@@ -15,18 +15,18 @@
           extend: {
             colors: { paper: "#fdfdfb", ink: "#1a1a1a", muted: "#717171", border: "#e5e5e0" },
             fontFamily: { sans: ['Inter', 'sans-serif'], serif: ['Noto Serif TC', 'serif'] },
-            animation: { 'fade-in': 'fadeIn 0.6s ease-out' },
+            animation: { 'fade-in': 'fadeIn 0.5s ease-out' },
             keyframes: { fadeIn: { '0%': { opacity: '0', transform: 'translateY(10px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } } }
           },
         },
       }
     </script>
     <style>
-      body { background-color: #fdfdfb; color: #1a1a1a; font-family: 'Inter', sans-serif; background-image: radial-gradient(#e5e5e0 0.5px, transparent 0.5px); background-size: 24px 24px; }
-      .minimal-nav { background: rgba(253, 253, 251, 0.9); backdrop-filter: blur(8px); border-bottom: 1px solid #e5e5e0; }
-      .minimal-card { background: #ffffff; border: 1px solid #e5e5e0; transition: all 0.4s ease; }
-      .minimal-card:hover { transform: translateY(-4px); border-color: #1a1a1a; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-      article p { margin-bottom: 1.5rem; line-height: 1.8; color: #374151; }
+      body { background-color: #fdfdfb; color: #1a1a1a; font-family: 'Inter', sans-serif; background-image: radial-gradient(#e5e5e0 0.5px, transparent 0.5px); background-size: 20px 20px; -webkit-font-smoothing: antialiased; }
+      .minimal-nav { background: rgba(253, 253, 251, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid #e5e5e0; }
+      .minimal-card { background: #ffffff; border: 1px solid #e5e5e0; transition: all 0.3s ease; }
+      @media (hover: hover) { .minimal-card:hover { transform: translateY(-4px); border-color: #1a1a1a; box-shadow: 0 10px 30px rgba(0,0,0,0.05); } }
+      .no-scrollbar::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body>
@@ -39,24 +39,18 @@
         const [currentPage, setCurrentPage] = useState('home');
         const [selectedArticle, setSelectedArticle] = useState(null);
 
-        const navigateToArticle = (id) => {
-            setSelectedArticle(id);
-            setCurrentPage('article');
-            window.scrollTo(0, 0);
-        };
-
         const Navigation = () => (
           <nav className="fixed top-0 w-full z-50 minimal-nav">
-            <div className="max-w-5xl mx-auto px-8 h-20 flex items-center justify-between">
-              <button onClick={() => {setCurrentPage('home'); setSelectedArticle(null);}} className="font-serif font-bold text-2xl tracking-tighter">K.</button>
-              <div className="flex gap-8 text-xs font-medium uppercase tracking-[0.2em] text-muted">
+            <div className="max-w-5xl mx-auto px-4 sm:px-8 h-16 sm:h-20 flex items-center justify-between">
+              <button onClick={() => {setCurrentPage('home'); setSelectedArticle(null);}} className="font-serif font-bold text-xl sm:text-2xl tracking-tighter">K.</button>
+              <div className="flex gap-4 sm:gap-8 text-[10px] sm:text-xs font-medium uppercase tracking-[0.1em] sm:tracking-[0.2em] text-muted overflow-x-auto no-scrollbar">
                 {['Home', 'Blog', 'Resources', 'About'].map((item) => (
                   <button 
                     key={item}
                     onClick={() => {setCurrentPage(item.toLowerCase()); setSelectedArticle(null);}}
-                    className={`hover:text-ink transition-colors ${currentPage === item.toLowerCase() || (item==='Blog' && currentPage==='article') ? 'text-ink border-b border-ink font-bold' : ''}`}
+                    className={`whitespace-nowrap hover:text-ink transition-colors ${currentPage === item.toLowerCase() || (item==='Blog' && currentPage==='article') ? 'text-ink border-b border-ink font-bold' : ''}`}
                   >
-                    {item === 'About' ? 'About me' : item}
+                    {item === 'About' ? 'About' : item}
                   </button>
                 ))}
               </div>
@@ -65,48 +59,45 @@
         );
 
         const HomePage = () => (
-          <div className="relative z-10 w-full max-w-2xl text-center animate-fade-in">
-            <div className="mb-12 flex justify-center">
-              <div className="w-32 h-32 rounded-full p-[1px] bg-border shadow-sm">
-                <div className="w-full h-full rounded-full bg-paper overflow-hidden border-[6px] border-white">
+          <div className="relative z-10 w-full max-w-2xl text-center animate-fade-in px-4">
+            <div className="mb-8 sm:mb-12 flex justify-center pt-4">
+              <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full p-[1px] bg-border shadow-sm">
+                <div className="w-full h-full rounded-full bg-paper overflow-hidden border-[4px] sm:border-[6px] border-white">
                   <img src="https://kirstenyau.github.io/profile.png" alt="Profile" className="w-full h-full object-cover" />
                 </div>
               </div>
             </div>
-            <h1 className="font-serif text-5xl font-bold mb-6 tracking-tight">Design with Kirsten</h1>
-            <p className="text-muted text-sm tracking-[0.15em] uppercase mb-12">UXUI Design <span className="mx-3 text-border">/</span> AI tips <span className="mx-3 text-border">/</span> Tech Lifestyle</p>
-            <div className="grid gap-6 sm:grid-cols-3 px-4">
-              <button onClick={() => setCurrentPage('blog')} className="minimal-card p-6 rounded-sm group text-center">
-                <div className="text-ink mb-2 font-serif italic text-lg opacity-40 group-hover:opacity-100 transition-opacity">01</div>
-                <div className="text-xs font-bold uppercase tracking-widest">Blog</div>
+            <h1 className="font-serif text-3xl sm:text-5xl font-bold mb-4 sm:mb-6 tracking-tight">Design with Kirsten</h1>
+            <p className="text-muted text-[10px] sm:text-sm tracking-[0.1em] sm:tracking-[0.15em] uppercase mb-8 sm:mb-12">UXUI Design <span className="mx-2 text-border">/</span> AI tips <span className="mx-2 text-border">/</span> Tech Lifestyle</p>
+            <div className="grid gap-3 sm:gap-6 grid-cols-1 sm:grid-cols-3">
+              <button onClick={() => setCurrentPage('blog')} className="minimal-card py-4 sm:py-6 rounded-sm group">
+                <div className="text-xs font-bold uppercase tracking-widest text-ink">Blog</div>
               </button>
-              <a href="https://www.instagram.com/kirsten_uxui/" target="_blank" className="minimal-card p-6 rounded-sm text-center group">
-                <div className="text-ink mb-2 font-serif italic text-lg opacity-40 group-hover:opacity-100 transition-opacity">02</div>
-                <div className="text-xs font-bold uppercase tracking-widest">Instagram</div>
+              <a href="https://www.instagram.com/kirsten_uxui/" target="_blank" className="minimal-card py-4 sm:py-6 rounded-sm text-center">
+                <div className="text-xs font-bold uppercase tracking-widest text-ink">Instagram</div>
               </a>
-              <button onClick={() => setCurrentPage('resources')} className="minimal-card p-6 rounded-sm group text-center">
-                <div className="text-ink mb-2 font-serif italic text-lg opacity-40 group-hover:opacity-100 transition-opacity">03</div>
-                <div className="text-xs font-bold uppercase tracking-widest">Resources</div>
+              <button onClick={() => setCurrentPage('resources')} className="minimal-card py-4 sm:py-6 rounded-sm group">
+                <div className="text-xs font-bold uppercase tracking-widest text-ink">Resources</div>
               </button>
             </div>
           </div>
         );
 
         const BlogPage = () => (
-          <div className="relative z-10 w-full max-w-4xl mx-auto animate-fade-in px-6">
-            <header className="mb-16 border-l-4 border-ink pl-6">
-              <h2 className="font-serif text-4xl font-bold mb-3">Blog</h2>
-              <p className="text-muted text-sm leading-relaxed max-w-lg italic">Hello, I will share my UXUI design case study and learning journey of vibe coding here.</p>
+          <div className="relative z-10 w-full max-w-4xl mx-auto animate-fade-in px-4 sm:px-6">
+            <header className="mb-10 sm:mb-16 border-l-4 border-ink pl-4 sm:pl-6">
+              <h2 className="font-serif text-3xl sm:text-4xl font-bold mb-2">Blog</h2>
+              <p className="text-muted text-xs sm:text-sm leading-relaxed italic">UXUI design & vibe coding journey.</p>
             </header>
-            <div className="grid gap-12">
-              <div onClick={() => navigateToArticle('vibe-coding')} className="group cursor-pointer flex flex-col md:flex-row gap-8 items-center border-b border-border pb-12 hover:opacity-80 transition-opacity">
-                <div className="w-full md:w-72 h-48 bg-gray-100 border border-border flex items-center justify-center overflow-hidden">
-                    <span className="text-muted text-xs tracking-widest uppercase">Cover Photo Coming Soon</span>
+            <div className="grid gap-8 sm:gap-12">
+              <div onClick={() => {setSelectedArticle('vibe-coding'); setCurrentPage('article'); window.scrollTo(0,0);}} className="group cursor-pointer flex flex-col gap-4 sm:gap-8 border-b border-border pb-8 sm:pb-12">
+                <div className="w-full h-40 sm:h-64 bg-gray-100 border border-border flex items-center justify-center">
+                    <span className="text-muted text-[10px] uppercase tracking-widest">Cover Photo Coming Soon</span>
                 </div>
-                <div className="flex-1">
-                  <h3 className="font-serif text-2xl font-bold mb-3">My Journey of Vibe coding with Gemini</h3>
-                  <p className="text-muted text-sm leading-relaxed mb-4">這不僅僅是一個關於程式碼的故事，更是一場關於「直覺」與「對話」的實驗...</p>
-                  <span className="text-xs font-bold uppercase tracking-widest border-b border-ink pb-1">Read More</span>
+                <div>
+                  <h3 className="font-serif text-xl sm:text-2xl font-bold mb-2">My Journey of Vibe coding with Gemini</h3>
+                  <p className="text-muted text-xs sm:text-sm leading-relaxed mb-4 line-clamp-3">這不僅僅是一個關於程式碼的故事，更是一場關於「直覺」與「對話」的實驗...</p>
+                  <span className="text-[10px] font-bold uppercase tracking-widest border-b border-ink pb-1">Read More</span>
                 </div>
               </div>
             </div>
@@ -115,27 +106,26 @@
 
         const ResourcesPage = () => {
           const tools = [
-            { name: "Figma", desc: "The industry-standard collaborative design tool for interface design and prototyping.", link: "https://www.figma.com" },
-            { name: "Behance", desc: "Adobe's social media platform for showcasing and discovering creative work.", link: "https://www.behance.net" },
-            { name: "Dribbble", desc: "A self-promotion and social networking platform for digital designers and creatives.", link: "https://dribbble.com" },
-            { name: "Mobbin", desc: "A comprehensive library of mobile and web design patterns from real-world products.", link: "https://mobbin.com" },
-            { name: "Product Hunt", desc: "The place to find the latest mobile apps, websites, and technology products.", link: "https://www.producthunt.com" }
+            { name: "Figma", desc: "Industry-standard collaborative design tool.", link: "https://www.figma.com" },
+            { name: "Behance", desc: "Discovering and showcasing creative work.", link: "https://www.behance.net" },
+            { name: "Dribbble", desc: "Social network for digital designers.", link: "https://dribbble.com" },
+            { name: "Mobbin", desc: "Library of real-world mobile design patterns.", link: "https://mobbin.com" },
+            { name: "Product Hunt", desc: "Find the latest mobile apps and websites.", link: "https://www.producthunt.com" }
           ];
-
           return (
-            <div className="relative z-10 w-full max-w-4xl mx-auto animate-fade-in px-6">
-              <header className="text-left mb-16 border-l-4 border-ink pl-6">
-                <h2 className="font-serif text-4xl font-bold mb-3 tracking-tight">Resources</h2>
-                <p className="text-muted text-sm leading-relaxed max-w-lg">If you are new to the world of UXUI design, start with the following tools and play around!</p>
+            <div className="relative z-10 w-full max-w-4xl mx-auto animate-fade-in px-4 sm:px-6">
+              <header className="mb-10 sm:mb-16 border-l-4 border-ink pl-4 sm:pl-6">
+                <h2 className="font-serif text-3xl sm:text-4xl font-bold mb-2">Resources</h2>
+                <p className="text-muted text-xs sm:text-sm leading-relaxed">Essential tools for UXUI beginners.</p>
               </header>
-              <div className="grid gap-4">
+              <div className="grid gap-3 sm:gap-4">
                 {tools.map((tool) => (
-                  <a key={tool.name} href={tool.link} target="_blank" className="minimal-card p-6 rounded-sm flex flex-col md:flex-row md:items-center justify-between group">
-                    <div className="mb-2 md:mb-0">
-                      <h3 className="font-serif text-xl font-bold mb-1 group-hover:text-muted transition-colors">{tool.name}</h3>
-                      <p className="text-muted text-sm font-light">{tool.desc}</p>
+                  <a key={tool.name} href={tool.link} target="_blank" className="minimal-card p-5 sm:p-6 rounded-sm flex justify-between items-center group">
+                    <div>
+                      <h3 className="font-serif text-lg sm:text-xl font-bold mb-1">{tool.name}</h3>
+                      <p className="text-muted text-[10px] sm:text-sm font-light">{tool.desc}</p>
                     </div>
-                    <span className="text-xs font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Explore →</span>
+                    <span className="hidden sm:block text-xs font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Explore →</span>
                   </a>
                 ))}
               </div>
@@ -144,35 +134,35 @@
         };
 
         const ArticleContent = () => (
-          <div className="relative z-10 w-full max-w-2xl mx-auto animate-fade-in px-6 py-10 text-justify">
-            <button onClick={() => setCurrentPage('blog')} className="text-muted text-xs font-bold uppercase tracking-widest mb-12 hover:text-ink">← Back to Blog</button>
+          <div className="relative z-10 w-full max-w-2xl mx-auto animate-fade-in px-4 sm:px-6 py-4 sm:py-10">
+            <button onClick={() => setCurrentPage('blog')} className="text-muted text-[10px] font-bold uppercase tracking-widest mb-8 hover:text-ink">← Back to Blog</button>
             <article>
-              <h1 className="font-serif text-4xl font-bold mb-8 leading-tight italic">My Journey of Vibe coding with Gemini</h1>
-              <div className="prose prose-sm font-light text-gray-700">
+              <h1 className="font-serif text-2xl sm:text-4xl font-bold mb-6 sm:mb-8 leading-tight italic">My Journey of Vibe coding with Gemini</h1>
+              <div className="text-sm sm:text-base font-light text-gray-700 leading-relaxed space-y-6">
                 <p>作為一名 UXUI 設計師，我一直相信「設計」的本質是解決問題，而非僅僅是繪製精美的介面。然而，將設計轉化為真實網頁的過程，往往被繁瑣的技術細節所填滿。直到我遇見了 <strong>Vibe Coding</strong>。</p>
                 <p>這張網頁的誕生，沒有經歷傳統的開發流程。我坐在沙發上，透過 Google AI Studio (Gemini)，以一種近乎對話的方式，完成了這一切。</p>
-                <p><strong>什麼是 Vibe Coding？</strong> 對我而言，它是一種「意識流」開發。我不必精確地告訴 AI 每一行程式碼該怎麼寫，我只需傳達我想要的「感覺」——日式的極簡、呼吸般的留白、溫潤的和紙感背景。Gemini 迅速將我的審美意識轉化為 React 與 Tailwind CSS 結構。</p>
-                <p>在過程中，我們不斷地微調。每一次 Commit，都是審美與科技的完美對話。這場旅程讓我明白，未來的開發者，更多時候會像是一名「導演」或「策展人」，我們負責定義 Vibe，而 AI 負責執行細節。</p>
+                <p><strong>什麼是 Vibe Coding？</strong> 對我而言，它是一種「意識流」開發。我不必精確地告訴 AI 每一行程式碼該怎麼寫，我只需傳達我想要的「感覺」——日式的極簡、呼吸般的留白、溫潤的和紙感背景。</p>
+                <p>在過程中，每一次 Commit，都是審美與科技的對話。未來的開發者，更多時候會像是一名「導演」，我們負責定義 Vibe，而 AI 負責執行細節。</p>
               </div>
             </article>
-            <footer className="mt-20 pt-10 border-t border-border flex justify-between items-center">
-                <span className="text-[10px] text-muted uppercase tracking-widest">Written by Kirsten · 2025</span>
-                <button onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})} className="text-[10px] font-bold uppercase tracking-widest">Back to top</button>
+            <footer className="mt-16 pt-8 border-t border-border flex justify-between items-center">
+                <span className="text-[9px] text-muted uppercase tracking-widest">Kirsten · 2025</span>
+                <button onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})} className="text-[9px] font-bold uppercase tracking-widest">Top ↑</button>
             </footer>
           </div>
         );
 
         const AboutPage = () => (
-          <div className="relative z-10 w-full max-w-2xl mx-auto animate-fade-in px-6 text-center">
-             <header className="mb-16">
-              <h2 className="font-serif text-4xl font-bold mb-2 italic text-center">About me</h2>
-              <div className="w-12 h-[1px] bg-ink mx-auto mt-4"></div>
+          <div className="relative z-10 w-full max-w-2xl mx-auto animate-fade-in px-4 sm:px-6">
+             <header className="mb-10 sm:mb-16 text-center">
+              <h2 className="font-serif text-3xl sm:text-4xl font-bold mb-2 italic">About me</h2>
+              <div className="w-8 h-[1px] bg-ink mx-auto mt-4"></div>
             </header>
-            <div className="space-y-8 text-ink leading-relaxed font-light">
+            <div className="text-sm sm:text-base text-ink leading-relaxed font-light space-y-6">
               <p>我是 Kirsten，一名專注於 UXUI 設計與 AI 工具應用的創作者。我相信好的設計應該像日式美學一樣，在簡潔中隱藏細節。</p>
-              <div className="pt-8 border-t border-border text-left">
-                <h4 className="text-xs font-bold uppercase tracking-widest mb-4">Focus Areas</h4>
-                <ul className="grid grid-cols-2 gap-4 text-sm text-muted italic">
+              <div className="pt-8 border-t border-border">
+                <h4 className="text-[10px] font-bold uppercase tracking-widest mb-4">Focus Areas</h4>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm text-muted italic">
                   <li>• User Experience Design</li>
                   <li>• AI Workflow Optimization</li>
                   <li>• Interface Aesthetics</li>
@@ -184,16 +174,15 @@
         );
 
         return (
-          <div className="min-h-screen flex flex-col items-center justify-center p-6 pt-32 pb-20">
+          <div className="min-h-screen flex flex-col items-center justify-center py-20">
             <Navigation />
             {currentPage === 'home' && <HomePage />}
             {currentPage === 'blog' && <BlogPage />}
             {currentPage === 'resources' && <ResourcesPage />}
             {currentPage === 'about' && <AboutPage />}
             {currentPage === 'article' && <ArticleContent />}
-            
-            <footer className="mt-32 text-center opacity-30">
-                <p className="text-[9px] tracking-[0.5em] uppercase font-medium">© 2025 Kirsten Yau / Tokyo Minimalist</p>
+            <footer className="mt-20 text-center opacity-30 px-4">
+                <p className="text-[8px] sm:text-[9px] tracking-[0.3em] sm:tracking-[0.5em] uppercase font-medium">© 2025 Kirsten Yau / Tokyo Minimalist</p>
             </footer>
           </div>
         );
