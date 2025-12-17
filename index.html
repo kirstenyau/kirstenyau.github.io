@@ -14,13 +14,10 @@
           extend: {
             colors: {
               glass: "rgba(255, 255, 255, 0.05)",
-              glassBorder: "rgba(255, 255, 255, 0.1)",
-              primary: "#6366f1", // Indigo
-              secondary: "#ec4899", // Pink
+              primary: "#6366f1",
+              secondary: "#ec4899",
             },
-            animation: {
-              'blob': 'blob 7s infinite',
-            },
+            animation: { 'blob': 'blob 7s infinite' },
             keyframes: {
               blob: {
                 '0%': { transform: 'translate(0px, 0px) scale(1)' },
@@ -34,67 +31,100 @@
       }
     </script>
     <style>
-      body { background-color: #020617; color: #f8fafc; overflow-x: hidden; }
-      .glass-card {
-        background: rgba(255, 255, 255, 0.03);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-      }
+      body { background-color: #020617; color: #f8fafc; font-family: 'Inter', sans-serif; }
+      .glass-nav { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.1); }
+      .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
     </style>
 </head>
 <body>
     <div id="root"></div>
 
     <script type="text/babel">
+      const { useState } = React;
+
       function App() {
-        return (
-          <div className="relative min-h-screen w-full flex items-center justify-center p-6">
-            {/* 背景動態光暈 Blobs */}
-            <div className="fixed top-0 -left-4 w-72 h-72 bg-primary rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-            <div className="fixed top-0 -right-4 w-72 h-72 bg-secondary rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob [animation-delay:2s]"></div>
-            <div className="fixed -bottom-8 left-20 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob [animation-delay:4s]"></div>
+        const [currentPage, setCurrentPage] = useState('home');
 
-            <div className="relative z-10 w-full max-w-md">
-              <div className="glass-card rounded-3xl p-8 shadow-2xl">
-                {/* Header */}
-                <header className="text-center mb-10">
-                  <h1 className="text-4xl font-bold tracking-tight mb-3 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
-                    Design with Kirsten
-                  </h1>
-                  <p className="text-gray-400 font-medium">
-                    UXUI Design | AI tips | Career Transition
-                  </p>
-                </header>
-
-                {/* 按鈕列表 */}
-                <div className="space-y-4">
-                  <a 
-                    href="https://www.instagram.com/kirsten_uxui/" 
-                    target="_blank"
-                    className="flex items-center justify-between w-full p-4 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 transition-all duration-300 group"
+        // 導航組件
+        const Navigation = () => (
+          <nav className="fixed top-0 w-full z-50 glass-nav">
+            <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+              <span className="font-bold tracking-tighter text-xl">K.</span>
+              <div className="flex gap-6 text-sm font-medium text-gray-400">
+                {['Home', 'Blog', 'Portfolio', 'About'].map((item) => (
+                  <button 
+                    key={item}
+                    onClick={() => setCurrentPage(item.toLowerCase())}
+                    className={`hover:text-white transition-colors ${currentPage === item.toLowerCase() ? 'text-primary' : ''}`}
                   >
-                    <span className="text-gray-200 group-hover:text-white transition-colors">Case Study on Instagram</span>
-                    <span className="text-gray-500 group-hover:translate-x-1 transition-transform">→</span>
-                  </a>
-
-                  <a 
-                    href="https://www.threads.com/@kirsten_uxui?xmt=AQF0VP2qPWbXL3S48S-jzUFX0cR4jd4JorQZwrdXA8pMFHE" 
-                    target="_blank"
-                    className="flex items-center justify-between w-full p-4 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-secondary/50 transition-all duration-300 group"
-                  >
-                    <span className="text-gray-200 group-hover:text-white transition-colors">Articles on Threads</span>
-                    <span className="text-gray-500 group-hover:translate-x-1 transition-transform">→</span>
-                  </a>
-                </div>
-
-                {/* Footer */}
-                <footer className="mt-12 text-center">
-                  <p className="text-xs text-gray-600 uppercase tracking-widest">
-                    Vibe Coding · 2025
-                  </p>
-                </footer>
+                    {item}
+                  </button>
+                ))}
               </div>
             </div>
+          </nav>
+        );
+
+        // 主頁內容
+        const HomePage = () => (
+          <div className="relative z-10 w-full max-w-2xl text-center">
+            <div className="mb-8 flex justify-center">
+              {/* Profile Picture Placeholder */}
+              <div className="w-32 h-32 rounded-full p-1 bg-gradient-to-tr from-primary to-secondary">
+                <div className="w-full h-full rounded-full bg-gray-800 overflow-hidden border-4 border-[#020617]">
+                  <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Kirsten" alt="Profile" className="w-full h-full object-cover" />
+                </div>
+              </div>
+            </div>
+
+            <h1 className="text-5xl font-bold tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
+              Design with Kirsten
+            </h1>
+            <p className="text-gray-400 text-lg mb-10">
+              UXUI Design <span className="mx-2 text-gray-600">|</span> 
+              AI tips <span className="mx-2 text-gray-600">|</span> 
+              Tech Lifestyle
+            </p>
+
+            <div className="grid gap-4 sm:grid-cols-3">
+              <button onClick={() => setCurrentPage('blog')} className="glass-card p-4 rounded-2xl hover:bg-white/10 transition-all group border-white/5">
+                <div className="text-primary mb-1 text-xl">✍️</div>
+                <div className="text-sm font-semibold">View articles</div>
+              </button>
+
+              <a href="https://www.instagram.com/kirsten_uxui/" target="_blank" className="glass-card p-4 rounded-2xl hover:bg-white/10 transition-all group border-white/5 text-center">
+                <div className="text-secondary mb-1 text-xl">📸</div>
+                <div className="text-sm font-semibold">Case Study</div>
+              </a>
+
+              <button onClick={() => setCurrentPage('portfolio')} className="glass-card p-4 rounded-2xl hover:bg-white/10 transition-all group border-white/5">
+                <div className="text-purple-400 mb-1 text-xl">💼</div>
+                <div className="text-sm font-semibold">My Works</div>
+              </button>
+            </div>
+          </div>
+        );
+
+        return (
+          <div className="min-h-screen flex flex-col items-center justify-center p-6 pt-24">
+            <Navigation />
+            
+            {/* 動態背景 */}
+            <div className="fixed top-0 -left-4 w-96 h-96 bg-primary rounded-full mix-blend-multiply filter blur-[128px] opacity-10 animate-blob"></div>
+            <div className="fixed top-0 -right-4 w-96 h-96 bg-secondary rounded-full mix-blend-multiply filter blur-[128px] opacity-10 animate-blob [animation-delay:2s]"></div>
+
+            {currentPage === 'home' && <HomePage />}
+            {currentPage !== 'home' && (
+              <div className="z-10 text-center glass-card p-20 rounded-3xl">
+                <h2 className="text-3xl font-bold capitalize mb-4">{currentPage} Page</h2>
+                <p className="text-gray-500 mb-8">此頁面內容正在 Vibe Coding 中...</p>
+                <button onClick={() => setCurrentPage('home')} className="text-primary hover:underline">返回首頁</button>
+              </div>
+            )}
+
+            <footer className="mt-20 text-xs text-gray-600 tracking-widest uppercase">
+              Kirsten Yau · 2025
+            </footer>
           </div>
         );
       }
