@@ -99,17 +99,13 @@
               <p className="text-muted text-sm leading-relaxed max-w-lg italic">Hello, I will share my UXUI design case study and learning journey of vibe coding here.</p>
             </header>
             <div className="grid gap-12">
-              {/* Article Card */}
-              <div 
-                onClick={() => navigateToArticle('vibe-coding')}
-                className="group cursor-pointer flex flex-col md:flex-row gap-8 items-center border-b border-border pb-12 hover:opacity-80 transition-opacity"
-              >
+              <div onClick={() => navigateToArticle('vibe-coding')} className="group cursor-pointer flex flex-col md:flex-row gap-8 items-center border-b border-border pb-12 hover:opacity-80 transition-opacity">
                 <div className="w-full md:w-72 h-48 bg-gray-100 border border-border flex items-center justify-center overflow-hidden">
                     <span className="text-muted text-xs tracking-widest uppercase">Cover Photo Coming Soon</span>
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-serif text-2xl font-bold mb-3 group-hover:text-muted transition-colors">My Journey of Vibe coding with Gemini</h3>
-                  <p className="text-muted text-sm leading-relaxed mb-4">這不僅僅是一個關於程式碼的故事，更是一場關於「直覺」與「對話」的實驗。在 2025 年，我們不再需要從零開始學習語法，而是學習如何與 AI 同步頻率...</p>
+                  <h3 className="font-serif text-2xl font-bold mb-3">My Journey of Vibe coding with Gemini</h3>
+                  <p className="text-muted text-sm leading-relaxed mb-4">這不僅僅是一個關於程式碼的故事，更是一場關於「直覺」與「對話」的實驗...</p>
                   <span className="text-xs font-bold uppercase tracking-widest border-b border-ink pb-1">Read More</span>
                 </div>
               </div>
@@ -117,54 +113,64 @@
           </div>
         );
 
+        const ResourcesPage = () => {
+          const tools = [
+            { name: "Figma", desc: "The industry-standard collaborative design tool for interface design and prototyping.", link: "https://www.figma.com" },
+            { name: "Behance", desc: "Adobe's social media platform for showcasing and discovering creative work.", link: "https://www.behance.net" },
+            { name: "Dribbble", desc: "A self-promotion and social networking platform for digital designers and creatives.", link: "https://dribbble.com" },
+            { name: "Mobbin", desc: "A comprehensive library of mobile and web design patterns from real-world products.", link: "https://mobbin.com" },
+            { name: "Product Hunt", desc: "The place to find the latest mobile apps, websites, and technology products.", link: "https://www.producthunt.com" }
+          ];
+
+          return (
+            <div className="relative z-10 w-full max-w-4xl mx-auto animate-fade-in px-6">
+              <header className="text-left mb-16 border-l-4 border-ink pl-6">
+                <h2 className="font-serif text-4xl font-bold mb-3 tracking-tight">Resources</h2>
+                <p className="text-muted text-sm leading-relaxed max-w-lg">If you are new to the world of UXUI design, start with the following tools and play around!</p>
+              </header>
+              <div className="grid gap-4">
+                {tools.map((tool) => (
+                  <a key={tool.name} href={tool.link} target="_blank" className="minimal-card p-6 rounded-sm flex flex-col md:flex-row md:items-center justify-between group">
+                    <div className="mb-2 md:mb-0">
+                      <h3 className="font-serif text-xl font-bold mb-1 group-hover:text-muted transition-colors">{tool.name}</h3>
+                      <p className="text-muted text-sm font-light">{tool.desc}</p>
+                    </div>
+                    <span className="text-xs font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Explore →</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          );
+        };
+
         const ArticleContent = () => (
-          <div className="relative z-10 w-full max-w-2xl mx-auto animate-fade-in px-6 py-10">
+          <div className="relative z-10 w-full max-w-2xl mx-auto animate-fade-in px-6 py-10 text-justify">
             <button onClick={() => setCurrentPage('blog')} className="text-muted text-xs font-bold uppercase tracking-widest mb-12 hover:text-ink">← Back to Blog</button>
             <article>
-              <h1 className="font-serif text-4xl font-bold mb-8 leading-tight text-ink italic">My Journey of Vibe coding with Gemini</h1>
+              <h1 className="font-serif text-4xl font-bold mb-8 leading-tight italic">My Journey of Vibe coding with Gemini</h1>
               <div className="prose prose-sm font-light text-gray-700">
                 <p>作為一名 UXUI 設計師，我一直相信「設計」的本質是解決問題，而非僅僅是繪製精美的介面。然而，將設計轉化為真實網頁的過程，往往被繁瑣的技術細節所填滿。直到我遇見了 <strong>Vibe Coding</strong>。</p>
-                <p>這張網頁的誕生，沒有經歷傳統的開發流程。我沒有打開 VS Code，沒有安裝複雜的環境，也沒有查閱冗長的文檔。相反地，我坐在沙發上，透過 Google AI Studio (Gemini)，以一種近乎對話的方式，完成了這一切。</p>
-                <p><strong>什麼是 Vibe Coding？</strong> 對我而言，它是一種「意識流」開發。我不必精確地告訴 AI 每一行程式碼該怎麼寫，我只需傳達我想要的「感覺」——日式的極簡、呼吸般的留白、溫潤的和紙感背景。Gemini 就像一位極具默契的夥伴，迅速將我的審美意識轉化為 React 與 Tailwind CSS 結構。</p>
-                <p>在過程中，我們不斷地微調：從深色電競風轉向明亮的禪意風格，從複雜的 Portfolio 到精煉的 Resources 導向。每一次 Commit，都是審美與科技的完美對話。這場旅程讓我明白，未來的開發者，更多時候會像是一名「導演」或「策展人」，我們負責定義 Vibe，而 AI 負責執行細節。</p>
-                <p>歡迎來到我的數位花園，這裡是我與 AI 共同構築的、充滿 Vibe 的實驗場。</p>
+                <p>這張網頁的誕生，沒有經歷傳統的開發流程。我坐在沙發上，透過 Google AI Studio (Gemini)，以一種近乎對話的方式，完成了這一切。</p>
+                <p><strong>什麼是 Vibe Coding？</strong> 對我而言，它是一種「意識流」開發。我不必精確地告訴 AI 每一行程式碼該怎麼寫，我只需傳達我想要的「感覺」——日式的極簡、呼吸般的留白、溫潤的和紙感背景。Gemini 迅速將我的審美意識轉化為 React 與 Tailwind CSS 結構。</p>
+                <p>在過程中，我們不斷地微調。每一次 Commit，都是審美與科技的完美對話。這場旅程讓我明白，未來的開發者，更多時候會像是一名「導演」或「策展人」，我們負責定義 Vibe，而 AI 負責執行細節。</p>
               </div>
             </article>
             <footer className="mt-20 pt-10 border-t border-border flex justify-between items-center">
-              <span className="text-[10px] text-muted uppercase tracking-widest">Written by Kirsten · 2025</span>
-              <button onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})} className="text-[10px] font-bold uppercase tracking-widest">Back to top</button>
+                <span className="text-[10px] text-muted uppercase tracking-widest">Written by Kirsten · 2025</span>
+                <button onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})} className="text-[10px] font-bold uppercase tracking-widest">Back to top</button>
             </footer>
           </div>
         );
 
-        const ResourcesPage = () => (
-          <div className="relative z-10 w-full max-w-4xl mx-auto animate-fade-in px-6">
-            <header className="text-left mb-16 border-l-4 border-ink pl-6">
-              <h2 className="font-serif text-4xl font-bold mb-2 tracking-tight">Resources</h2>
-              <p className="text-muted text-sm tracking-widest uppercase italic">Curated tools and assets for creators.</p>
-            </header>
-            <div className="grid gap-6 md:grid-cols-2">
-               <div className="minimal-card p-8 rounded-sm">
-                  <h3 className="font-serif text-xl font-bold mb-2">UXUI Design Kit</h3>
-                  <p className="text-muted text-xs tracking-widest mb-6">Coming Soon</p>
-               </div>
-               <div className="minimal-card p-8 rounded-sm">
-                  <h3 className="font-serif text-xl font-bold mb-2">AI Prompts Library</h3>
-                  <p className="text-muted text-xs tracking-widest mb-6">Coming Soon</p>
-               </div>
-            </div>
-          </div>
-        );
-
         const AboutPage = () => (
-          <div className="relative z-10 w-full max-w-2xl mx-auto animate-fade-in px-6">
-             <header className="text-center mb-16">
-              <h2 className="font-serif text-4xl font-bold mb-2 italic">About me</h2>
+          <div className="relative z-10 w-full max-w-2xl mx-auto animate-fade-in px-6 text-center">
+             <header className="mb-16">
+              <h2 className="font-serif text-4xl font-bold mb-2 italic text-center">About me</h2>
               <div className="w-12 h-[1px] bg-ink mx-auto mt-4"></div>
             </header>
             <div className="space-y-8 text-ink leading-relaxed font-light">
               <p>我是 Kirsten，一名專注於 UXUI 設計與 AI 工具應用的創作者。我相信好的設計應該像日式美學一樣，在簡潔中隱藏細節。</p>
-              <div className="pt-8 border-t border-border">
+              <div className="pt-8 border-t border-border text-left">
                 <h4 className="text-xs font-bold uppercase tracking-widest mb-4">Focus Areas</h4>
                 <ul className="grid grid-cols-2 gap-4 text-sm text-muted italic">
                   <li>• User Experience Design</li>
