@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
+    <title>Kristen's Vibe Blog</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kristen's Vibe Blog</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
             --bg-color: #050505;
             --text-color: #e0e0e0;
-            --accent-color: #00ff88; /* 這是你的 Vibe 主色調，可以隨時改 */
+            --accent-color: #00ff88; /* Vibe 主色調：螢光綠 */
+            --button-bg: #222;
         }
 
         body {
@@ -21,6 +26,7 @@
             min-height: 100vh;
             margin: 0;
             line-height: 1.6;
+            padding: 20px;
         }
 
         .container {
@@ -37,6 +43,13 @@
             color: #fff;
         }
 
+        .tagline {
+            font-size: 1rem;
+            color: var(--accent-color);
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
         .vibe-tag {
             background: var(--accent-color);
             color: #000;
@@ -46,37 +59,71 @@
             text-transform: uppercase;
         }
 
-        .post-list {
-            margin-top: 2rem;
-            list-style: none;
-            padding: 0;
+        .button-group {
+            margin-top: 3rem;
         }
 
-        .post-item {
-            margin-bottom: 1rem;
-            opacity: 0.7;
-            transition: 0.3s;
-            cursor: pointer;
+        .vibe-button {
+            display: block;
+            width: 100%;
+            padding: 12px 20px;
+            margin-bottom: 15px;
+            background-color: var(--button-bg);
+            color: var(--text-color);
+            text-decoration: none;
+            text-align: left;
+            border: 1px solid #444;
+            border-radius: 4px;
+            transition: all 0.2s ease-in-out;
+            font-size: 1.1rem;
         }
 
-        .post-item:hover {
-            opacity: 1;
-            padding-left: 10px;
+        .vibe-button i {
+            margin-right: 10px;
             color: var(--accent-color);
+        }
+
+        .vibe-button:hover {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 255, 136, 0.2);
+        }
+        
+        .vibe-button:hover i {
+            color: var(--bg-color); /* Hover時圖標變成黑色 */
+        }
+        
+        .description {
+            margin-bottom: 2rem;
+            opacity: 0.8;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <span class="vibe-tag">Vibe Coding</span>
-        <h1>Kristen Yau</h1>
-        <p>這是一個正在進化的 Vibe 實驗室。沒有複雜的後台，只有純粹的代碼與設計。</p>
+        <h1>I am Kirsten.</h1>
         
-        <ul class="post-list">
-            <li class="post-item">01. 關於這場 Vibe Coding 的冒險 →</li>
-            <li class="post-item">02. 為什麼捨棄了那些煩人的工具 →</li>
-            <li class="post-item">03. 未來的實驗清單 →</li>
-        </ul>
+        <p class="tagline">UXUI Design | AI tips | Career Transition</p>
+
+        <p class="description">這是一個正在進化的 Vibe 實驗室。沒有複雜的後台，只有純粹的代碼與設計。</p>
+        
+        <div class="button-group">
+            
+            <a href="https://www.instagram.com/kirsten_uxui/" target="_blank" class="vibe-button">
+                <i class="fab fa-instagram"></i> Case Study on Instagram
+            </a>
+            
+            <a href="https://www.threads.com/@kirsten_uxui?xmt=AQF0VP2qPWbXL3S48S-jzUFX0cR4jd4JorQZwrdXA8pMFHE" target="_blank" class="vibe-button">
+                <i class="fab fa-threads"></i> Articles on Threads
+            </a>
+
+            <a href="#" class="vibe-button">
+                <i class="fas fa-arrow-right"></i> Future Blog Articles (Coming Soon)
+            </a>
+        </div>
     </div>
 </body>
 </html>
