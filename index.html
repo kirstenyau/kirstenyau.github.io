@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
+<html lang="zh-Hant">
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Minimalist Portfolio</title>
+    <title>Kirsten | UXUI & AI Tips</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+    
     <script>
       tailwind.config = {
         theme: {
@@ -17,44 +18,81 @@
               serif: ['Playfair Display', 'serif'],
             },
             colors: {
-              primary: '#18181b', // zinc-900
-              secondary: '#71717a', // zinc-500
-              accent: '#2563eb', // blue-600
-              background: '#fafafa', // zinc-50
-              surface: '#ffffff', // white
-              border: '#e4e4e7', // zinc-200
+              primary: '#18181b',
+              secondary: '#71717a',
+              accent: '#2563eb', // 你可以之後改成你喜歡的藍或綠
+              background: '#fafafa',
             }
           }
         }
       }
     </script>
+
     <style>
       body {
-        font-family: 'Inter', sans-serif;
-        background-color: #fafafa;
-        color: #18181b;
-        /* Vertical Pinstripe Pattern - Dark subtle lines */
         background-image: linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
         background-size: 40px 100%;
-        min-height: 100vh;
+      }
+      .glass-card {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(228, 228, 231, 0.8);
       }
     </style>
-  <script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@18.2.0",
-    "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
-    "react-router-dom": "https://esm.sh/react-router-dom@6.22.3?external=react",
-    "lucide-react": "https://esm.sh/lucide-react@0.344.0?external=react",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "next/": "https://esm.sh/next@^16.0.10/"
-  }
-}
-</script>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
-  <body>
+<body class="bg-[#fafafa] text-[#18181b] min-h-screen">
     <div id="root"></div>
-    <script type="module" src="./index.tsx"></script>
-  </body>
+
+    <script type="text/babel">
+      const { useState } = React;
+
+      function App() {
+        return (
+          <div className="max-w-2xl mx-auto pt-24 px-6">
+            {/* Header 部分 */}
+            <header className="mb-12">
+              <h1 className="font-serif text-5xl mb-4 italic">I am Kirsten.</h1>
+              <p className="text-secondary text-lg font-light tracking-wide">
+                UXUI Design <span className="mx-2">|</span> 
+                AI tips <span className="mx-2">|</span> 
+                Career Transition
+              </p>
+            </header>
+
+            {/* 按鈕區塊 */}
+            <div className="space-y-4">
+              <a 
+                href="https://www.instagram.com/kirsten_uxui/" 
+                target="_blank"
+                className="glass-card flex items-center justify-between p-5 rounded-xl hover:shadow-lg hover:border-accent transition-all duration-300 group"
+              >
+                <span className="font-medium text-primary">Case Study on Instagram</span>
+                <span className="text-secondary group-hover:text-accent">→</span>
+              </a>
+
+              <a 
+                href="https://www.threads.com/@kirsten_uxui?xmt=AQF0VP2qPWbXL3S48S-jzUFX0cR4jd4JorQZwrdXA8pMFHE" 
+                target="_blank"
+                className="glass-card flex items-center justify-between p-5 rounded-xl hover:shadow-lg hover:border-accent transition-all duration-300 group"
+              >
+                <span className="font-medium text-primary">Articles on Threads</span>
+                <span className="text-secondary group-hover:text-accent">→</span>
+              </a>
+            </div>
+
+            <footer className="mt-24 pb-12 text-xs text-secondary uppercase tracking-[0.2em]">
+              © 2025 Kirsten Yau · Vibe Coding Lab
+            </footer>
+          </div>
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(<App />);
+    </script>
+</body>
 </html>
