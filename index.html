@@ -55,4 +55,144 @@
       }
       .minimal-card:hover {
         transform: translateY(-4px);
-        border-color: #1a1a1a
+        border-color: #1a1a1a;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const { useState } = React;
+
+      function App() {
+        const [currentPage, setCurrentPage] = useState('home');
+
+        const Navigation = () => (
+          <nav className="fixed top-0 w-full z-50 minimal-nav">
+            <div className="max-w-5xl mx-auto px-8 h-20 flex items-center justify-between">
+              <button onClick={() => setCurrentPage('home')} className="font-serif font-bold text-2xl tracking-tighter">K.</button>
+              <div className="flex gap-8 text-xs font-medium uppercase tracking-[0.2em] text-muted">
+                {['Home', 'Blog', 'Portfolio', 'About'].map((item) => (
+                  <button 
+                    key={item}
+                    onClick={() => setCurrentPage(item.toLowerCase())}
+                    className={`hover:text-ink transition-colors ${currentPage === item.toLowerCase() ? 'text-ink border-b border-ink font-bold' : ''}`}
+                  >
+                    {item === 'About' ? 'About me' : item}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </nav>
+        );
+
+        const HomePage = () => (
+          <div className="relative z-10 w-full max-w-2xl text-center animate-fade-in">
+            <div className="mb-12 flex justify-center">
+              <div className="w-32 h-32 rounded-full p-[1px] bg-border shadow-sm">
+                <div className="w-full h-full rounded-full bg-paper overflow-hidden border-[6px] border-white">
+                  <img src="https://kirstenyau.github.io/profile.png" alt="Profile" className="w-full h-full object-cover" />
+                </div>
+              </div>
+            </div>
+            <h1 className="font-serif text-5xl font-bold mb-6 tracking-tight">Design with Kirsten</h1>
+            <p className="text-muted text-sm tracking-[0.15em] uppercase mb-12">
+              UXUI Design <span className="mx-3 text-border">/</span> 
+              AI tips <span className="mx-3 text-border">/</span> 
+              Tech Lifestyle
+            </p>
+            <div className="grid gap-6 sm:grid-cols-3 px-4">
+              <button onClick={() => setCurrentPage('blog')} className="minimal-card p-6 rounded-sm group">
+                <div className="text-ink mb-2 font-serif italic text-lg opacity-40 group-hover:opacity-100 transition-opacity">01</div>
+                <div className="text-xs font-bold uppercase tracking-widest">View articles</div>
+              </button>
+              <a href="https://www.instagram.com/kirsten_uxui/" target="_blank" className="minimal-card p-6 rounded-sm text-center group">
+                <div className="text-ink mb-2 font-serif italic text-lg opacity-40 group-hover:opacity-100 transition-opacity">02</div>
+                <div className="text-xs font-bold uppercase tracking-widest">Case Study</div>
+              </a>
+              <button onClick={() => setCurrentPage('portfolio')} className="minimal-card p-6 rounded-sm group">
+                <div className="text-ink mb-2 font-serif italic text-lg opacity-40 group-hover:opacity-100 transition-opacity">03</div>
+                <div className="text-xs font-bold uppercase tracking-widest">My Works</div>
+              </button>
+            </div>
+          </div>
+        );
+
+        const PortfolioPage = () => (
+          <div className="relative z-10 w-full max-w-4xl mx-auto animate-fade-in px-6">
+            <header className="text-left mb-16 border-l-4 border-ink pl-6">
+              <h2 className="font-serif text-4xl font-bold mb-2">Selected works</h2>
+              <p className="text-muted text-sm tracking-widest uppercase">UXUI design / Vibe coding</p>
+            </header>
+            <div className="grid gap-12 md:grid-cols-2">
+              <div className="group cursor-pointer">
+                <div className="aspect-[4/3] bg-white border border-border overflow-hidden mb-6">
+                  <div className="w-full h-full flex items-center justify-center bg-[#f9f9f7] group-hover:scale-105 transition-transform duration-700 font-serif italic text-border">
+                    Current Site
+                  </div>
+                </div>
+                <h3 className="font-serif text-xl font-bold mb-1">Vibe Coding Project</h3>
+                <p className="text-muted text-xs uppercase tracking-widest">Portfolio System Design</p>
+              </div>
+              <a href="https://www.behance.net/gallery/152258595/UX-UI-project-News-Aggregator-App" target="_blank" className="group">
+                <div className="aspect-[4/3] bg-white border border-border overflow-hidden mb-6">
+                  <div className="w-full h-full flex items-center justify-center bg-[#f9f9f7] group-hover:scale-105 transition-transform duration-700">
+                    <span className="text-4xl">📰</span>
+                  </div>
+                </div>
+                <h3 className="font-serif text-xl font-bold mb-1 text-ink">News Aggregator App</h3>
+                <p className="text-muted text-xs uppercase tracking-widest">Mobile Experience Design</p>
+              </a>
+            </div>
+          </div>
+        );
+
+        const AboutPage = () => (
+          <div className="relative z-10 w-full max-w-2xl mx-auto animate-fade-in px-6">
+             <header className="text-center mb-16">
+              <h2 className="font-serif text-4xl font-bold mb-2 italic">About me</h2>
+              <div className="w-12 h-[1px] bg-ink mx-auto mt-4"></div>
+            </header>
+            <div className="space-y-8 text-ink leading-relaxed font-light">
+              <p>我是 Kirsten，一名專注於 UXUI 設計與 AI 工具應用的創作者。我相信好的設計應該像日式美學一樣，在簡潔中隱藏細節，在靜謐中傳達力量。</p>
+              <div className="pt-8 border-t border-border">
+                <h4 className="text-xs font-bold uppercase tracking-widest mb-4">Focus Areas</h4>
+                <ul className="grid grid-cols-2 gap-4 text-sm text-muted">
+                  <li>• User Experience Design</li>
+                  <li>• AI Workflow Optimization</li>
+                  <li>• Interface Aesthetics</li>
+                  <li>• Digital Tech Lifestyle</li>
+                </ul>
+              </div>
+            </div>
+            <button onClick={() => setCurrentPage('home')} className="mt-16 text-xs font-bold uppercase tracking-[0.2em] border-b border-ink pb-1">Back to Home</button>
+          </div>
+        );
+
+        return (
+          <div className="min-h-screen flex flex-col items-center justify-center p-6 pt-32 pb-20">
+            <Navigation />
+            {currentPage === 'home' && <HomePage />}
+            {currentPage === 'portfolio' && <PortfolioPage />}
+            {currentPage === 'about' && <AboutPage />}
+            {currentPage === 'blog' && (
+              <div className="z-10 text-center animate-fade-in">
+                <h2 className="font-serif text-3xl font-bold mb-6 italic">Blog</h2>
+                <p className="text-muted text-xs tracking-[0.2em] mb-12">準備中 / UNDER CONSTRUCTION</p>
+                <button onClick={() => setCurrentPage('home')} className="text-ink border-b border-ink pb-1 text-xs font-bold uppercase tracking-widest">Back</button>
+              </div>
+            )}
+            <footer className="mt-32 text-center opacity-30">
+                <p className="text-[9px] tracking-[0.5em] uppercase font-medium">© 2025 Kirsten Yau / Tokyo Minimalist</p>
+            </footer>
+          </div>
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(<App />);
+    </script>
+</body>
+</html>
