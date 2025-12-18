@@ -5,22 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Blog - Design with Kirsten</title>
     <style>
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: -apple-system, system-ui, sans-serif; background: #fafafa; margin: 0; padding-top: 100px; color: #333; }
-        
         nav { position: fixed; top: 0; left: 0; width: 100%; height: 70px; background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #eee; z-index: 9999; }
-        nav a { margin: 0 18px; text-decoration: none; color: #666; font-weight: 600; font-size: 15px; transition: 0.2s; }
+        nav a { margin: 0 18px; text-decoration: none; color: #666; font-weight: 600; font-size: 15px; transition: 0.2s; letter-spacing: 0.5px; }
         nav a:hover { color: #007bff; }
-
         .main-content { max-width: 700px; margin: 0 auto; padding: 0 25px 80px; }
-        h1 { font-size: 2rem; margin-bottom: 40px; text-align: center; }
-
-        /* Blog 卡片樣式 */
+        h1 { font-size: 2.2rem; margin-bottom: 40px; text-align: center; font-weight: 800; }
         .post-item { background: #fff; padding: 25px; border-radius: 20px; border: 1px solid #eee; margin-bottom: 20px; display: block; text-decoration: none; transition: 0.3s; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
         .post-item:hover { transform: translateY(-5px); border-color: #007bff; box-shadow: 0 12px 25px rgba(0,0,0,0.08); }
         .post-date { font-size: 12px; color: #bbb; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
-        .post-title { font-size: 1.3rem; font-weight: 700; color: #222; line-height: 1.4; }
-
+        .post-title { font-size: 1.4rem; font-weight: 700; color: #222; line-height: 1.4; }
         @media (max-width: 600px) {
             nav { height: 60px; }
             nav a { margin: 0 12px; font-size: 14px; }
@@ -29,12 +24,7 @@
     </style>
 </head>
 <body>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="blog.html">Blog</a>
-        <a href="resources.html">Resources</a>
-        <a href="about.html">About</a>
-    </nav>
+    <nav><a href="index.html">Home</a><a href="blog.html">Blog</a><a href="resources.html">Resources</a><a href="about.html">About</a></nav>
     <div class="main-content">
         <h1>Latest Stories</h1>
         <div id="blog-list"></div>
@@ -46,13 +36,8 @@
                 const posts = await response.json();
                 const list = document.getElementById('blog-list');
                 posts.sort((a, b) => new Date(b.date) - new Date(a.date));
-                list.innerHTML = posts.map(post => `
-                    <a href="post.html?slug=${post.slug}" class="post-item">
-                        <div class="post-date">${post.date}</div>
-                        <div class="post-title">${post.title}</div>
-                    </a>
-                `).join('');
-            } catch (e) { document.getElementById('blog-list').innerText = "無法載入內容"; }
+                list.innerHTML = posts.map(post => `<a href="post.html?slug=${post.slug}" class="post-item"><div class="post-date">${post.date}</div><div class="post-title">${post.title}</div></a>`).join('');
+            } catch (e) { document.getElementById('blog-list').innerText = "載入失敗"; }
         }
         loadPosts();
     </script>
