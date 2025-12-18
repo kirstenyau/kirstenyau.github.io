@@ -1,9 +1,9 @@
 name: Sync Notion to Blog
 
 on:
-  workflow_dispatch: # 允許手動點擊執行
+  workflow_dispatch:
   schedule:
-    - cron: '0 * * * *' # 每小時自動同步一次
+    - cron: '0 * * * *'
 
 jobs:
   build:
@@ -23,9 +23,9 @@ jobs:
 
       - name: Run sync script
         env:
-          # 這兩行是把 GitHub Secrets 轉換成環境變數給 JS 用
-          NOTION_TOKEN: ${{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}}
-          NOTION_DATABASE_ID: ${{2cdc0300ab4380f38f18fe6683a15453}}
+          # 這裡維持原樣，GitHub 會自動從你的 Settings 抓取資料
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
         run: node sync.js
 
       - name: Commit and push changes
