@@ -13,7 +13,7 @@ async function loadDetail() {
 
         try {
             // 加上 t=... 確保不讀取舊的快取
-            const response = await fetch(`${filePath}?t=${new Date().getTime()}`);
+            const response = await fetch(`https://kirstenyau.github.io/posts/${slug.trim()}.md`);
             
             if (!response.ok) {
                 // 如果失敗，嘗試加上斜線開頭的路徑
