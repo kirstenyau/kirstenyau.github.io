@@ -3,57 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog Post</title>
+    <title>Post - Design with Kirsten</title>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
-        body { font-family: -apple-system, system-ui, sans-serif; line-height: 1.8; max-width: 750px; margin: 0 auto; padding: 40px 20px; color: #333; }
-        .back-btn { display: inline-block; margin-bottom: 30px; text-decoration: none; color: #007bff; }
-        #post-content img { max-width: 100%; height: auto; border-radius: 8px; }
-        pre { background: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; }
-        h1 { font-size: 2.2rem; margin-top: 0; }
+        body { font-family: -apple-system, sans-serif; line-height: 1.7; max-width: 700px; margin: 0 auto; padding: 60px 20px; color: #333; }
+        .back-nav { margin-bottom: 40px; }
+        .back-nav a { text-decoration: none; color: #888; font-size: 0.9rem; }
+        #post-content img { max-width: 100%; border-radius: 10px; margin: 20px 0; }
+        h1 { font-size: 2.2rem; line-height: 1.3; margin-bottom: 10px; }
+        .date { color: #aaa; font-size: 0.9rem; margin-bottom: 30px; display: block; }
     </style>
 </head>
 <body>
-    <a href="index.html" class="back-btn">← 返回列表</a>
-    <article id="post-content">正在讀取內容...</article>
+    <div class="back-nav"><a href="blog.html">← Back to Blog</a></div>
+    <article id="post-content">載入內容中...</article>
 
     <script>
-        async function renderPost() {
-            const params = new URLSearchParams(window.location.search);
-            const slug = params.get('slug');
-            const contentDiv = document.getElementById('post-content');
-
+        async function loadDetail() {
+            const slug = new URLSearchParams(window.location.search).get('slug');
+            const container = document.getElementById('post-content');
+            
             if (!slug) {
-                contentDiv.innerHTML = "<h1>錯誤</h1><p>網址遺失 slug 參數。</p>";
+                container.innerHTML = "找不到文章標籤。";
                 return;
             }
 
             try {
-                // 強制加上時間戳避免快取問題 (?t=...)
-                const response = await fetch(`./posts/${slug}.md?t=${new Date().getTime()}`);
+                // 1. 抓取 .md 檔案
+                const response = await fetch(`./posts/${slug}.md`);
+                if (!response.ok) throw new Error('檔案讀取失敗');
                 
-                if (!response.ok) {
-                    throw new Error(`找不到檔案：posts/${slug}.md (狀態碼: ${response.status})`);
-                }
+                let text = await response.text();
+                
+                // 2. 移除 Front Matter (--- 標題區塊)
+                const cleanContent = text.replace(/^---[\s\S]*?---/, '');
+                
+                // 3. 渲染
+                container.innerHTML = marked.parse(cleanContent);
+                
+                // 4. 設定網頁標題
+                document.title = slug.replace(/-/g, ' ') + " | Blog";
 
-                const mdText = await response.text();
-                
-                // 移除 Front-matter (--- 之間的內容)
-                const cleanMd = mdText.replace(/^---[\s\S]*?---/, '');
-                
-                // 轉換 Markdown
-                contentDiv.innerHTML = marked.parse(cleanMd);
-                
-                // 更新網頁標題
-                const titleMatch = mdText.match(/title: "(.*?)"/);
-                if (titleMatch) document.title = titleMatch[1];
-
-            } catch (error) {
-                console.error(error);
-                contentDiv.innerHTML = `<h1>載入失敗</h1><p>${error.message}</p><p>請確認 posts/${slug}.md 檔案是否存在於 GitHub 中。</p>`;
+            } catch (err) {
+                container.innerHTML = "文章載入失敗，請確認路徑是否正確。";
+                console.error(err);
             }
         }
-        renderPost();
+        loadDetail();
     </script>
 </body>
 </html>
