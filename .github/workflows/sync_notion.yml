@@ -24,8 +24,8 @@ jobs:
       - name: Run sync script
         env:
           # 這兩行是把 GitHub Secrets 轉換成環境變數給 JS 用
-          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
-          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+          NOTION_TOKEN: ${{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}}
+          NOTION_DATABASE_ID: ${{2cdc0300ab4380f38f18fe6683a15453}}
         run: node sync.js
 
       - name: Commit and push changes
