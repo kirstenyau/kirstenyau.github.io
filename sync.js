@@ -6,17 +6,11 @@ const path = require("path");
 async function main() {
   console.log("🚀 啟動同步程序...");
 
-  // 這些變數會從 GitHub Secrets 自動讀取，請勿手動修改此處
   const auth = process.env.NOTION_TOKEN;
   const databaseId = process.env.NOTION_DATABASE_ID;
 
-  console.log("檢查變數狀態：", {
-    TOKEN_是否存在: !!auth,
-    DATABASE_ID_是否存在: !!databaseId
-  });
-
   if (!auth || !databaseId) {
-    console.error("❌ 錯誤：找不到 NOTION_TOKEN 或 NOTION_DATABASE_ID。");
+    console.error("❌ 錯誤：找不到 TOKEN 或 ID");
     process.exit(1);
   }
 
@@ -24,12 +18,17 @@ async function main() {
   const n2m = new NotionToMarkdown({ notionClient: notion });
 
   try {
-    console.log("📡 正在從 Notion 讀取資料...");
-    const response = await notion.databases.query({
-      database_id: databaseId,
-      filter: {
-        property: "Status",
-        select: { equals: "Published" },
+    console.log("📡 正在連接 Notion API...");
+    
+    // 使用 request 方法更為穩定
+    const response = await notion.request({
+      path: `databases/${databaseId}/query`,
+      method: "POST",
+      body: {
+        filter: {
+          property: "Status",
+          select: { equals: "Published" },
+        },
       },
     });
 
