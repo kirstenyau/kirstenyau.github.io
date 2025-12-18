@@ -1,55 +1,44 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Post - Design with Kirsten</title>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <style>
-        body { font-family: -apple-system, sans-serif; line-height: 1.7; max-width: 700px; margin: 0 auto; padding: 60px 20px; color: #333; }
-        .back-nav { margin-bottom: 40px; }
-        .back-nav a { text-decoration: none; color: #888; font-size: 0.9rem; }
-        #post-content img { max-width: 100%; border-radius: 10px; margin: 20px 0; }
-        h1 { font-size: 2.2rem; line-height: 1.3; margin-bottom: 10px; }
-        .date { color: #aaa; font-size: 0.9rem; margin-bottom: 30px; display: block; }
-    </style>
-</head>
-<body>
-    <div class="back-nav"><a href="blog.html">← Back to Blog</a></div>
-    <article id="post-content">載入內容中...</article>
-
-    <script>
-        async function loadDetail() {
-            const slug = new URLSearchParams(window.location.search).get('slug');
-            const container = document.getElementById('post-content');
-            
-            if (!slug) {
-                container.innerHTML = "找不到文章標籤。";
-                return;
-            }
-
-            try {
-                // 1. 抓取 .md 檔案
-                const response = await fetch(`./posts/${slug}.md`);
-                if (!response.ok) throw new Error('檔案讀取失敗');
-                
-                let text = await response.text();
-                
-                // 2. 移除 Front Matter (--- 標題區塊)
-                const cleanContent = text.replace(/^---[\s\S]*?---/, '');
-                
-                // 3. 渲染
-                container.innerHTML = marked.parse(cleanContent);
-                
-                // 4. 設定網頁標題
-                document.title = slug.replace(/-/g, ' ') + " | Blog";
-
-            } catch (err) {
-                container.innerHTML = "文章載入失敗，請確認路徑是否正確。";
-                console.error(err);
-            }
+async function loadDetail() {
+        const params = new URLSearchParams(window.location.search);
+        const slug = params.get('slug');
+        const container = document.getElementById('post-content');
+        
+        if (!slug) {
+            container.innerHTML = "<h1>錯誤</h1><p>網址遺失 slug 參數。</p>";
+            return;
         }
-        loadDetail();
-    </script>
-</body>
-</html>
+
+        try {
+            // 加上時間戳 t=... 避免讀到舊的快取
+            // 使用相對路徑 ./posts/ 確保在 GitHub Pages 環境下正確
+            const response = await fetch(`./posts/${slug}.md?t=${new Date().getTime()}`);
+            
+            if (!response.ok) {
+                // 如果失敗，嘗試檢查是否是因為副檔名問題
+                throw new Error(`找不到檔案: posts/${slug}.md`);
+            }
+            
+            let text = await response.text();
+            
+            // 移除 Notion 同步過來的 Front Matter (--- 區塊)
+            const cleanContent = text.replace(/^---[\s\S]*?---/, '');
+            
+            // 使用 marked 渲染內容
+            container.innerHTML = marked.parse(cleanContent);
+            
+            // 更新瀏覽器標籤標題
+            document.title = slug.split('-').join(' ').toUpperCase() + " | Blog";
+
+        } catch (err) {
+            console.error("Fetch error:", err);
+            container.innerHTML = `
+                <div style="background: #fff5f5; padding: 20px; border-radius: 10px; border: 1px solid #feb2b2;">
+                    <h1 style="color: #c53030;">文章載入失敗</h1>
+                    <p>原因：${err.message}</p>
+                    <p>請檢查 GitHub 倉庫中的 <b>posts/</b> 資料夾，確認是否存在名為 <b>${slug}.md</b> 的檔案。</p>
+                    <a href="blog.html" style="color: #3182ce;">← 返回列表重試</a>
+                </div>
+            `;
+        }
+    }
+    loadDetail();
