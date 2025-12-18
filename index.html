@@ -5,22 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Design with Kirsten</title>
     <style>
-        body { font-family: sans-serif; background: #fff; margin: 0; display: flex; align-items: center; justify-content: center; height: 100vh; text-align: center; }
+        body { font-family: -apple-system, system-ui, sans-serif; background: #fff; margin: 0; display: flex; align-items: center; justify-content: center; height: 100vh; text-align: center; color: #333; }
         
         /* Floating Nav Bar */
-        nav { position: fixed; top: 20px; background: rgba(255,255,255,0.8); backdrop-filter: blur(10px); padding: 10px 30px; border-radius: 50px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); z-index: 1000; }
-        nav a { margin: 0 15px; text-decoration: none; color: #555; font-weight: 500; font-size: 14px; }
+        nav { position: fixed; top: 20px; background: rgba(255,255,255,0.8); backdrop-filter: blur(10px); padding: 12px 30px; border-radius: 50px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); z-index: 1000; border: 1px solid rgba(238, 238, 238, 0.5); }
+        nav a { margin: 0 15px; text-decoration: none; color: #666; font-weight: 500; font-size: 14px; transition: 0.2s; }
+        nav a:hover { color: #000; }
 
         /* Profile Section */
-        .container { max-width: 600px; }
-        .profile-pic { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; }
-        h1 { font-size: 2rem; margin: 15px 0 5px; }
-        p { color: #888; margin-bottom: 30px; }
+        .container { max-width: 450px; width: 90%; }
+        .profile-pic { width: 110px; height: 110px; border-radius: 50%; object-fit: cover; margin-bottom: 10px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
+        h1 { font-size: 1.8rem; margin: 10px 0 5px; font-weight: 700; }
+        .description { color: #888; margin-bottom: 35px; font-size: 0.95rem; letter-spacing: 0.5px; }
 
         /* Buttons Grid */
-        .button-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .btn { padding: 15px; border: 1px solid #eee; border-radius: 12px; text-decoration: none; color: #333; font-weight: 600; transition: 0.3s; }
-        .btn:hover { background: #f5f5f5; transform: translateY(-2px); }
+        .button-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .btn { padding: 16px; border: 1px solid #f0f0f0; border-radius: 14px; text-decoration: none; color: #444; font-weight: 600; font-size: 0.9rem; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); background: #fff; }
+        .btn:hover { background: #fafafa; border-color: #ddd; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
     </style>
 </head>
 <body>
@@ -29,17 +30,17 @@
     <a href="index.html">Home</a>
     <a href="blog.html">Blog</a>
     <a href="#">Resources</a>
-    <a href="#">About Me</a>
+    <a href="#">About</a>
 </nav>
 
 <div class="container">
     <img src="profile.png" alt="Kirsten" class="profile-pic">
     <h1>Design with Kirsten</h1>
-    <p>UXUI Design | AI Tips | Resources</p>
+    <p class="description">UXUI Design | AI Tips | Resources</p>
 
     <div class="button-grid">
-        <a href="https://instagram.com/你的帳號" class="btn">Instagram</a>
-        <a href="https://threads.net/你的帳號" class="btn">Threads</a>
+        <a href="https://www.instagram.com/kirsten_uxui/" target="_blank" class="btn">Instagram</a>
+        <a href="https://www.threads.net/@kirsten_uxui" target="_blank" class="btn">Threads</a>
         <a href="blog.html" class="btn">Blog</a>
         <a href="#" class="btn">Resources</a>
     </div>
