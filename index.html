@@ -1,238 +1,122 @@
 <!DOCTYPE html>
-<html lang="zh-Hant" class="scroll-smooth">
+<html lang="zh-TW">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    
-    <title>Design with Kirsten | UXUI Design & AI Workflow</title>
-    <meta name="description" content="Kirsten 的個人作品集與部落格，分享 UXUI 設計心得、AI 工作流應用及 Vibe Coding 實驗紀實。" />
-    <meta name="keywords" content="UXUI, 設計師, AI, Vibe Coding, Kirsten, 作品集, 香港設計師" />
-    <meta name="author" content="Kirsten Yau" />
-
-    <meta property="og:title" content="Design with Kirsten | UXUI & AI Portfolio" />
-    <meta property="og:description" content="探索設計與 AI 的交匯點。由 Kirsten Yau 創作的日式極簡風格網頁。" />
-    <meta property="og:image" content="https://kirstenyau.github.io/profile.png" />
-    <meta property="og:url" content="https://kirstenyau.github.io" />
-    <meta property="og:type" content="website" />
-
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-    
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: { washi: "#f9f8f6", ink: "#2c2c2c", stone: "#78716c", sand: "#e7e5e4" },
-            fontFamily: { sans: ['Inter', 'sans-serif'], serif: ['"Noto Serif JP"', 'serif'] },
-            animation: { 'pop-instant': 'popInstant 0.15s ease-out forwards', 'fade-in': 'fadeIn 1s ease-out' },
-            keyframes: { 
-              popInstant: { '0%': { transform: 'translate(-50%, 5px) scale(0.9)' }, '100%': { transform: 'translate(-50%, 0) scale(1)' } },
-              fadeIn: { '0%': { opacity: '0', transform: 'translateY(10px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } }
-            }
-          },
-        },
-      }
-    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kirsten's Blog</title>
     <style>
-      body { background-color: #f9f8f6; color: #2c2c2c; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
-      h1, h2, h3 { font-family: 'Noto Serif JP', serif; }
-      ::-webkit-scrollbar { width: 6px; }
-      ::-webkit-scrollbar-track { background: transparent; }
-      ::-webkit-scrollbar-thumb { background: #d6d3d1; border-radius: 3px; }
-      .cursor-heart { cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="red"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>'), auto; }
-      .nav-floating { position: fixed; top: 1.5rem; left: 50%; transform: translateX(-50%); width: 90%; max-width: 800px; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(15px); border: 1px solid rgba(231, 229, 228, 0.6); border-radius: 99px; box-shadow: 0 4px 25px rgba(0, 0, 0, 0.04); z-index: 100; }
-      .white-card { background: #ffffff; border: 1px solid #eeeeee; border-radius: 2rem; transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); }
-      @media (hover: hover) { .white-card:hover { transform: translateY(-8px); border-color: #2c2c2c; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08); } }
-      .tooltip-arrow::after { content: ""; position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%); border-width: 6px 6px 0 6px; border-color: #2c2c2c transparent transparent transparent; }
-      .no-scrollbar::-webkit-scrollbar { display: none; }
+        /* 基礎樣式設計 */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background-color: #f9f9f9;
+        }
+
+        /* 個人資料區塊 */
+        .profile-section {
+            text-align: center;
+            margin-bottom: 60px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid #eee;
+        }
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        h1 { margin: 10px 0; color: #222; }
+        .bio { color: #666; font-size: 1.1rem; }
+
+        /* Blog 區塊樣式 */
+        .blog-section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+        .blog-section h2 {
+            border-left: 5px solid #007bff;
+            padding-left: 15px;
+            margin-bottom: 30px;
+        }
+        .post-item {
+            padding: 20px 0;
+            border-bottom: 1px solid #f0f0f0;
+            transition: transform 0.2s;
+        }
+        .post-item:last-child { border-bottom: none; }
+        .post-item:hover { transform: translateX(5px); }
+        
+        .post-date {
+            font-size: 0.85rem;
+            color: #999;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .post-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: #007bff;
+        }
+        .post-title:hover { text-decoration: underline; }
+
+        #blog-list { min-height: 100px; }
+        .loading { color: #999; font-style: italic; }
     </style>
 </head>
 <body>
-    <div style="display:none;">
-        <h1>Design with Kirsten - UXUI Portfolio</h1>
-        <p>這是一個關於 UXUI 設計、AI 工具及 Vibe Coding 的部落格。主要文章：My Journey of Vibe coding with Gemini。</p>
-        <p>常用工具：Figma, Behance, Dribbble, Mobbin, Product Hunt。</p>
-    </div>
 
-    <div id="root"></div>
+    <section class="profile-section">
+        <img src="profile.png" alt="Kirsten" class="profile-pic">
+        <h1>Kirsten Yau</h1>
+        <p class="bio">歡迎來到我的空間。這裡記錄我的生活、技術筆記與創意想法。</p>
+    </section>
 
-    <script type="text/babel">
-      const { useState, useEffect } = React;
+    <section class="blog-section">
+        <h2>Latest Blog Posts</h2>
+        <div id="blog-list" class="loading">正在從 Notion 獲取最新文章...</div>
+    </section>
 
-      function App() {
-        const [currentPage, setCurrentPage] = useState('home');
-        const [showTooltip, setShowTooltip] = useState(false);
+    <script>
+        async function fetchBlogPosts() {
+            const listElement = document.getElementById('blog-list');
+            try {
+                // 讀取由 sync.js 生成的 posts.json
+                const response = await fetch('./posts.json');
+                if (!response.ok) throw new Error('尚無文章');
+                
+                const posts = await response.json();
+                
+                if (posts.length === 0) {
+                    listElement.innerHTML = '<p class="loading">目前還沒有發佈的文章。</p>';
+                    return;
+                }
 
-        // SEO：動態更新分頁標題
-        useEffect(() => {
-          const titles = {
-            home: "Design with Kirsten | Home",
-            blog: "Blog | UXUI & AI Insights",
-            resources: "Resources | Designer Toolkit",
-            about: "About me | Kirsten Yau",
-            article: "My Journey of Vibe coding with Gemini"
-          };
-          document.title = titles[currentPage] || "Design with Kirsten";
-        }, [currentPage]);
-
-        const navigate = (page) => {
-          setCurrentPage(page);
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        };
-
-        const Navigation = () => (
-          <div className="nav-floating h-14 sm:h-16 flex items-center px-6 sm:px-10">
-            <div className="flex w-full items-center justify-between">
-              <button onClick={() => navigate('home')} className="font-serif font-semibold text-lg sm:text-xl tracking-tighter">K.</button>
-              <div className="flex gap-4 sm:gap-8 text-[10px] sm:text-xs font-medium uppercase tracking-[0.15em] text-stone overflow-x-auto no-scrollbar">
-                {['Home', 'Blog', 'Resources', 'About'].map((item) => (
-                  <button 
-                    key={item}
-                    onClick={() => navigate(item.toLowerCase())}
-                    className={`whitespace-nowrap transition-colors hover:text-ink ${currentPage === item.toLowerCase() || (item==='Blog' && currentPage==='article') ? 'text-ink font-bold' : ''}`}
-                  >
-                    {item === 'About' ? 'About me' : item}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-        );
-
-        const HomePage = () => (
-          <div className="relative z-10 w-full max-w-2xl text-center animate-fade-in px-6">
-            <div className="mb-10 sm:mb-14 flex justify-center pt-10">
-              <div className="relative">
-                {showTooltip && (
-                  <div className="absolute -top-12 left-1/2 -translate-x-1/2 z-20 animate-pop-instant">
-                    <div className="bg-ink text-white text-[10px] sm:text-xs px-3 py-1.5 rounded-lg whitespace-nowrap font-medium tooltip-arrow shadow-xl">
-                      Hello from HK! 🇭🇰
+                // 生成文章列表 HTML
+                listElement.innerHTML = posts.map(post => `
+                    <div class="post-item">
+                        <span class="post-date">${post.date}</span>
+                        <a href="post.html?slug=${post.slug}" class="post-title">${post.title}</a>
                     </div>
-                  </div>
-                )}
-                <div 
-                  className="w-28 h-28 sm:w-36 sm:h-36 rounded-full p-[1px] bg-sand cursor-heart transition-transform duration-500 hover:scale-110"
-                  onMouseEnter={() => setShowTooltip(true)}
-                  onMouseLeave={() => setShowTooltip(false)}
-                >
-                  <div className="w-full h-full rounded-full bg-white overflow-hidden border-[4px] sm:border-[6px] border-white shadow-lg">
-                    <img src="https://kirstenyau.github.io/profile.png" alt="Profile" className="w-full h-full object-cover" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <h1 className="text-4xl sm:text-6xl font-semibold mb-6 tracking-tight italic">Design with Kirsten</h1>
-            <p className="text-stone text-[10px] sm:text-sm tracking-[0.25em] uppercase mb-12">UXUI Design <span className="mx-2 text-sand">/</span> AI Workflow <span className="mx-2 text-sand">/</span> Tech Lifestyle</p>
-            <div className="grid gap-4 grid-cols-2 max-w-sm mx-auto">
-              <button onClick={() => navigate('blog')} className="white-card py-4 sm:py-7 font-bold uppercase text-[10px] sm:text-xs tracking-widest text-ink">Blog</button>
-              <button onClick={() => navigate('resources')} className="white-card py-4 sm:py-7 font-bold uppercase text-[10px] sm:text-xs tracking-widest text-ink">Resources</button>
-              <a href="https://www.instagram.com/kirsten_uxui/" target="_blank" className="white-card py-4 sm:py-7 font-bold uppercase text-[10px] sm:text-xs tracking-widest flex items-center justify-center">Instagram</a>
-              <a href="https://www.threads.net/@kirsten_uxui" target="_blank" className="white-card py-4 sm:py-7 font-bold uppercase text-[10px] sm:text-xs tracking-widest flex items-center justify-center text-ink">Threads</a>
-            </div>
-          </div>
-        );
+                `).join('');
 
-        const BlogPage = () => (
-          <div className="relative z-10 w-full max-w-4xl mx-auto animate-fade-in px-6 pt-10">
-            <header className="mb-16 border-l-4 border-ink pl-8 italic text-left">
-              <h2 className="text-4xl sm:text-5xl font-semibold mb-4">Blog</h2>
-              <p className="text-stone text-sm italic">Sharing my UXUI design journey and vibe coding experiments.</p>
-            </header>
-            <div onClick={() => navigate('article')} className="white-card p-6 sm:p-10 cursor-pointer group">
-              <div className="w-full h-64 bg-washi rounded-2xl mb-8 flex items-center justify-center border border-sand overflow-hidden">
-                <span className="text-sand text-xs uppercase tracking-widest font-bold">Cover Photo Coming Soon</span>
-              </div>
-              <h3 className="text-2xl sm:text-3xl font-semibold mb-4 italic group-hover:text-stone transition-colors text-ink">My Journey of Vibe coding with Gemini</h3>
-              <p className="text-stone text-sm leading-relaxed mb-6 font-light line-clamp-3 text-left">這不僅僅是一個關於程式碼的故事，更是一場關於「直覺」與「對話」的實驗...</p>
-              <div className="text-left"><span className="text-[10px] font-bold uppercase tracking-widest border-b border-ink pb-1">Read Article</span></div>
-            </div>
-          </div>
-        );
+            } catch (error) {
+                console.log("Blog Load Error:", error);
+                listElement.innerHTML = '<p class="loading">暫時沒有文章可以顯示。</p>';
+            }
+        }
 
-        const ResourcesPage = () => {
-          const tools = [
-            { name: "Figma", desc: "The industry-standard collaborative design tool for interface design and prototyping.", link: "https://www.figma.com" },
-            { name: "Behance", desc: "Adobe's social media platform for showcasing and discovering creative work.", link: "https://www.behance.net" },
-            { name: "Dribbble", desc: "A self-promotion and social networking platform for digital designers.", link: "https://dribbble.com" },
-            { name: "Mobbin", desc: "A comprehensive library of mobile and web design patterns from real-world products.", link: "https://mobbin.com" },
-            { name: "Product Hunt", desc: "The place to find the latest mobile apps, websites, and technology products.", link: "https://www.producthunt.com" }
-          ];
-          return (
-            <div className="relative z-10 w-full max-w-4xl mx-auto animate-fade-in px-6 pt-10 text-left">
-              <header className="mb-16 border-l-4 border-ink pl-8 italic">
-                <h2 className="text-4xl sm:text-5xl font-semibold mb-4 text-ink text-left">Resources</h2>
-                <p className="text-stone text-sm sm:text-base font-light text-left">If you are new to the world of UXUI design, start with the following tools.</p>
-              </header>
-              <div className="grid gap-6">
-                {tools.map((tool) => (
-                  <a key={tool.name} href={tool.link} target="_blank" className="white-card p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between group">
-                    <div className="text-left">
-                      <h3 className="text-2xl font-semibold mb-2 italic group-hover:text-stone transition-colors text-ink">{tool.name}</h3>
-                      <p className="text-stone text-xs sm:text-sm font-light leading-relaxed">{tool.desc}</p>
-                    </div>
-                    <span className="hidden md:block text-[10px] font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity mt-4 md:mt-0">Explore →</span>
-                  </a>
-                ))}
-              </div>
-            </div>
-          );
-        };
-
-        const ArticleContent = () => (
-          <div className="relative z-10 w-full max-w-2xl mx-auto animate-fade-in px-6 pt-10">
-            <button onClick={() => navigate('blog')} className="text-stone text-[10px] font-bold uppercase tracking-widest mb-12 hover:text-ink">← Back to Blog</button>
-            <div className="white-card p-8 sm:p-16 text-left">
-              <article>
-                <h1 className="text-3xl sm:text-4xl font-semibold mb-10 italic leading-tight text-ink text-left">My Journey of Vibe coding with Gemini</h1>
-                <div className="text-sm sm:text-base font-light text-ink leading-[2] space-y-8 text-left">
-                  <p>作為一名 UXUI 設計師，我一直相信「設計」的本質是解決問題，而非僅僅是繪製精美的介面。然而，將設計轉化為真實網頁的過程，往往被繁瑣的技術細節所填滿。直到我遇見了 <strong>Vibe Coding</strong>。</p>
-                  <p>這張網頁的誕生，沒有經歷傳統的開發流程。我坐在沙發上，透過 Google AI Studio (Gemini)，以一種近乎對話的方式，完成了這一切。</p>
-                  <p><strong>什麼是 Vibe Coding？</strong> 對我而言，它是一種「意識流」開發。我不必精確地告訴 AI 每一行程式碼該怎麼寫，我只需傳達我想要的「感覺」——日式的極簡、呼吸般的留白、溫潤的和紙感背景。</p>
-                  <p>在過程中，每一次 Commit，都是審美與科技的完美對話。這場旅程讓我明白，未來的開發者，更多時候會像是一名「導演」，我們負責定義 Vibe，而 AI 負責執行細節。</p>
-                </div>
-              </article>
-            </div>
-          </div>
-        );
-
-        const AboutPage = () => (
-          <div className="relative z-10 w-full max-w-2xl mx-auto animate-fade-in px-6 pt-10">
-            <div className="white-card p-12 sm:p-20 text-center shadow-sm">
-              <h2 className="text-4xl font-semibold mb-6 italic text-ink">About me</h2>
-              <div className="w-10 h-[1px] bg-ink mx-auto mb-10"></div>
-              <p className="text-base text-ink leading-[2.2] font-light mb-12">
-                我是 Kirsten，一名專注於 UXUI 設計與 AI 工具應用的創作者。我相信好的設計應該像日式美學一樣，在簡潔中隱藏細節。
-              </p>
-              <div className="grid grid-cols-2 gap-4 text-[10px] font-bold uppercase tracking-widest text-stone italic border-t border-sand pt-10">
-                <span>UXUI Design</span>
-                <span>AI Workflow</span>
-                <span>Product Design</span>
-                <span>Tech Lifestyle</span>
-              </div>
-            </div>
-          </div>
-        );
-
-        return (
-          <div className="min-h-screen flex flex-col items-center justify-start py-32">
-            <Navigation />
-            {currentPage === 'home' && <HomePage />}
-            {currentPage === 'blog' && <BlogPage />}
-            {currentPage === 'resources' && <ResourcesPage />}
-            {currentPage === 'about' && <AboutPage />}
-            {currentPage === 'article' && <ArticleContent />}
-            <footer className="mt-32 text-center opacity-30 px-6">
-                <p className="text-[9px] tracking-[0.4em] uppercase font-bold text-ink italic">© 2025 Kirsten Yau / Design with Kirsten</p>
-            </footer>
-          </div>
-        );
-      }
-
-      const root = ReactDOM.createRoot(document.getElementById('root'));
-      root.render(<App />);
+        // 頁面載入時執行
+        window.onload = fetchBlogPosts;
     </script>
+
 </body>
 </html>
