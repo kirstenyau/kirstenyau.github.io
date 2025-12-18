@@ -28,10 +28,11 @@ jobs:
           NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
         run: node sync.js
 
-      - name: Commit and push changes
+      -- name: Commit and push changes
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add posts/*.md
-          git commit -m "Update posts from Notion" || echo "No changes to commit"
+          # 關鍵：加上 posts.json
+          git add posts/*.md posts.json
+          git commit -m "Update posts and index from Notion" || echo "No changes to commit"
           git push
