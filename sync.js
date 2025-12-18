@@ -79,7 +79,14 @@ ${mdString.parent}`;
 
       fs.writeFileSync(path.join(postsDir, `${slug}.md`), content);
     }
-
+// 在 main 函式的最後，console.log("🎉 所有文章同步完成！"); 之前加入：
+    const postsList = data.results.map(page => ({
+      title: page.properties.Name?.title[0]?.plain_text || "Untitled",
+      slug: page.properties.Slug?.rich_text[0]?.plain_text || `post-${page.id}`,
+      date: page.properties.Date?.date?.start || new Date().toISOString().split('T')[0]
+    }));
+    fs.writeFileSync(path.join(__dirname, "posts.json"), JSON.stringify(postsList, null, 2));
+    console.log("📋 posts.json 目錄已更新！");
     console.log("🎉 所有文章同步完成！");
   } catch (error) {
     console.error("❌ 發生錯誤：", error.message);
