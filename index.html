@@ -5,24 +5,92 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Design with Kirsten</title>
     <style>
-        /* 統一的全域樣式 */
-        body { font-family: -apple-system, system-ui, sans-serif; background: #fff; margin: 0; display: flex; align-items: center; justify-content: center; height: 100vh; text-align: center; color: #333; }
+        /* 1. 全域樣式 */
+        body { 
+            font-family: -apple-system, system-ui, sans-serif; 
+            background: #fff; 
+            margin: 0; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 100vh; 
+            text-align: center; 
+            color: #333; 
+        }
         
-        /* 統一的 Floating Nav Bar */
-        nav { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.85); backdrop-filter: blur(10px); padding: 12px 30px; border-radius: 50px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); z-index: 1000; border: 1px solid rgba(238, 238, 238, 0.5); display: flex; white-space: nowrap; }
+        /* 2. 統一的導覽列 */
+        nav { 
+            position: fixed; 
+            top: 20px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            background: rgba(255,255,255,0.85); 
+            backdrop-filter: blur(10px); 
+            padding: 12px 30px; 
+            border-radius: 50px; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05); 
+            z-index: 1000; 
+            border: 1px solid rgba(238, 238, 238, 0.5); 
+            display: flex; 
+            white-space: nowrap; 
+        }
         nav a { margin: 0 15px; text-decoration: none; color: #666; font-weight: 500; font-size: 14px; transition: color 0.2s; }
         nav a:hover { color: #007bff; }
 
-        /* Profile Section */
-        .container { max-width: 450px; width: 90%; }
-        .profile-pic { width: 110px; height: 110px; border-radius: 50%; object-fit: cover; margin-bottom: 10px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
-        h1 { font-size: 1.8rem; margin: 10px 0 5px; font-weight: 700; }
-        .description { color: #888; margin-bottom: 35px; font-size: 0.95rem; line-height: 1.4; }
+        /* 3. Profile Section */
+        .container { max-width: 400px; width: 85%; padding: 40px 0; }
+        
+        /* Profile Icon Hover Effect */
+        .profile-pic { 
+            width: 120px; 
+            height: 120px; 
+            border-radius: 50%; 
+            object-fit: cover; 
+            margin-bottom: 15px; 
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1); 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            cursor: pointer;
+            border: 3px solid transparent;
+        }
+        .profile-pic:hover { 
+            transform: scale(1.1) rotate(5deg); 
+            box-shadow: 0 15px 35px rgba(0,123,255,0.2);
+            border: 3px solid #007bff;
+        }
 
-        /* Buttons Grid */
-        .button-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .btn { padding: 16px; border: 1px solid #f0f0f0; border-radius: 14px; text-decoration: none; color: #444; font-weight: 600; font-size: 0.9rem; transition: 0.3s; background: #fff; }
-        .btn:hover { background: #fafafa; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-color: #007bff; color: #007bff; }
+        h1 { font-size: 1.8rem; margin: 10px 0 5px; font-weight: 700; }
+        .description { color: #888; margin-bottom: 35px; font-size: 1rem; line-height: 1.4; }
+
+        /* 4. Buttons 垂直排列 */
+        .button-stack { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; 
+        }
+        .btn { 
+            padding: 18px; 
+            border: 1px solid #f0f0f0; 
+            border-radius: 16px; 
+            text-decoration: none; 
+            color: #444; 
+            font-weight: 600; 
+            font-size: 1rem; 
+            transition: all 0.3s ease; 
+            background: #fff; 
+        }
+        .btn:hover { 
+            background: #f8f9fa; 
+            transform: translateY(-3px); 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05); 
+            border-color: #007bff; 
+            color: #007bff; 
+        }
+
+        /* 手機版導覽列微調 */
+        @media (max-width: 600px) {
+            nav { width: 80%; justify-content: space-around; padding: 10px 20px; }
+            nav a { margin: 0 5px; font-size: 13px; }
+        }
     </style>
 </head>
 <body>
@@ -39,11 +107,11 @@
     <h1>Design with Kirsten</h1>
     <p class="description">UXUI Design | AI Tips | Resources</p>
 
-    <div class="button-grid">
+    <div class="button-stack">
         <a href="https://www.instagram.com/kirsten_uxui/" target="_blank" class="btn">Instagram</a>
         <a href="https://www.threads.net/@kirsten_uxui" target="_blank" class="btn">Threads</a>
-        <a href="blog.html" class="btn">Blog</a>
-        <a href="resources.html" class="btn">Resources</a>
+        <a href="blog.html" class="btn">Blog Posts</a>
+        <a href="resources.html" class="btn">Design Resources</a>
     </div>
 </div>
 
