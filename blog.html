@@ -2,35 +2,71 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog - Design with Kirsten</title>
     <style>
-        body { font-family: sans-serif; max-width: 600px; margin: 80px auto; padding: 20px; }
-        nav { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #fff; padding: 10px 30px; border-radius: 50px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
-        nav a { margin: 0 15px; text-decoration: none; color: #555; }
-        .post-item { padding: 20px 0; border-bottom: 1px solid #eee; display: block; text-decoration: none; color: #333; }
-        .post-date { font-size: 12px; color: #aaa; }
-        .post-title { font-size: 1.2rem; font-weight: bold; margin-top: 5px; color: #007bff; }
+        /* 統一的全域樣式 */
+        body { font-family: -apple-system, system-ui, sans-serif; background: #fff; margin: 0; padding-top: 120px; color: #333; }
+        
+        /* 統一的 Floating Nav Bar */
+        nav { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.85); backdrop-filter: blur(10px); padding: 12px 30px; border-radius: 50px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); z-index: 1000; border: 1px solid rgba(238, 238, 238, 0.5); display: flex; white-space: nowrap; }
+        nav a { margin: 0 15px; text-decoration: none; color: #666; font-weight: 500; font-size: 14px; transition: color 0.2s; }
+        nav a:hover { color: #007bff; }
+
+        /* Content Area */
+        .main-content { max-width: 600px; margin: 0 auto; padding: 0 20px; }
+        h1 { font-size: 2.2rem; margin-bottom: 40px; text-align: left; }
+
+        /* Blog List Style */
+        .post-item { padding: 25px 0; border-bottom: 1px solid #f0f0f0; display: block; text-decoration: none; transition: 0.3s; }
+        .post-item:hover { transform: translateX(8px); }
+        .post-date { font-size: 12px; color: #bbb; letter-spacing: 1px; text-transform: uppercase; }
+        .post-title { font-size: 1.4rem; font-weight: 700; margin-top: 8px; color: #222; transition: 0.2s; }
+        .post-item:hover .post-title { color: #007bff; }
+        
+        .loading-text { color: #aaa; font-style: italic; }
     </style>
 </head>
 <body>
 
-<nav><a href="index.html">Home</a> <a href="blog.html">Blog</a></nav>
+<nav>
+    <a href="index.html">Home</a>
+    <a href="blog.html">Blog</a>
+    <a href="resources.html">Resources</a>
+    <a href="#">About</a>
+</nav>
 
-<h1>All Posts</h1>
-<div id="blog-list">載入中...</div>
+<div class="main-content">
+    <h1>Blog</h1>
+    <div id="blog-list" class="loading-text">正在載入 Notion 最新文章...</div>
+</div>
 
 <script>
     async function loadPosts() {
-        const response = await fetch('./posts.json');
-        const posts = await response.json();
-        document.getElementById('blog-list').innerHTML = posts.map(post => `
-            <a href="post.html?slug=${post.slug}" class="post-item">
-                <div class="post-date">${post.date}</div>
-                <div class="post-title">${post.title}</div>
-            </a>
-        `).join('');
+        const listElement = document.getElementById('blog-list');
+        try {
+            // 加上時間戳防止快取
+            const response = await fetch('./posts.json?t=' + new Date().getTime());
+            if (!response.ok) throw new Error();
+            const posts = await response.json();
+            
+            if (posts.length === 0) {
+                listElement.innerHTML = "目前尚無發佈的文章。";
+                return;
+            }
+
+            listElement.innerHTML = posts.map(post => `
+                <a href="post.html?slug=${post.slug}" class="post-item">
+                    <div class="post-date">${post.date}</div>
+                    <div class="post-title">${post.title}</div>
+                </a>
+            `).join('');
+        } catch (e) {
+            listElement.innerHTML = "載入失敗，請確認 posts.json 是否存在。";
+        }
     }
     loadPosts();
 </script>
+
 </body>
 </html>
