@@ -7,37 +7,78 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { font-family: -apple-system, system-ui, sans-serif; background: #fafafa; margin: 0; padding-top: 100px; color: #333; line-height: 1.8; }
         
-        /* 統一頂部橫跨式導覽列 */
-        nav { position: fixed; top: 0; left: 0; width: 100%; height: 70px; background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #eee; z-index: 9999; }
+        /* 背景設為淺灰，與其他頁面一致 */
+        body { 
+            font-family: -apple-system, system-ui, sans-serif; 
+            background: #fafafa; 
+            margin: 0; 
+            padding-top: 100px; 
+            color: #333; 
+            line-height: 1.8; 
+        }
+        
+        /* 統一頂部橫跨式導覽列 (與 Index/Blog 一致) */
+        nav { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 70px; 
+            background: rgba(255,255,255,0.9); 
+            backdrop-filter: blur(10px); 
+            -webkit-backdrop-filter: blur(10px); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            border-bottom: 1px solid #eee; 
+            z-index: 9999; 
+        }
         nav a { margin: 0 18px; text-decoration: none; color: #666; font-weight: 600; font-size: 15px; transition: 0.2s; letter-spacing: 0.5px; }
         nav a:hover { color: #007bff; }
 
         /* 文章容器 */
-        .container { max-width: 750px; margin: 0 auto; padding: 0 25px 80px; }
+        .container { max-width: 750px; margin: 0 auto; padding: 0 20px 80px; }
         
-        /* 文章主體白色背景 */
-        article { background: #fff; padding: 40px; border-radius: 24px; border: 1px solid #eee; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+        /* 文章主體：純白卡片感 */
+        article { 
+            background: #fff; 
+            padding: 40px; 
+            border-radius: 24px; 
+            border: 1px solid #eee; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03); 
+        }
 
-        .back-link { display: inline-block; margin-bottom: 20px; color: #007bff; text-decoration: none; font-size: 0.9rem; font-weight: 600; }
+        .back-link { 
+            display: inline-block; 
+            margin-bottom: 25px; 
+            color: #007bff; 
+            text-decoration: none; 
+            font-size: 0.95rem; 
+            font-weight: 600; 
+            transition: 0.2s;
+        }
+        .back-link:hover { opacity: 0.7; transform: translateX(-3px); }
 
-        /* Markdown 內容美化 */
-        #post-content h1 { font-size: 2.2rem; line-height: 1.2; margin-bottom: 20px; color: #111; }
-        #post-content img { max-width: 100%; height: auto; border-radius: 16px; margin: 30px 0; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        /* Markdown 內容樣式美化 */
+        #post-content h1 { font-size: 2.2rem; line-height: 1.3; margin-bottom: 25px; color: #111; font-weight: 800; }
+        #post-content h2 { font-size: 1.6rem; margin-top: 40px; border-bottom: 1px solid #f0f0f0; padding-bottom: 10px; }
+        #post-content img { max-width: 100%; height: auto; border-radius: 16px; margin: 30px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
         #post-content p { font-size: 1.1rem; color: #444; margin-bottom: 1.6em; }
-        #post-content blockquote { border-left: 4px solid #007bff; background: #f8f9fa; margin: 25px 0; padding: 20px; border-radius: 0 12px 12px 0; }
+        #post-content blockquote { border-left: 5px solid #007bff; background: #f8f9fa; margin: 25px 0; padding: 20px; border-radius: 0 12px 12px 0; font-style: italic; }
+        #post-content code { background: #f0f0f0; padding: 3px 6px; border-radius: 5px; font-family: monospace; font-size: 0.9em; }
 
         @media (max-width: 600px) {
             nav { height: 60px; }
             nav a { margin: 0 12px; font-size: 14px; }
-            body { padding-top: 80px; }
+            body { padding-top: 85px; }
             article { padding: 25px; border-radius: 16px; }
             #post-content h1 { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
+
     <nav>
         <a href="index.html">Home</a>
         <a href="blog.html">Blog</a>
@@ -46,8 +87,10 @@
     </nav>
 
     <div class="container">
-        <a href="blog.html" class="back-link">← Back to Blog</a>
-        <article id="post-content">正在讀取內容...</article>
+        <a href="blog.html" class="back-link">← Back to Stories</a>
+        <article id="post-content">
+            <p style="text-align: center; color: #aaa;">正在從 Notion 同步內容...</p>
+        </article>
     </div>
 
     <script>
@@ -55,4 +98,49 @@
             const urlParams = new URLSearchParams(window.location.search);
             const slug = urlParams.get('slug');
             const container = document.getElementById('post-content');
-            if (!slug
+
+            if (!slug) {
+                container.innerHTML = "<h1>找不到文章</h1><p>請回到 <a href='blog.html'>Blog 列表</a> 重新選擇。</p>";
+                return;
+            }
+
+            try {
+                // 優先嘗試抓取 posts 資料夾下的 md 檔案
+                const response = await fetch(`./posts/${slug}.md?v=${Date.now()}`);
+                
+                if (!response.ok) {
+                    throw new Error("File not found");
+                }
+
+                const mdText = await response.text();
+
+                // 移除 Notion 生成的 YAML Front Matter (--- 區塊)
+                const cleanMd = mdText.replace(/^---[\s\S]*?---/, '');
+
+                // 渲染 Markdown
+                container.innerHTML = marked.parse(cleanMd);
+                
+                // 動態設定網頁標題
+                const titleMatch = cleanMd.match(/^#\s+(.*)/);
+                if (titleMatch) {
+                    document.title = `${titleMatch[1]} - Kirsten`;
+                }
+
+            } catch (err) {
+                console.error(err);
+                container.innerHTML = `
+                    <div style="text-align:center; padding: 40px 0;">
+                        <h2 style="color:#333">尚未找到文章內容</h2>
+                        <p style="color:#888">文章可能正在同步中，或檔案路徑不正確。</p>
+                        <p style="font-size: 0.8rem; color:#ccc;">Slug: ${slug}</p>
+                        <a href="blog.html" style="color:#007bff; font-weight:600;">回列表重試</a>
+                    </div>
+                `;
+            }
+        }
+
+        // 啟動加載
+        loadPost();
+    </script>
+</body>
+</html>
