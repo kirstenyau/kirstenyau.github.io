@@ -8,37 +8,43 @@ async function loadDetail() {
             return;
         }
 
+        // 使用相對路徑，並確保 slug 格式正確
+        const filePath = `./posts/${slug.trim()}.md`;
+
         try {
-            // 加上時間戳 t=... 避免讀到舊的快取
-            // 使用相對路徑 ./posts/ 確保在 GitHub Pages 環境下正確
-            const response = await fetch(`./posts/${slug}.md?t=${new Date().getTime()}`);
+            // 加上 t=... 確保不讀取舊的快取
+            const response = await fetch(`${filePath}?t=${new Date().getTime()}`);
             
             if (!response.ok) {
-                // 如果失敗，嘗試檢查是否是因為副檔名問題
-                throw new Error(`找不到檔案: posts/${slug}.md`);
+                // 如果失敗，嘗試加上斜線開頭的路徑
+                const altResponse = await fetch(`posts/${slug.trim()}.md`);
+                if (!altResponse.ok) {
+                    throw new Error(`找不到檔案：${filePath}`);
+                }
+                return render(await altResponse.text());
             }
             
-            let text = await response.text();
-            
-            // 移除 Notion 同步過來的 Front Matter (--- 區塊)
-            const cleanContent = text.replace(/^---[\s\S]*?---/, '');
-            
-            // 使用 marked 渲染內容
-            container.innerHTML = marked.parse(cleanContent);
-            
-            // 更新瀏覽器標籤標題
-            document.title = slug.split('-').join(' ').toUpperCase() + " | Blog";
+            render(await response.text());
 
         } catch (err) {
             console.error("Fetch error:", err);
             container.innerHTML = `
                 <div style="background: #fff5f5; padding: 20px; border-radius: 10px; border: 1px solid #feb2b2;">
                     <h1 style="color: #c53030;">文章載入失敗</h1>
-                    <p>原因：${err.message}</p>
-                    <p>請檢查 GitHub 倉庫中的 <b>posts/</b> 資料夾，確認是否存在名為 <b>${slug}.md</b> 的檔案。</p>
+                    <p>我們在嘗試讀取 <b>${filePath}</b> 時遇到了問題。</p>
+                    <p>請檢查 GitHub 倉庫中的 <b>posts/</b> 資料夾，確認是否存在 <b>${slug}.md</b>。</p>
                     <a href="blog.html" style="color: #3182ce;">← 返回列表重試</a>
                 </div>
             `;
+        }
+
+        function render(mdText) {
+            // 移除 Notion 同步過來的 Front Matter
+            const cleanContent = mdText.replace(/^---[\s\S]*?---/, '');
+            // 使用 marked 渲染內容
+            container.innerHTML = marked.parse(cleanContent);
+            // 更新瀏覽器標題
+            document.title = slug.split('-').join(' ').toUpperCase();
         }
     }
     loadDetail();
