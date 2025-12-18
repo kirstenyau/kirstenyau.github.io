@@ -3,102 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loading Post...</title>
+    <title>Blog Post</title>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
-        /* 閱讀頁面的樣式設計 */
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.8;
-            color: #333;
-            max-width: 750px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            background-color: #fff;
-        }
-        .back-btn {
-            display: inline-block;
-            margin-bottom: 30px;
-            text-decoration: none;
-            color: #666;
-            font-size: 0.9rem;
-            transition: color 0.2s;
-        }
-        .back-btn:hover { color: #007bff; }
-        
-        /* 文章內容樣式 */
-        #post-content img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            display: block;
-            margin: 20px auto;
-        }
-        h1 { font-size: 2.2rem; margin-bottom: 10px; color: #111; }
-        hr { border: 0; border-top: 1px solid #eee; margin: 30px 0; }
-        pre {
-            background: #f4f4f4;
-            padding: 15px;
-            border-radius: 5px;
-            overflow-x: auto;
-            font-family: Consolas, Monaco, 'Andale Mono', monospace;
-        }
-        blockquote {
-            border-left: 4px solid #ddd;
-            padding-left: 20px;
-            color: #666;
-            font-style: italic;
-            margin: 20px 0;
-        }
+        body { font-family: -apple-system, system-ui, sans-serif; line-height: 1.8; max-width: 750px; margin: 0 auto; padding: 40px 20px; color: #333; }
+        .back-btn { display: inline-block; margin-bottom: 30px; text-decoration: none; color: #007bff; }
+        #post-content img { max-width: 100%; height: auto; border-radius: 8px; }
+        pre { background: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; }
+        h1 { font-size: 2.2rem; margin-top: 0; }
     </style>
 </head>
 <body>
-
-    <a href="index.html" class="back-btn">← 返回文章列表</a>
-    
-    <article id="post-content">
-        <p style="color: #999;">正在載入文章內容...</p>
-    </article>
+    <a href="index.html" class="back-btn">← 返回列表</a>
+    <article id="post-content">正在讀取內容...</article>
 
     <script>
         async function renderPost() {
-            // A. 從網址取得文章的 slug (例如 ?slug=my-first-post)
             const params = new URLSearchParams(window.location.search);
             const slug = params.get('slug');
+            const contentDiv = document.getElementById('post-content');
 
             if (!slug) {
-                document.getElementById('post-content').innerHTML = "<h1>找不到文章</h1><p>請返回首頁重新選擇。</p>";
+                contentDiv.innerHTML = "<h1>錯誤</h1><p>網址遺失 slug 參數。</p>";
                 return;
             }
 
             try {
-                // B. 去 posts 資料夾抓取對應的 .md 檔案
-                const response = await fetch(`./posts/${slug}.md`);
-                if (!response.ok) throw new Error('檔案讀取失敗');
+                // 強制加上時間戳避免快取問題 (?t=...)
+                const response = await fetch(`./posts/${slug}.md?t=${new Date().getTime()}`);
+                
+                if (!response.ok) {
+                    throw new Error(`找不到檔案：posts/${slug}.md (狀態碼: ${response.status})`);
+                }
 
                 const mdText = await response.text();
-
-                // C. 處理 Front-matter (去掉檔案開頭的 --- 標題日期資訊)
-                // 因為我們已經在 index.html 顯示過標題了，這裡只保留內文
+                
+                // 移除 Front-matter (--- 之間的內容)
                 const cleanMd = mdText.replace(/^---[\s\S]*?---/, '');
-
-                // D. 解析 Markdown 並放入頁面
-                const htmlContent = marked.parse(cleanMd);
-                document.getElementById('post-content').innerHTML = htmlContent;
-
-                // E. 自動將文章的第一個標題設為網頁標籤標題
-                const firstHeading = document.querySelector('h1');
-                if (firstHeading) {
-                    document.title = firstHeading.innerText + " | Kirsten's Blog";
-                }
+                
+                // 轉換 Markdown
+                contentDiv.innerHTML = marked.parse(cleanMd);
+                
+                // 更新網頁標題
+                const titleMatch = mdText.match(/title: "(.*?)"/);
+                if (titleMatch) document.title = titleMatch[1];
 
             } catch (error) {
                 console.error(error);
-                document.getElementById('post-content').innerHTML = "<h1>抱歉！</h1><p>載入文章時發生錯誤，請確認文章是否存在。</p>";
+                contentDiv.innerHTML = `<h1>載入失敗</h1><p>${error.message}</p><p>請確認 posts/${slug}.md 檔案是否存在於 GitHub 中。</p>`;
             }
         }
-
-        // 啟動渲染
         renderPost();
     </script>
 </body>
