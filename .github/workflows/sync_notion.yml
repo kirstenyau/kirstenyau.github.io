@@ -1,0 +1,41 @@
+name: Sync Notion to Blog
+
+# 定義什麼時候要執行
+on:
+  schedule:
+    - cron: '0 * * * *' # 每一小時自動檢查一次 Notion
+  workflow_dispatch: # 這行很重要！它讓你可以手動點擊「執行」按鈕來測試
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      # 安裝搬運工具
+      - name: Install dependencies
+        run: |
+          npm install @notionhq/client notion-to-md
+
+      # 執行你寫好的 sync.js (確保你的根目錄有這檔案)
+      - name: Run sync script
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+        run: node sync.js
+
+      # 如果有新文章，就自動存檔並上傳到 GitHub 分支
+      - name: Commit and Push changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add posts/*.md
+          git commit -m "Update blog posts from Notion" || echo "No changes to commit"
+          git push
