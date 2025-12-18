@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Blog Post</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; max-width: 800px; margin: 50px auto; padding: 0 20px; color: #333; }
+        #content img { max-width: 100%; }
+        .back-link { display: block; margin-bottom: 20px; text-decoration: none; color: #007bff; }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">← 回首頁</a>
+    <div id="content">載入中...</div>
+
+    <script>
+        async function renderPost() {
+            const params = new URLSearchParams(window.location.search);
+            const slug = params.get('slug');
+            if (!slug) return;
+
+            try {
+                const response = await fetch(`./posts/${slug}.md`);
+                const text = await response.json(); // 修正：如果你的 sync.js 直接存文字，用 response.text()
+                // 讀取 Markdown 並去掉 Front-matter (標題日期設定)
+                const md = await response.text();
+                const cleanMd = md.replace(/---[\s\S]*?---/, '');
+                document.getElementById('content').innerHTML = marked.parse(cleanMd);
+            } catch (e) {
+                document.getElementById('content').innerHTML = "文章載入失敗。";
+            }
+        }
+        renderPost();
+    </script>
+</body>
+</html>
