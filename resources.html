@@ -1,67 +1,46 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resources - Design with Kirsten</title>
-    <style>
-        /* 1. 基礎設定 - 確保手機可以捲動 */
-        body { 
-            font-family: -apple-system, system-ui, sans-serif; 
-            background: #fff; 
-            margin: 0; 
-            min-height: 100vh; 
-            color: #333; 
-            padding-top: 100px; 
-            display: block; 
-        }
-        
-        /* 2. 統一的導覽列 */
-        nav { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.85); backdrop-filter: blur(10px); padding: 12px 30px; border-radius: 50px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); z-index: 1000; border: 1px solid rgba(238, 238, 238, 0.5); display: flex; white-space: nowrap; }
-        nav a { margin: 0 12px; text-decoration: none; color: #666; font-weight: 500; font-size: 14px; transition: color 0.2s; }
-        nav a:hover { color: #007bff; }
+<style>
+    /* 統一的導覽列樣式 - 確保所有頁面一致 */
+    nav { 
+        position: fixed; 
+        top: 20px; 
+        left: 50%; 
+        transform: translateX(-50%); 
+        background: rgba(255,255,255,0.85); 
+        backdrop-filter: blur(10px); 
+        padding: 12px 30px; 
+        border-radius: 50px; 
+        box-shadow: 0 4px 20px rgba(0,0,0,0.05); 
+        z-index: 1000; 
+        border: 1px solid rgba(238, 238, 238, 0.5); 
+        display: flex; 
+        white-space: nowrap; 
+        box-sizing: border-box; /* 確保 padding 不會撐破寬度 */
+    }
 
-        /* 3. 標題區 */
-        .header { text-align: center; max-width: 600px; margin: 0 auto 40px; padding: 0 20px; }
-        h1 { font-size: 2rem; margin-bottom: 10px; }
-        .description { color: #888; font-size: 0.95rem; line-height: 1.6; }
+    nav a { 
+        margin: 0 15px; 
+        text-decoration: none; 
+        color: #666; 
+        font-weight: 500; 
+        font-size: 14px; 
+        transition: color 0.2s; 
+    }
 
-        /* 4. 資源卡片網格 - 關鍵佈局 */
-        .resources-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
-            gap: 20px; 
-            max-width: 1100px; 
-            margin: 0 auto; 
-            padding: 0 20px 100px; 
-        }
-        
-        /* 5. 卡片樣式 */
-        .card { 
-            background: #fff; 
-            border: 1px solid #f0f0f0; 
-            border-radius: 16px; 
-            padding: 25px; 
-            text-decoration: none; 
-            color: inherit; 
-            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            display: flex; 
-            flex-direction: column; 
-        }
-        .card:hover { transform: translateY(-5px); border-color: #007bff; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-        .card-tag { font-size: 0.7rem; font-weight: bold; color: #007bff; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 0.5px; }
-        .card h3 { margin: 0 0 10px 0; font-size: 1.2rem; color: #111; }
-        .card p { margin: 0; font-size: 0.9rem; color: #666; line-height: 1.6; }
+    nav a:hover { color: #007bff; }
 
-        /* 手機版微調 */
-        @media (max-width: 600px) {
-            nav { padding: 10px 15px; width: 90%; justify-content: center; }
-            nav a { margin: 0 8px; font-size: 13px; }
-            .resources-grid { grid-template-columns: 1fr; } /* 手機版強制單欄 */
+    /* 關鍵：手機版適應性修正 */
+    @media (max-width: 600px) {
+        nav { 
+            width: 90%; /* 確保在窄螢幕上不會太擠 */
+            justify-content: center; 
+            padding: 10px 10px; 
         }
-    </style>
-</head>
-<body>
+        nav a { 
+            margin: 0 8px; /* 手機上縮小間距防止溢出 */
+            font-size: 13px; 
+        }
+    }
+</style>
 
 <nav>
     <a href="index.html">Home</a>
@@ -69,61 +48,3 @@
     <a href="resources.html">Resources</a>
     <a href="#">About</a>
 </nav>
-
-<div class="header">
-    <h1>Resources</h1>
-    <p class="description">歡迎進入 UXUI Design 世界，這些是設計師必收藏的工具和靈感來源！</p>
-</div>
-
-<div class="resources-grid">
-    <a href="https://www.figma.com" target="_blank" class="card">
-        <span class="card-tag">Tool</span>
-        <h3>Figma</h3>
-        <p>業界領先的協作設計工具，集介面設計、原型製作與即時協作於一身。</p>
-    </a>
-
-    <a href="https://www.behance.net" target="_blank" class="card">
-        <span class="card-tag">Inspiration</span>
-        <h3>Behance</h3>
-        <p>Adobe 旗下的設計展示平台，適合尋找完整專案 Case Study 與視覺靈感。</p>
-    </a>
-
-    <a href="https://dribbble.com" target="_blank" class="card">
-        <span class="card-tag">Inspiration</span>
-        <h3>Dribbble</h3>
-        <p>匯聚全球頂尖設計師的微縮作品，是掌握 UI 視覺趨勢的最佳去處。</p>
-    </a>
-
-    <a href="https://mobbin.com" target="_blank" class="card">
-        <span class="card-tag">UI Patterns</span>
-        <h3>Mobbin Design</h3>
-        <p>收錄數千個真實 App 截圖，是研究使用者流程與 UI Patterns 的百科全書。</p>
-    </a>
-
-    <a href="https://www.pinterest.com" target="_blank" class="card">
-        <span class="card-tag">Inspiration</span>
-        <h3>Pinterest</h3>
-        <p>視覺搜尋引擎，適合收集 Moodboard、排版靈感以及跨領域創意。</p>
-    </a>
-
-    <a href="https://m3.material.io" target="_blank" class="card">
-        <span class="card-tag">Design System</span>
-        <h3>Material Design</h3>
-        <p>Google 開發的設計語言規範，提供完整的原則與組件指引。</p>
-    </a>
-
-    <a href="https://ant.design" target="_blank" class="card">
-        <span class="card-tag">Design System</span>
-        <h3>Ant Design</h3>
-        <p>企業級產品設計體系，擁有豐富的組件庫，適合 B2B 產品設計參考。</p>
-    </a>
-
-    <a href="https://www.producthunt.com" target="_blank" class="card">
-        <span class="card-tag">Trending</span>
-        <h3>Product Hunt</h3>
-        <p>每日挖掘全球最新科技產品與工具，隨時掌握市場最前線動態。</p>
-    </a>
-</div>
-
-</body>
-</html>
