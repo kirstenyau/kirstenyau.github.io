@@ -6,11 +6,12 @@ const path = require("path");
 async function main() {
   console.log("🚀 啟動同步程序...");
 
-  const auth = process.env.NOTION_TOKEN;
-  const databaseId = process.env.NOTION_DATABASE_ID;
+  // 從環境變數讀取，並使用 .trim() 刪除可能存在的空白
+  const auth = process.env.NOTION_TOKEN ? process.env.NOTION_TOKEN.trim() : null;
+  const databaseId = process.env.NOTION_DATABASE_ID ? process.env.NOTION_DATABASE_ID.trim() : null;
 
   if (!auth || !databaseId) {
-    console.error("❌ 錯誤：找不到 TOKEN 或 ID");
+    console.error("❌ 錯誤：找不到 NOTION_TOKEN 或 NOTION_DATABASE_ID，請檢查 GitHub Secrets。");
     process.exit(1);
   }
 
@@ -18,17 +19,14 @@ async function main() {
   const n2m = new NotionToMarkdown({ notionClient: notion });
 
   try {
-    console.log("📡 正在連接 Notion API...");
-    
-    // 使用 request 方法更為穩定
-    const response = await notion.request({
-      path: `databases/${databaseId}/query`,
-      method: "POST",
-      body: {
-        filter: {
-          property: "Status",
-          select: { equals: "Published" },
-        },
+    console.log("📡 正在從 Notion 讀取資料庫...");
+
+    // 使用官方標準 method，不手動拼接 URL 避免 'invalid_request_url'
+    const response = await notion.databases.query({
+      database_id: databaseId,
+      filter: {
+        property: "Status",
+        select: { equals: "Published" },
       },
     });
 
@@ -38,8 +36,11 @@ async function main() {
     if (!fs.existsSync(postsDir)) fs.mkdirSync(postsDir);
 
     for (const page of response.results) {
+      // 取得標題 (Name)
       const title = page.properties.Name?.title[0]?.plain_text || "Untitled";
+      // 取得 Slug
       const slug = page.properties.Slug?.rich_text[0]?.plain_text || `post-${page.id}`;
+      // 取得日期 (Date)
       const date = page.properties.Date?.date?.start || new Date().toISOString().split('T')[0];
 
       console.log(`📝 正在轉換：${title}`);
@@ -60,6 +61,10 @@ ${mdString.parent}`;
     console.log("🎉 所有文章同步完成！");
   } catch (error) {
     console.error("❌ 同步過程中發生錯誤：", error.message);
+    // 如果報錯是 404，通常是忘記在 Notion 頁面做 Add Connections
+    if (error.message.includes("Could not find database")) {
+      console.error("💡 提示：請檢查 Notion 頁面右上角是否已 'Add connections' 給你的 Bot。");
+    }
     process.exit(1);
   }
 }
