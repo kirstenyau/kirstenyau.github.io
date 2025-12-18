@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kirsten's Blog</title>
+    <title>Kirsten's Personal Space</title>
     <style>
-        /* 基礎樣式設計 */
+        /* --- 這裡保留你原本設計的樣式 --- */
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             line-height: 1.6;
@@ -16,106 +16,132 @@
             background-color: #f9f9f9;
         }
 
-        /* 個人資料區塊 */
         .profile-section {
             text-align: center;
             margin-bottom: 60px;
             padding-bottom: 40px;
             border-bottom: 1px solid #eee;
         }
+
         .profile-pic {
             width: 120px;
             height: 120px;
             border-radius: 50%;
             object-fit: cover;
             margin-bottom: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
-        h1 { margin: 10px 0; color: #222; }
-        .bio { color: #666; font-size: 1.1rem; }
 
-        /* Blog 區塊樣式 */
-        .blog-section {
+        h1 { margin: 10px 0; color: #222; font-size: 2.5rem; }
+        .bio { color: #666; font-size: 1.1rem; max-width: 500px; margin: 0 auto; }
+
+        /* --- Blog 區塊專屬樣式 (專業版) --- */
+        .blog-container {
             background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            margin-top: 20px;
         }
-        .blog-section h2 {
-            border-left: 5px solid #007bff;
-            padding-left: 15px;
+
+        .blog-container h2 {
+            font-size: 1.8rem;
             margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            color: #222;
         }
-        .post-item {
+
+        .blog-container h2::before {
+            content: "";
+            width: 6px;
+            height: 1.5rem;
+            background: #007bff;
+            margin-right: 12px;
+            border-radius: 3px;
+        }
+
+        .post-card {
             padding: 20px 0;
             border-bottom: 1px solid #f0f0f0;
-            transition: transform 0.2s;
+            transition: all 0.3s ease;
+            display: block;
+            text-decoration: none;
         }
-        .post-item:last-child { border-bottom: none; }
-        .post-item:hover { transform: translateX(5px); }
-        
+
+        .post-card:last-child { border-bottom: none; }
+
+        .post-card:hover {
+            transform: translateX(8px);
+        }
+
         .post-date {
             font-size: 0.85rem;
-            color: #999;
-            display: block;
-            margin-bottom: 5px;
+            color: #bbb;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-        .post-title {
-            font-size: 1.25rem;
-            font-weight: bold;
-            text-decoration: none;
-            color: #007bff;
-        }
-        .post-title:hover { text-decoration: underline; }
 
-        #blog-list { min-height: 100px; }
-        .loading { color: #999; font-style: italic; }
+        .post-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #007bff;
+            margin-top: 5px;
+            display: block;
+        }
+
+        .loading-text {
+            color: #aaa;
+            font-style: italic;
+            text-align: center;
+            padding: 20px;
+        }
     </style>
 </head>
 <body>
 
     <section class="profile-section">
-        <img src="profile.png" alt="Kirsten" class="profile-pic">
+        <img src="profile.png" alt="Kirsten Yau" class="profile-pic">
         <h1>Kirsten Yau</h1>
         <p class="bio">歡迎來到我的空間。這裡記錄我的生活、技術筆記與創意想法。</p>
     </section>
 
-    <section class="blog-section">
+    <div class="blog-container">
         <h2>Latest Blog Posts</h2>
-        <div id="blog-list" class="loading">正在從 Notion 獲取最新文章...</div>
-    </section>
+        <div id="blog-list" class="loading-text">正在讀取 Notion 最新文章...</div>
+    </div>
 
     <script>
-        async function fetchBlogPosts() {
+        async function loadBlogPosts() {
             const listElement = document.getElementById('blog-list');
             try {
-                // 讀取由 sync.js 生成的 posts.json
+                // 向同目錄下的 posts.json 請求數據
                 const response = await fetch('./posts.json');
-                if (!response.ok) throw new Error('尚無文章');
+                if (!response.ok) throw new Error('Posts not found');
                 
                 const posts = await response.json();
                 
                 if (posts.length === 0) {
-                    listElement.innerHTML = '<p class="loading">目前還沒有發佈的文章。</p>';
+                    listElement.innerHTML = '<p class="loading-text">目前還沒有發佈的文章。</p>';
                     return;
                 }
 
-                // 生成文章列表 HTML
+                // 渲染文章列表
                 listElement.innerHTML = posts.map(post => `
-                    <div class="post-item">
+                    <a href="post.html?slug=${post.slug}" class="post-card">
                         <span class="post-date">${post.date}</span>
-                        <a href="post.html?slug=${post.slug}" class="post-title">${post.title}</a>
-                    </div>
+                        <span class="post-title">${post.title}</span>
+                    </a>
                 `).join('');
 
             } catch (error) {
-                console.log("Blog Load Error:", error);
-                listElement.innerHTML = '<p class="loading">暫時沒有文章可以顯示。</p>';
+                console.warn("Blog status:", error.message);
+                listElement.innerHTML = '<p class="loading-text">暫時沒有文章可以顯示。</p>';
             }
         }
 
-        // 頁面載入時執行
-        window.onload = fetchBlogPosts;
+        // 確保 DOM 載入後執行
+        document.addEventListener('DOMContentLoaded', loadBlogPosts);
     </script>
 
 </body>
