@@ -6,11 +6,10 @@ const path = require("path");
 async function main() {
   console.log("🚀 啟動同步程序...");
 
-  // 讀取環境變數
+  // 這些變數會從 GitHub Secrets 自動讀取，請勿手動修改此處
   const auth = process.env.NOTION_TOKEN;
   const databaseId = process.env.NOTION_DATABASE_ID;
 
-  // 偵錯訊息：確認變數是否有傳進來
   console.log("檢查變數狀態：", {
     TOKEN_是否存在: !!auth,
     DATABASE_ID_是否存在: !!databaseId
@@ -18,7 +17,6 @@ async function main() {
 
   if (!auth || !databaseId) {
     console.error("❌ 錯誤：找不到 NOTION_TOKEN 或 NOTION_DATABASE_ID。");
-    console.error("請檢查 GitHub Settings -> Secrets -> Actions 中的變數名稱是否正確。");
     process.exit(1);
   }
 
@@ -30,8 +28,8 @@ async function main() {
     const response = await notion.databases.query({
       database_id: databaseId,
       filter: {
-        property: "Status", // 請確保你的 Notion 裡有這個欄位
-        select: { equals: "Published" }, // 請確保狀態是 Published
+        property: "Status",
+        select: { equals: "Published" },
       },
     });
 
@@ -41,11 +39,8 @@ async function main() {
     if (!fs.existsSync(postsDir)) fs.mkdirSync(postsDir);
 
     for (const page of response.results) {
-      // 取得標題
       const title = page.properties.Name?.title[0]?.plain_text || "Untitled";
-      // 取得 Slug (用於檔名)
       const slug = page.properties.Slug?.rich_text[0]?.plain_text || `post-${page.id}`;
-      // 取得日期
       const date = page.properties.Date?.date?.start || new Date().toISOString().split('T')[0];
 
       console.log(`📝 正在轉換：${title}`);
