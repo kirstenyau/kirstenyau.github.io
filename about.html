@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>About - Design with Kirsten</title>
+    <style>
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { font-family: -apple-system, system-ui, sans-serif; background: #fafafa; margin: 0; padding-top: 100px; color: #333; line-height: 1.6; }
+        
+        /* 統一頂部橫跨式導覽列 */
+        nav { position: fixed; top: 0; left: 0; width: 100%; height: 70px; background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #eee; z-index: 9999; }
+        nav a { margin: 0 18px; text-decoration: none; color: #666; font-weight: 600; font-size: 15px; transition: 0.2s; letter-spacing: 0.5px; }
+        nav a:hover { color: #007bff; }
+
+        .container { max-width: 800px; margin: 0 auto; padding: 0 25px 80px; }
+        
+        /* About 卡片佈局 */
+        .about-card { 
+            background: #fff; 
+            border-radius: 30px; 
+            border: 1px solid #eee; 
+            padding: 50px; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03); 
+            display: flex; 
+            align-items: center; 
+            gap: 40px; 
+        }
+
+        /* 照片樣式 */
+        .about-image { 
+            flex-shrink: 0;
+            width: 220px; 
+            height: 220px; 
+            border-radius: 24px; 
+            object-fit: cover; 
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        /* 文字內容 */
+        .about-text { flex-grow: 1; }
+        .about-text h1 { font-size: 2.2rem; margin: 0 0 15px 0; font-weight: 800; }
+        .about-text .tag { display: inline-block; background: #eef6ff; color: #007bff; padding: 4px 12px; border-radius: 50px; font-size: 0.85rem; font-weight: 700; margin-bottom: 15px; }
+        .about-text p { font-size: 1.05rem; color: #555; margin-bottom: 25px; line-height: 1.8; }
+
+        /* 社群按鈕 */
+        .social-links { display: flex; gap: 12px; }
+        .social-btn { 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            padding: 10px 20px; 
+            border: 1px solid #eee; 
+            border-radius: 50px; 
+            text-decoration: none; 
+            color: #444; 
+            font-weight: 600; 
+            font-size: 0.9rem; 
+            transition: 0.3s; 
+            background: #fff; 
+        }
+        .social-btn:hover { 
+            border-color: #007bff; 
+            color: #007bff; 
+            transform: translateY(-2px); 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); 
+        }
+
+        /* 手機版適應 */
+        @media (max-width: 768px) {
+            .about-card { flex-direction: column; padding: 35px 25px; text-align: center; }
+            .about-image { width: 180px; height: 180px; }
+            .social-links { justify-content: center; }
+            nav { height: 60px; }
+            nav a { margin: 0 12px; font-size: 14px; }
+            body { padding-top: 80px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="resources.html">Resources</a>
+        <a href="about.html">About</a>
+    </nav>
+
+    <div class="container">
+        <div class="about-card">
+            <img src="profile.png" alt="Kirsten" class="about-image">
+            
+            <div class="about-text">
+                <span class="tag">INFJ / Designer</span>
+                <h1>Hi, I'm Kirsten.</h1>
+                <p>
+                    我是一位從 **Content Editor 轉職** 的 **UXUI Designer**。我熱衷於挖掘使用者需求，並將複雜的邏輯轉化為直覺、美觀的介面。
+                    身為典型的 **INFJ**，我擁有敏銳的觀察力，喜歡設計的同時也熱愛分享所學。
+                </p>
+                <p>
+                    生活中，我是 **Miffy 米飛兔** 的忠實粉絲，家裡還有**兩隻可愛的貓咪**陪伴。在這裡，我會分享關於設計、AI 工具以及我個人的轉職心路歷程。
+                </p>
+
+                <div class="social-links">
+                    <a href="https://www.instagram.com/kirsten_uxui/" target="_blank" class="social-btn">
+                        <span>Instagram</span>
+                    </a>
+                    <a href="https://www.threads.net/@kirsten_uxui" target="_blank" class="social-btn">
+                        <span>Threads</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
