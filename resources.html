@@ -5,93 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resources - Design with Kirsten</title>
     <style>
-        body { font-family: -apple-system, system-ui, sans-serif; background: #fff; margin: 0; padding-top: 100px; color: #333; }
-        
-        /* Floating Nav Bar */
-        nav { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.8); backdrop-filter: blur(10px); padding: 12px 30px; border-radius: 50px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); z-index: 1000; border: 1px solid rgba(238, 238, 238, 0.5); }
+        body { font-family: -apple-system, sans-serif; background: #fff; margin: 0; padding-top: 120px; text-align: center; }
+        nav { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.85); backdrop-filter: blur(10px); padding: 12px 30px; border-radius: 50px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); z-index: 1000; border: 1px solid rgba(238, 238, 238, 0.5); display: flex; }
         nav a { margin: 0 15px; text-decoration: none; color: #666; font-weight: 500; font-size: 14px; }
-        nav a:hover { color: #000; }
-
-        /* Header */
-        .header { text-align: center; max-width: 700px; margin: 0 auto 50px; padding: 0 20px; }
-        h1 { font-size: 2.5rem; margin-bottom: 15px; }
-        .description { color: #888; line-height: 1.6; font-size: 1.1rem; }
-
-        /* Resources Grid */
-        .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; max-width: 1000px; margin: 0 auto; padding: 0 20px 60px; }
-        
-        /* Card Style */
-        .card { background: #fff; border: 1px solid #f0f0f0; border-radius: 16px; padding: 25px; text-decoration: none; color: inherit; transition: all 0.3s ease; display: flex; flex-direction: column; }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-color: #007bff; }
-        
-        .card h3 { margin: 0 0 10px 0; font-size: 1.25rem; color: #111; }
-        .card p { margin: 0; font-size: 0.9rem; color: #666; line-height: 1.5; }
-        .card-tag { font-size: 0.75rem; font-weight: bold; color: #007bff; text-transform: uppercase; margin-bottom: 12px; letter-spacing: 0.5px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; max-width: 1000px; margin: 40px auto; padding: 0 20px; }
+        .card { padding: 20px; border: 1px solid #eee; border-radius: 12px; text-decoration: none; color: inherit; transition: 0.3s; text-align: left; }
+        .card:hover { border-color: #007bff; transform: translateY(-3px); }
+        .tag { color: #007bff; font-size: 12px; font-weight: bold; }
     </style>
 </head>
 <body>
-
-<nav>
-    <a href="index.html">Home</a>
-    <a href="blog.html">Blog</a>
-    <a href="resources.html">Resources</a>
-    <a href="#">About</a>
-</nav>
-
-<div class="header">
+    <nav><a href="index.html">Home</a><a href="blog.html">Blog</a><a href="resources.html">Resources</a><a href="#">About</a></nav>
     <h1>Resources</h1>
-    <p class="description">歡迎進入 UXUI Design 世界，這些是設計師必收藏的工具和靈感來源！</p>
-</div>
-
-<div class="resources-grid">
-    <a href="https://www.figma.com" target="_blank" class="card">
-        <span class="card-tag">Tool</span>
-        <h3>Figma</h3>
-        <p>業界領先的協作式設計工具，集介面設計、原型製作與即時協作於一身，是現代 UXUI 設計師的必備武器。</p>
-    </a>
-
-    <a href="https://www.behance.net" target="_blank" class="card">
-        <span class="card-tag">Inspiration</span>
-        <h3>Behance</h3>
-        <p>Adobe 旗下的全球設計作品展示平台，適合尋找完整的專案 Case Study 與視覺靈感。</p>
-    </a>
-
-    <a href="https://dribbble.com" target="_blank" class="card">
-        <span class="card-tag">Inspiration</span>
-        <h3>Dribbble</h3>
-        <p>設計界的社群中心，匯聚全球頂尖設計師的微縮作品，是掌握視覺趨勢的最佳去處。</p>
-    </a>
-
-    <a href="https://mobbin.com" target="_blank" class="card">
-        <span class="card-tag">UI Patterns</span>
-        <h3>Mobbin Design</h3>
-        <p>收錄數千個真實 App 的介面截圖，是研究使用者流程與 UI Patterns 的百科全書。</p>
-    </a>
-
-    <a href="https://www.pinterest.com" target="_blank" class="card">
-        <span class="card-tag">Inspiration</span>
-        <h3>Pinterest</h3>
-        <p>強大的視覺搜尋引擎，適合收集 Moodboard 以及跨領域的設計創意與排版靈感。</p>
-    </a>
-
-    <a href="https://m3.material.io" target="_blank" class="card">
-        <span class="card-tag">Design System</span>
-        <h3>Material Design</h3>
-        <p>由 Google 開發的設計語言規範，提供完整的原則與組件指引，是學習設計系統的基石。</p>
-    </a>
-
-    <a href="https://ant.design" target="_blank" class="card">
-        <span class="card-tag">Design System</span>
-        <h3>Ant Design</h3>
-        <p>企業級產品設計體系，擁有豐富的 React 組件庫與嚴謹的設計邏輯，適合 B2B 產品設計參考。</p>
-    </a>
-
-    <a href="https://www.producthunt.com" target="_blank" class="card">
-        <span class="card-tag">Trending</span>
-        <h3>Product Hunt</h3>
-        <p>每日挖掘全球最新科技產品與工具，讓你隨時掌握市場動態與創新的產品互動概念。</p>
-    </a>
-</div>
-
+    <p>UXUI Design 工具與靈感來源</p>
+    <div class="grid">
+        <a href="https://www.figma.com" class="card"><span class="tag">TOOL</span><h3>Figma</h3><p>業界領先的協作設計工具。</p></a>
+        <a href="https://www.behance.net" class="card"><span class="tag">INSIGHT</span><h3>Behance</h3><p>全球設計作品展示平台。</p></a>
+        </div>
 </body>
 </html>
