@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>加載中... | DESIGN WITH KIRSTEN</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
 
@@ -18,7 +17,7 @@
             line-height: 1.8;
         }
 
-        /* 導覽列：對齊 Resources 標準 */
+        /* 導覽列：完全對齊 Resources 標準 */
         nav { 
             position: fixed; top: 0; left: 0; width: 100%; height: 75px; 
             background: rgba(252, 252, 252, 0.85); 
@@ -35,40 +34,23 @@
         }
         nav a:hover { color: #111; }
 
-        /* 文章容器：限制在 750px 最適合閱讀 */
+        /* 文章容器 */
         .container { max-width: 750px; margin: 0 auto; padding: 40px 25px; }
 
         /* 文章標題區 */
-        .post-header { margin-bottom: 50px; text-align: left; }
-        .post-date { font-size: 12px; color: #bbb; letter-spacing: 0.1em; display: block; margin-bottom: 15px; }
-        .post-title { font-size: 2.2rem; font-weight: 500; color: #111; line-height: 1.3; margin: 0; }
+        .post-header { margin-bottom: 50px; }
+        .post-date { font-size: 12px; color: #bbb; letter-spacing: 0.1em; display: block; margin-bottom: 10px; }
+        .post-title { font-size: 2rem; font-weight: 500; color: #111; line-height: 1.4; margin: 0; }
 
-        /* 文章內文樣式 */
+        /* 文章內容 */
         .post-content { font-size: 16px; color: #444; font-weight: 300; }
-        .post-content p { margin-bottom: 30px; text-align: justify; }
-        
-        /* 圖片處理：加入微陰影與呼吸感 */
-        .post-content img { 
-            max-width: 100%; height: auto; display: block; 
-            margin: 40px auto; 
-            border: 1px solid #eee;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
-        }
+        .post-content p { margin-bottom: 25px; text-align: justify; }
+        .post-content img { max-width: 100%; height: auto; display: block; margin: 30px auto; }
 
-        /* 引用樣式：適合強調金句 */
-        .post-content blockquote {
-            border-left: 2px solid #111;
-            margin: 40px 0;
-            padding: 10px 30px;
-            color: #777;
-            font-style: italic;
-            background: #f9f9f9;
-        }
-
-        /* 返回按鈕 (回到 Blog 列表) */
+        /* 返回鏈接 */
         .back-link {
             display: inline-block;
-            margin-top: 60px;
+            margin-top: 50px;
             text-decoration: none;
             color: #bbb;
             font-size: 12px;
@@ -76,19 +58,6 @@
             transition: 0.3s;
         }
         .back-link:hover { color: #111; }
-
-        /* 返回頂部按鈕樣式 */
-        #backToTop {
-            position: fixed; bottom: 40px; right: 40px;
-            width: 45px; height: 45px;
-            background: rgba(255, 255, 255, 0.9);
-            color: #999; border: 1px solid #eee;
-            border-radius: 50%; cursor: pointer;
-            display: none; align-items: center; justify-content: center;
-            font-size: 16px; transition: 0.3s;
-            z-index: 999; backdrop-filter: blur(5px);
-        }
-        #backToTop:hover { background: #111; color: #fff; border-color: #111; transform: translateY(-3px); }
 
         footer {
             padding: 80px 0 40px; text-align: center; 
@@ -98,9 +67,9 @@
 
         @media (max-width: 600px) {
             nav { height: 65px; }
+            nav a { margin: 0 12px; font-size: 11px; }
             .container { padding: 30px 20px; }
-            .post-title { font-size: 1.7rem; }
-            #backToTop { bottom: 20px; right: 20px; }
+            .post-title { font-size: 1.6rem; }
         }
     </style>
 </head>
@@ -116,8 +85,8 @@
     <main class="container">
         <article>
             <header class="post-header">
-                <span id="date" class="post-date">Loading date...</span>
-                <h1 id="title" class="post-title">Loading title...</h1>
+                <span id="date" class="post-date"></span>
+                <h1 id="title" class="post-title"></h1>
             </header>
 
             <div id="content" class="post-content">
@@ -127,12 +96,9 @@
         </article>
     </main>
 
-    <button id="backToTop"><i class="fa-solid fa-chevron-up"></i></button>
-
     <footer>&copy; 2025 DESIGN WITH KIRSTEN</footer>
 
     <script>
-        // 獲取 Slug
         const urlParams = new URLSearchParams(window.location.search);
         const slug = urlParams.get('slug');
 
@@ -147,29 +113,22 @@
                     document.getElementById('title').innerText = post.title;
                     document.getElementById('date').innerText = post.date;
                     
-                    // 加載對應的 HTML 內容
+                    // 根據你之前的做法，加載獨立的 HTML 片段
                     const contentRes = await fetch(`posts/${post.slug}.html`);
-                    const contentHtml = await contentRes.text();
-                    document.getElementById('content').innerHTML = contentHtml;
+                    if (contentRes.ok) {
+                        const contentHtml = await contentRes.text();
+                        document.getElementById('content').innerHTML = contentHtml;
+                    } else {
+                        document.getElementById('content').innerHTML = "<p>文章內容檔案載入失敗。</p>";
+                    }
+                } else {
+                    document.getElementById('content').innerHTML = "<p>找不到該文章。</p>";
                 }
             } catch (e) {
-                console.error("加載文章失敗:", e);
-                document.getElementById('content').innerHTML = "<p>抱歉，找不到該文章內容。</p>";
+                console.error("Error:", e);
+                document.getElementById('content').innerHTML = "<p>加載出錯，請稍後再試。</p>";
             }
         }
-
-        // 返回頂部功能
-        const btn = document.getElementById("backToTop");
-        window.onscroll = function() {
-            if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
-                btn.style.display = "flex";
-            } else {
-                btn.style.display = "none";
-            }
-        };
-        btn.onclick = function() {
-            window.scrollTo({top: 0, behavior: "smooth"});
-        };
 
         loadPost();
     </script>
