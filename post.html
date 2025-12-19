@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>UXUI設計筆記 | DESIGN WITH KIRSTEN</title>
+    <title>Article | DESIGN WITH KIRSTEN</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
 
@@ -14,9 +15,10 @@
             background-color: #fcfcfc; 
             margin: 0; color: #333; 
             padding-top: 100px;
+            line-height: 1.9;
         }
 
-        /* ✨ 全站統一導覽列 (與 Index, About 一致) */
+        /* 導覽列 (全站統一) */
         nav { 
             position: fixed; top: 0; left: 0; width: 100%; height: 75px; 
             background: rgba(252, 252, 252, 0.85); 
@@ -33,56 +35,93 @@
         }
         nav a:hover { color: #111; }
 
-        .container { max-width: 900px; margin: 0 auto; padding: 40px 25px; }
+        .container { max-width: 750px; margin: 0 auto; padding: 40px 25px; }
 
-        /* 標題區：恢復為「UXUI設計筆記」 */
-        .page-header { margin-bottom: 60px; text-align: left; }
-        .page-title { 
-            font-size: 1.8rem; font-weight: 500; color: #111; 
-            letter-spacing: 0.15em; margin: 0;
+        /* 文章標題區 */
+        .post-header { margin-bottom: 50px; }
+        .post-title { 
+            font-size: 2.2rem; font-weight: 500; color: #111; 
+            margin: 0 0 30px 0; line-height: 1.3; letter-spacing: 0.05em;
         }
 
-        /* 文章清單排版 (恢復原本的設計) */
-        #post-list {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 40px;
+        /* 作者欄位 */
+        .author-meta {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #f0f0f0;
         }
-
-        .post-item {
-            display: block;
-            text-decoration: none;
-            color: inherit;
-            background: #fff;
+        .author-pic {
+            width: 48px; height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
             border: 1px solid #eee;
-            padding: 40px;
-            transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            background-color: #f0f0f0;
+        }
+        .author-info { display: flex; flex-direction: column; }
+        .author-name { font-size: 14px; font-weight: 500; color: #111; letter-spacing: 0.05em; }
+        .post-date { font-size: 12px; color: #bbb; letter-spacing: 0.1em; }
+
+        /* 文章內文 */
+        #post-content { font-size: 1.05rem; color: #444; font-weight: 300; }
+        #post-content h1, #post-content h2, #post-content h3 { color: #111; font-weight: 500; margin: 45px 0 20px; }
+        #post-content p { margin-bottom: 25px; }
+        #post-content img { max-width: 100%; height: auto; margin: 30px 0; border: 1px solid #eee; }
+        #post-content blockquote {
+            border-left: 2px solid #111;
+            margin: 30px 0; padding: 10px 0 10px 25px;
+            color: #777; background: #f9f9f9;
         }
 
-        .post-item:hover {
-            border-color: #111;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+        /* CTA Card */
+        .cta-card {
+            background: #fff;
+            border: 1px solid #111;
+            padding: 50px 40px;
+            margin: 80px 0 40px;
+            text-align: center;
+        }
+        .cta-text { 
+            font-size: 16px; font-weight: 500; color: #111; 
+            margin-bottom: 30px; letter-spacing: 0.15em; 
+        }
+        .cta-btns {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .cta-btn-link {
+            padding: 12px 25px;
+            border: 1px solid #111;
+            color: #111;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            transition: 0.3s;
+            display: inline-block;
+        }
+        .cta-btn-link:hover {
+            background: #111;
+            color: #fff;
         }
 
-        .post-date { font-size: 11px; color: #bbb; letter-spacing: 0.1em; display: block; margin-bottom: 12px; }
-        .post-item h2 { font-size: 1.4rem; font-weight: 500; margin: 0 0 15px 0; color: #111; line-height: 1.4; }
-        .post-excerpt { font-size: 14px; color: #888; line-height: 1.8; font-weight: 300; margin: 0; }
-
+        /* 頁尾 */
         footer {
-            padding: 100px 0 40px;
+            padding: 60px 0 40px;
             text-align: center; font-size: 9px; color: #ccc;
             letter-spacing: 0.3em;
             text-transform: uppercase;
         }
 
-        /* 📱 手機版適應：確保全站 Nav Bar 高度與間距一模一樣 */
         @media (max-width: 600px) {
-            nav { height: 65px; }
-            nav a { margin: 0 10px; font-size: 11px; letter-spacing: 0.1em; }
-            .container { padding: 20px 20px; }
-            .post-item { padding: 30px 20px; }
-            .page-title { font-size: 1.5rem; }
+            .post-title { font-size: 1.75rem; }
+            .cta-card { padding: 40px 20px; }
+            .cta-btns { flex-direction: column; align-items: center; }
+            .cta-btn-link { width: 100%; max-width: 280px; }
         }
     </style>
 </head>
@@ -90,49 +129,87 @@
 
     <nav>
         <a href="index.html">Home</a>
-        <a href="blog.html" style="color:#111;">Blog</a>
+        <a href="blog.html">Blog</a>
         <a href="resources.html">Resources</a>
         <a href="about.html">About</a>
     </nav>
 
-    <main class="container">
-        <header class="page-header">
-            <h1 class="page-title">UXUI設計筆記</h1>
+    <article class="container">
+        <header class="post-header">
+            <h1 id="post-title" class="post-title">——</h1>
+            
+            <div class="author-meta">
+                <img src="profile.png" alt="Kirsten" class="author-pic">
+                <div class="author-info">
+                    <span class="author-name">kirsten_uxui</span>
+                    <span id="post-date" class="post-date">YYYY-MM-DD</span>
+                </div>
+            </div>
         </header>
 
-        <div id="post-list">
-            <p style="color: #ccc;">Loading posts...</p>
+        <div id="post-content">
+            <p style="color: #ccc;">Loading content...</p>
         </div>
-    </main>
+
+        <div class="cta-card">
+            <div class="cta-text">追蹤我看更多 UXUI 設計筆記</div>
+            <div class="cta-btns">
+                <a href="https://www.instagram.com/kirsten_uxui/" target="_blank" class="cta-btn-link">在 Instagram 看 Case Study</a>
+                <a href="https://www.threads.net/@kirsten_uxui" target="_blank" class="cta-btn-link">在 Threads 看工作碎碎念</a>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="blog.html" style="font-size: 11px; color: #bbb; text-decoration: none; letter-spacing: 0.2em;">← BACK TO BLOG</a>
+        </div>
+    </article>
 
     <footer>
         &copy; 2025 DESIGN WITH KIRSTEN
     </footer>
 
     <script>
-        async function loadPosts() {
-            try {
-                const res = await fetch('posts/posts.json');
-                const posts = await res.json();
-                const list = document.getElementById('post-list');
-                list.innerHTML = '';
+        async function loadPost() {
+            const params = new URLSearchParams(window.location.search);
+            const slug = params.get('slug');
+            if (!slug) { window.location.href = 'blog.html'; return; }
 
-                posts.forEach(post => {
-                    const item = document.createElement('a');
-                    item.href = `post.html?slug=${post.slug}`;
-                    item.className = 'post-item';
-                    item.innerHTML = `
-                        <span class="post-date">${post.date}</span>
-                        <h2>${post.title}</h2>
-                        <p class="post-excerpt">${post.excerpt || '點擊閱讀更多關於 ' + post.title + ' 的內容...'}</p>
-                    `;
-                    list.appendChild(item);
-                });
+            try {
+                // 1. 抓取 posts.json 取得元數據
+                const resList = await fetch('posts/posts.json');
+                const posts = await resList.json();
+                const postInfo = posts.find(p => p.slug === slug);
+
+                if (postInfo) {
+                    document.getElementById('post-title').innerText = postInfo.title;
+                    document.getElementById('post-date').innerText = postInfo.date;
+                    document.title = `${postInfo.title} | Kirsten`;
+                }
+
+                // 2. 抓取 Markdown 內容
+                const resContent = await fetch(`posts/${slug}.md`);
+                let markdown = await resContent.text();
+
+                /** * 自動化過濾邏輯：
+                 * 移除 Notion 匯出時自動帶入的 Front Matter (title, date 等)
+                 */
+                if (markdown.trim().startsWith('---')) {
+                    // 過濾 --- 格式
+                    markdown = markdown.replace(/^---[\s\S]*?---/, '');
+                } else {
+                    // 過濾開頭直接顯示的 title: 或 date: 行
+                    markdown = markdown.replace(/^(title:|date:|slug:|layout:).*\n?/gm, '');
+                }
+
+                // 3. 渲染並注入 HTML
+                document.getElementById('post-content').innerHTML = marked.parse(markdown.trim());
+
             } catch (e) {
-                console.error("載入失敗:", e);
+                console.error(e);
+                document.getElementById('post-content').innerHTML = '<p style="color: #999;">內容載入失敗。</p>';
             }
         }
-        loadPosts();
+        loadPost();
     </script>
 </body>
 </html>
