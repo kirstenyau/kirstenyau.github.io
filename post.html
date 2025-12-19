@@ -15,10 +15,10 @@
             background-color: #fcfcfc; 
             margin: 0; color: #333; 
             padding-top: 100px;
-            line-height: 1.9; /* 稍微增加行高，提升閱讀舒適度 */
+            line-height: 1.9;
         }
 
-        /* 導覽列 */
+        /* 導覽列 (全站統一) */
         nav { 
             position: fixed; top: 0; left: 0; width: 100%; height: 75px; 
             background: rgba(252, 252, 252, 0.85); 
@@ -58,26 +58,24 @@
             border-radius: 50%;
             object-fit: cover;
             border: 1px solid #eee;
+            background-color: #f0f0f0;
         }
         .author-info { display: flex; flex-direction: column; }
         .author-name { font-size: 14px; font-weight: 500; color: #111; letter-spacing: 0.05em; }
         .post-date { font-size: 12px; color: #bbb; letter-spacing: 0.1em; }
 
-        /* 文章內文樣式 */
+        /* 文章內文 */
         #post-content { font-size: 1.05rem; color: #444; font-weight: 300; }
-        #post-content h1, #post-content h2, #post-content h3 { 
-            color: #111; font-weight: 500; margin: 45px 0 20px; 
-        }
+        #post-content h1, #post-content h2, #post-content h3 { color: #111; font-weight: 500; margin: 45px 0 20px; }
         #post-content p { margin-bottom: 25px; }
         #post-content img { max-width: 100%; height: auto; margin: 30px 0; border: 1px solid #eee; }
         #post-content blockquote {
             border-left: 2px solid #111;
             margin: 30px 0; padding: 10px 0 10px 25px;
-            color: #777; font-style: normal;
-            background: #f9f9f9;
+            color: #777; background: #f9f9f9;
         }
 
-        /* CTA Card 設計 */
+        /* CTA Card */
         .cta-card {
             background: #fff;
             border: 1px solid #111;
@@ -102,9 +100,9 @@
             text-decoration: none;
             font-size: 11px;
             font-weight: 500;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.1em;
             transition: 0.3s;
-            text-transform: uppercase;
+            display: inline-block;
         }
         .cta-btn-link:hover {
             background: #111;
@@ -122,8 +120,8 @@
         @media (max-width: 600px) {
             .post-title { font-size: 1.75rem; }
             .cta-card { padding: 40px 20px; }
-            .cta-btns { flex-direction: column; }
-            .cta-btn-link { width: 100%; }
+            .cta-btns { flex-direction: column; align-items: center; }
+            .cta-btn-link { width: 100%; max-width: 280px; }
         }
     </style>
 </head>
@@ -156,8 +154,8 @@
         <div class="cta-card">
             <div class="cta-text">追蹤我看更多 UXUI 設計筆記</div>
             <div class="cta-btns">
-                <a href="https://www.instagram.com/kirsten_uxui/" target="_blank" class="cta-btn-link">IG 看 Case Study</a>
-                <a href="https://www.threads.net/@kirsten_uxui" target="_blank" class="cta-btn-link">Thread 看工作碎碎念</a>
+                <a href="https://www.instagram.com/kirsten_uxui/" target="_blank" class="cta-btn-link">在 Instagram 看 Case Study</a>
+                <a href="https://www.threads.net/@kirsten_uxui" target="_blank" class="cta-btn-link">在 Threads 看工作碎碎念</a>
             </div>
         </div>
 
@@ -177,7 +175,7 @@
             if (!slug) { window.location.href = 'blog.html'; return; }
 
             try {
-                // 1. 抓取 posts.json 取得標題與日期
+                // 1. 抓取 posts.json 取得元數據
                 const resList = await fetch('posts/posts.json');
                 const posts = await resList.json();
                 const postInfo = posts.find(p => p.slug === slug);
@@ -192,23 +190,23 @@
                 const resContent = await fetch(`posts/${slug}.md`);
                 let markdown = await resContent.text();
 
-                /** * 核心邏輯：過濾重複的元數據 (Front Matter)
-                 * 過濾掉開頭的 title: "..." 和 date: "..." 等行
+                /** * 自動化過濾邏輯：
+                 * 移除 Notion 匯出時自動帶入的 Front Matter (title, date 等)
                  */
-                // 如果檔案以 --- 開頭（YAML 格式），過濾掉兩個 --- 之間的內容
                 if (markdown.trim().startsWith('---')) {
+                    // 過濾 --- 格式
                     markdown = markdown.replace(/^---[\s\S]*?---/, '');
                 } else {
-                    // 如果是直接顯示的屬性行，過濾掉開頭的特定標籤
+                    // 過濾開頭直接顯示的 title: 或 date: 行
                     markdown = markdown.replace(/^(title:|date:|slug:|layout:).*\n?/gm, '');
                 }
 
-                // 3. 渲染過濾後的乾淨內容
+                // 3. 渲染並注入 HTML
                 document.getElementById('post-content').innerHTML = marked.parse(markdown.trim());
 
             } catch (e) {
-                console.error("Markdown loading error:", e);
-                document.getElementById('post-content').innerHTML = '<p style="color: #999;">內容載入失敗，請稍後再試。</p>';
+                console.error(e);
+                document.getElementById('post-content').innerHTML = '<p style="color: #999;">內容載入失敗。</p>';
             }
         }
         loadPost();
