@@ -16,7 +16,7 @@
             padding-top: 100px;
         }
 
-        /* ✨ 導覽列：完全比照 Resources 頁面 */
+        /* 導覽列：對齊 Resources 頁面 */
         nav { 
             position: fixed; top: 0; left: 0; width: 100%; height: 75px; 
             background: rgba(252, 252, 252, 0.85); 
@@ -27,78 +27,59 @@
         }
         nav a { 
             margin: 0 18px; text-decoration: none; 
-            color: #999; /* 恢復淺灰色 */
-            font-size: 13px; font-weight: 400; /* 恢復細字重 */
-            transition: 0.3s; letter-spacing: 0.15em; /* 恢復寬字距 */
+            color: #999; font-size: 13px; font-weight: 400;
+            transition: 0.3s; letter-spacing: 0.15em;
             text-transform: uppercase;
         }
         nav a:hover { color: #111; }
 
-        /* 限制容器寬度 */
-        .container { max-width: 700px; margin: 0 auto; padding: 40px 25px; }
+        /* 調整容器寬度以配合大標題 (與截圖 Resources 比例對齊) */
+        .container { max-width: 850px; margin: 0 auto; padding: 40px 25px; }
 
-        /* 置中標題區 */
+        /* ✨ 標題區 UI 修正：對齊 Resources 樣式 */
         .page-header { text-align: center; margin-bottom: 80px; }
         .page-title { 
-            font-size: 1.7rem; font-weight: 500; color: #111; 
-            letter-spacing: 0.35em; margin: 0 0 15px 0;
+            font-size: 2rem; /* 增大字級 */
+            font-weight: 500; 
+            color: #111; 
+            letter-spacing: 0.45em; /* 增大字距，營造高級感 */
+            margin: 0 0 18px 0;
+            text-indent: 0.45em; /* 修正因字距導致的中心偏離 */
         }
         .page-subtitle { 
-            font-size: 11px; color: #bbb; letter-spacing: 0.2em; 
-            text-transform: uppercase; font-weight: 300;
+            font-size: 12px; 
+            color: #ccc; /* 使用較淺的顏色 */
+            letter-spacing: 0.25em; /* 增大英文描述字距 */
+            text-transform: uppercase; 
+            font-weight: 300;
         }
 
-        /* 文章清單佈局 */
-        #post-list {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-        }
+        /* 文章清單 (維持 700px 寬度讓卡片不會太闊) */
+        .post-list-wrapper { max-width: 700px; margin: 0 auto; }
+        #post-list { display: flex; flex-direction: column; gap: 25px; }
 
-        /* 精簡卡片設計 (日期 + 標題) */
+        /* 精簡卡片 */
         .post-item {
-            display: block;
-            text-decoration: none;
-            color: inherit;
-            background: #fff;
-            border: 1px solid #eee;
-            padding: 35px 40px;
-            transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            display: block; text-decoration: none; color: inherit;
+            background: #fff; border: 1px solid #eee;
+            padding: 35px 40px; transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
-
-        .post-item:hover {
-            border-color: #111;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-        }
-
-        .post-date { 
-            font-size: 11px; color: #bbb; letter-spacing: 0.15em; 
-            display: block; margin-bottom: 12px; 
-            font-weight: 400;
-        }
-        
-        .post-item h2 { 
-            font-size: 1.3rem; font-weight: 500; margin: 0; 
-            color: #111; line-height: 1.5; 
-            letter-spacing: 0.05em;
-        }
+        .post-item:hover { border-color: #111; transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.03); }
+        .post-date { font-size: 11px; color: #bbb; letter-spacing: 0.15em; display: block; margin-bottom: 12px; }
+        .post-item h2 { font-size: 1.35rem; font-weight: 500; margin: 0; color: #111; line-height: 1.5; }
 
         footer {
             padding: 100px 0 40px;
             text-align: center; font-size: 9px; color: #ccc;
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
+            letter-spacing: 0.3em; text-transform: uppercase;
         }
 
-        /* 手機版適應：完全對齊 Resources */
         @media (max-width: 600px) {
             nav { height: 65px; }
-            nav a { margin: 0 12px; font-size: 11px; letter-spacing: 0.12em; }
-            .container { padding: 20px 20px; }
-            .page-title { font-size: 1.5rem; }
+            nav a { margin: 0 10px; font-size: 11px; }
+            .page-title { font-size: 1.6rem; letter-spacing: 0.3em; text-indent: 0.3em; }
+            .page-subtitle { font-size: 10px; letter-spacing: 0.15em; padding: 0 10px; }
             .post-item { padding: 30px 25px; }
-            .post-item h2 { font-size: 1.15rem; }
         }
     </style>
 </head>
@@ -117,8 +98,10 @@
             <div class="page-subtitle">Thoughts on Design, AI and Tech Life</div>
         </header>
 
-        <div id="post-list">
-            </div>
+        <div class="post-list-wrapper">
+            <div id="post-list">
+                </div>
+        </div>
     </main>
 
     <footer>
@@ -132,7 +115,6 @@
                 const posts = await res.json();
                 const list = document.getElementById('post-list');
                 list.innerHTML = '';
-
                 posts.forEach(post => {
                     const item = document.createElement('a');
                     item.href = `post.html?slug=${post.slug}`;
@@ -145,7 +127,6 @@
                 });
             } catch (e) {
                 console.error("載入失敗:", e);
-                document.getElementById('post-list').innerHTML = '<p style="text-align:center;color:#ccc;">Loading...</p>';
             }
         }
         loadPosts();
