@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>DESIGN WITH KIRSTEN</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* 引入日系感較強的 Noto Sans TC */
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -20,19 +20,19 @@
             min-height: 100vh;
         }
 
-        /* 1. 導覽列：日系透明感 */
+        /* 1. 導覽列 */
         nav { 
             position: fixed; 
-            top: 0; width: 100%; height: 70px; 
-            background: rgba(252, 252, 252, 0.8); 
+            top: 0; width: 100%; height: 75px; 
+            background: rgba(252, 252, 252, 0.85); 
             backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
             display: flex; align-items: center; justify-content: center; 
-            border-bottom: 1px solid rgba(0,0,0,0.04); 
+            border-bottom: 0.5px solid rgba(0,0,0,0.06); 
             z-index: 9999; 
         }
         nav a { 
-            margin: 0 20px; text-decoration: none; 
-            color: #888; font-size: 13px; font-weight: 400;
+            margin: 0 18px; text-decoration: none; 
+            color: #999; font-size: 13px; font-weight: 400;
             transition: 0.3s; letter-spacing: 0.15em;
             text-transform: uppercase;
         }
@@ -43,95 +43,92 @@
             flex: 1;
             display: flex; flex-direction: column; 
             align-items: center; justify-content: center; 
-            text-align: center; padding: 100px 20px 60px;
+            text-align: center; padding: 120px 20px 80px;
         }
 
-        /* 頭像：日式圓框小細節 */
-        .profile-container {
-            position: relative;
-            margin-bottom: 25px;
-        }
+        .profile-container { margin-bottom: 25px; }
         .profile-img { 
             width: 120px; height: 120px; 
             border-radius: 50%; 
             object-fit: cover;
-            border: 1px solid #eee;
+            border: 1px solid #f0f0f0;
             padding: 5px;
             background: #fff;
         }
 
-        /* 標題設計：加大字距，輕盈感 */
         .hero h1 { 
             font-size: 1.5rem; font-weight: 500; color: #111; 
-            margin: 0 0 8px 0; letter-spacing: 0.3em; /* 極大字距是日系的關鍵 */
+            margin: 0 0 10px 0; letter-spacing: 0.3em; 
             text-transform: uppercase;
         }
         
-        /* 描述欄：日系分割符號 */
         .description { 
-            font-size: 0.8rem; color: #a0a0a0; 
-            margin: 0 0 30px 0; letter-spacing: 0.1em;
+            font-size: 0.85rem; color: #a0a0a0; 
+            margin: 0 0 15px 0; letter-spacing: 0.15em;
             font-weight: 300;
         }
 
-        /* 日式裝飾：細線 */
         .vertical-line {
-            width: 1px; height: 45px;
-            background: #e0e0e0;
+            width: 1px; height: 50px;
+            background: linear-gradient(to bottom, #d0d0d0, transparent);
             margin-bottom: 30px;
         }
 
-        /* 3. 按鈕擺位：與之前一致但細節精緻化 */
+        /* 3. 直角按鈕群組 */
         .btn-container {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 15px;
             width: 100%;
-            max-width: 260px;
+            max-width: 280px;
+            margin-bottom: 30px;
         }
         
         .cta-button { 
-            padding: 13px 20px; 
-            border: 1px solid #e0e0e0; /* 極細淺邊框 */
-            color: #666; text-decoration: none; 
-            font-size: 11px; font-weight: 400; 
-            letter-spacing: 0.25em; 
-            transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); 
-            border-radius: 50px;
-            background: #fff;
+            padding: 14px 20px; 
+            border: 1px solid #111; 
+            color: #111; text-decoration: none; 
+            font-size: 11px; font-weight: 500; 
+            letter-spacing: 0.3em; 
+            transition: 0.3s; 
+            border-radius: 0; /* 強制直角 */
+            background: transparent;
             text-transform: uppercase;
         }
         
         .cta-button:hover { 
-            border-color: #111;
-            color: #111; 
-            transform: translateY(-2px);
-            background: #fafafa;
-        }
-
-        /* 主按鈕：Explore Blog 填滿感 */
-        .btn-primary {
             background: #111;
-            color: #fff;
-            border-color: #111;
-        }
-        .btn-primary:hover {
-            background: #333;
-            color: #fff;
+            color: #fff; 
         }
 
-        /* 4. 頁尾：日系小字設計 */
+        /* 4. 社群 Icon 按鈕 */
+        .social-container {
+            display: flex;
+            gap: 25px;
+            margin-top: 10px;
+        }
+        .social-icon {
+            color: #aaa;
+            font-size: 1.2rem;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .social-icon:hover {
+            color: #111;
+            transform: translateY(-2px);
+        }
+
+        /* 頁尾 */
         footer {
             padding: 40px 0;
-            text-align: center; font-size: 9px; color: #bbb;
+            text-align: center; font-size: 9px; color: #ccc;
             letter-spacing: 0.3em;
             text-transform: uppercase;
         }
 
         @media (max-width: 600px) {
-            nav a { margin: 0 10px; font-size: 11px; }
-            .hero h1 { font-size: 1.25rem; }
-            .btn-container { max-width: 220px; }
+            .hero h1 { font-size: 1.3rem; }
+            .btn-container { max-width: 240px; }
         }
     </style>
 </head>
@@ -155,11 +152,18 @@
         <div class="vertical-line"></div>
         
         <div class="btn-container">
-            <a href="blog.html" class="cta-button btn-primary">Explore Blog</a>
-            <a href="https://www.instagram.com/kirsten_uxui/" target="_blank" class="cta-button">Instagram</a>
-            <a href="https://www.threads.net/@kirsten_uxui" target="_blank" class="cta-button">Threads</a>
-            <a href="resources.html" class="cta-button">Resources</a>
-            <a href="about.html" class="cta-button">My Stories</a>
+            <a href="blog.html" class="cta-button">EXPLORE BLOG</a>
+            <a href="resources.html" class="cta-button">RESOURCES</a>
+            <a href="about.html" class="cta-button">MY STORY</a>
+        </div>
+
+        <div class="social-container">
+            <a href="https://www.instagram.com/kirsten_uxui/" target="_blank" class="social-icon" title="Instagram">
+                <i class="fa-brands fa-instagram"></i>
+            </a>
+            <a href="https://www.threads.net/@kirsten_uxui" target="_blank" class="social-icon" title="Threads">
+                <i class="fa-brands fa-threads"></i>
+            </a>
         </div>
     </div>
 
