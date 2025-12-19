@@ -16,7 +16,7 @@
             padding-top: 100px;
         }
 
-        /* 導覽列 */
+        /* 導覽列 (全站統一) */
         nav { 
             position: fixed; top: 0; left: 0; width: 100%; height: 75px; 
             background: rgba(252, 252, 252, 0.85); 
@@ -33,48 +33,85 @@
         }
         nav a:hover { color: #111; }
 
-        .container { max-width: 900px; margin: 0 auto; padding: 40px 25px; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
 
-        /* 更新後的標題樣式 */
-        .page-header { margin-bottom: 60px; text-align: left; }
-        .page-title { 
-            font-size: 1.8rem; font-weight: 500; color: #111; 
-            letter-spacing: 0.15em; margin: 0 0 10px 0;
+        /* 標題區：更新標題字樣 */
+        .page-header { text-align: center; margin-bottom: 80px; }
+        .page-header h1 { 
+            font-size: 1.7rem; font-weight: 500; letter-spacing: 0.35em; 
+            color: #111; margin-bottom: 15px;
         }
-        .page-subtitle { font-size: 12px; color: #bbb; letter-spacing: 0.2em; text-transform: uppercase; }
+        .page-header .sub-title { 
+            font-size: 0.8rem; color: #aaa; letter-spacing: 0.15em; font-weight: 300; 
+            text-transform: uppercase;
+        }
 
-        /* 資源列表樣式 (延續直角卡片風格) */
-        .resource-grid {
+        /* 資源網格佈局 (雙欄) */
+        #resource-list {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
         }
+
+        /* 卡片設計 (跟其他頁面一致的直角風格) */
         .resource-card {
             background: #fff;
             border: 1px solid #eee;
-            padding: 30px;
-            transition: 0.3s;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             text-decoration: none;
             color: inherit;
         }
+
         .resource-card:hover {
             border-color: #111;
             transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.03);
         }
-        .res-category { font-size: 10px; color: #bbb; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 15px; display: block; }
-        .res-title { font-size: 16px; font-weight: 500; color: #111; margin-bottom: 10px; display: block; }
-        .res-desc { font-size: 13px; color: #777; font-weight: 300; line-height: 1.6; }
+
+        .tag {
+            font-size: 10px; color: #bbb; letter-spacing: 0.1em;
+            text-transform: uppercase; margin-bottom: 12px; font-weight: 500;
+        }
+
+        .resource-title {
+            font-size: 1.3rem; font-weight: 500; color: #111;
+            margin: 0 0 15px 0; letter-spacing: 0.05em;
+        }
+
+        .resource-desc {
+            font-size: 0.9rem; color: #888; line-height: 1.7;
+            font-weight: 300; margin-bottom: 30px; flex-grow: 1;
+        }
+
+        /* 按鈕設計 (跟全站一致的直角按鈕) */
+        .resource-link {
+            display: inline-block;
+            align-self: flex-start;
+            padding: 10px 20px;
+            border: 1px solid #111;
+            font-size: 10px; font-weight: 500;
+            letter-spacing: 0.2em; text-transform: uppercase;
+            color: #111; transition: 0.3s;
+        }
+
+        .resource-card:hover .resource-link {
+            background: #111;
+            color: #fff;
+        }
 
         footer {
             padding: 80px 0 40px;
             text-align: center; font-size: 9px; color: #ccc;
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
+            letter-spacing: 0.3em; text-transform: uppercase;
         }
 
-        @media (max-width: 600px) {
-            .page-title { font-size: 1.5rem; }
-            .resource-grid { grid-template-columns: 1fr; }
+        @media (max-width: 768px) {
+            #resource-list { grid-template-columns: 1fr; }
+            .page-header h1 { font-size: 1.4rem; }
+            .resource-card { padding: 30px; }
         }
     </style>
 </head>
@@ -87,34 +124,85 @@
         <a href="about.html">About</a>
     </nav>
 
-    <main class="container">
+    <div class="container">
         <header class="page-header">
-            <h1 class="page-title">學習UXUI必備資源</h1>
-            <span class="page-subtitle">Curated tools & inspiration for designers</span>
+            <h1>學習UXUI必備資源</h1>
+            <div class="sub-title">Curated Tools for Design & Productivity</div>
         </header>
 
-        <div class="resource-grid">
-            <a href="#" class="resource-card">
-                <span class="res-category">Tools</span>
-                <span class="res-title">Figma Guide</span>
-                <p class="res-desc">從基礎到進階的 Figma 使用技巧整理。</p>
-            </a>
-            <a href="#" class="resource-card">
-                <span class="res-category">Inspiration</span>
-                <span class="res-title">Design Systems</span>
-                <p class="res-desc">全球頂尖企業的設計規範參考清單。</p>
-            </a>
-            <a href="#" class="resource-card">
-                <span class="res-category">AI Tips</span>
-                <span class="res-title">ChatGPT Prompts</span>
-                <p class="res-desc">專為 UI 設計師打造的 AI 提問模板。</p>
-            </a>
-        </div>
-    </main>
+        <div id="resource-list">
+            </div>
+    </div>
 
     <footer>
         &copy; 2025 DESIGN WITH KIRSTEN
     </footer>
 
+    <script>
+        // 確保 6 個資源內容完整
+        const resources = [
+            {
+                tag: "#Design Tool",
+                title: "Figma",
+                description: "目前全球領先的協作式介面設計工具，無論是原型製作或系統化設計皆能輕鬆達成。",
+                url: "https://www.figma.com",
+                buttonText: "Direct to Figma"
+            },
+            {
+                tag: "#Portfolio",
+                title: "Behance",
+                description: "Adobe 旗下的創意展示平台，是尋找完整專案細節與視覺包裝靈感的最佳去處。",
+                url: "https://www.behance.net",
+                buttonText: "Explore Behance"
+            },
+            {
+                tag: "#Inspiration",
+                title: "Dribbble",
+                description: "匯集全球頂尖設計師的創意碎片，適合尋找 UI 細節與最新視覺趨勢。",
+                url: "https://dribbble.com",
+                buttonText: "Get Inspired"
+            },
+            {
+                tag: "#UI UX Reference",
+                title: "Mobbin",
+                description: "最齊全的真實 App 介面資料庫，透過解析知名產品的 User Flow 來精進產品邏輯。",
+                url: "https://mobbin.com",
+                buttonText: "Check Mobbin"
+            },
+            {
+                tag: "#Visual Mood",
+                title: "Pinterest",
+                description: "視覺情緒板（Moodboard）的必備工具，幫助你在專案初期快速建立風格方向。",
+                url: "https://www.pinterest.com",
+                buttonText: "See Pinterest"
+            },
+            {
+                tag: "#Tech Trend",
+                title: "Product Hunt",
+                description: "每日更新全球最新的科技產品與 AI 工具，讓你始終走在數位趨勢的最前線。",
+                url: "https://www.producthunt.com",
+                buttonText: "Discover Products"
+            }
+        ];
+
+        function renderResources() {
+            const list = document.getElementById('resource-list');
+            list.innerHTML = '';
+            resources.forEach(item => {
+                const card = document.createElement('a');
+                card.href = item.url;
+                card.target = "_blank";
+                card.className = 'resource-card';
+                card.innerHTML = `
+                    <span class="tag">${item.tag}</span>
+                    <h3 class="resource-title">${item.title}</h3>
+                    <p class="resource-desc">${item.description}</p>
+                    <span class="resource-link">${item.buttonText}</span>
+                `;
+                list.appendChild(card);
+            });
+        }
+        renderResources();
+    </script>
 </body>
 </html>
