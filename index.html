@@ -55,12 +55,13 @@
             border: 1px solid #f0f0f0;
             padding: 5px;
             background: #fff;
-            /* 動態過渡效果：設定時間為 0.4s，並使用平滑曲線 */
+            /* 動態過渡效果 */
             transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease;
-            cursor: pointer;
+            /* 保持預設游標，不顯示點擊手勢 */
+            cursor: default; 
         }
         
-        /* 當滑鼠移入時放大 5% 並加強陰影 */
+        /* 當滑鼠移入時放大 5% */
         .profile-img:hover { 
             transform: scale(1.05); 
             box-shadow: 0 10px 25px rgba(0,0,0,0.05);
