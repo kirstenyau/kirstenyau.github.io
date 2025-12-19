@@ -14,7 +14,7 @@
             background-color: #fcfcfc; 
             margin: 0; color: #333; 
             padding-top: 100px;
-            line-height: 2;
+            line-height: 2; /* 保持舒適的閱讀間距 */
         }
 
         /* 導覽列 (全站統一) */
@@ -34,89 +34,74 @@
         }
         nav a:hover { color: #111; }
 
-        .container { max-width: 900px; margin: 0 auto; padding: 60px 25px; }
+        .container { max-width: 700px; margin: 0 auto; padding: 60px 25px; }
 
-        /* 佈局：左右非對稱 */
-        .about-wrapper {
-            display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            gap: 80px;
-            align-items: start;
-        }
-
-        /* 左側內容 */
-        .profile-content h1 {
-            font-size: 2rem; font-weight: 500; letter-spacing: 0.2em;
-            margin: 0 0 40px 0; color: #111;
-        }
-        .profile-content p {
-            font-size: 1rem; color: #555; font-weight: 300;
-            margin-bottom: 30px;
-        }
-
-        .expertise {
-            margin-top: 60px;
-            border-top: 1px solid #111;
-            padding-top: 40px;
-        }
-        .section-label {
-            font-size: 11px; color: #bbb; letter-spacing: 0.3em;
-            text-transform: uppercase; margin-bottom: 25px; display: block;
-        }
-        .expertise-list {
-            list-style: none; padding: 0; margin: 0;
-            display: grid; grid-template-columns: 1fr 1fr; gap: 15px;
-        }
-        .expertise-list li {
-            font-size: 13px; color: #111; letter-spacing: 0.05em;
-            display: flex; align-items: center;
-        }
-        .expertise-list li::before {
-            content: ""; width: 6px; height: 6px; background: #111; 
-            margin-right: 12px;
-        }
-
-        /* 右側：圖片與聯繫 */
-        .profile-sidebar {
-            position: sticky; top: 150px;
-        }
-        .profile-image {
-            width: 100%; aspect-ratio: 1/1;
-            background-color: #eee;
+        /* 個人圖片 */
+        .profile-section { text-align: center; margin-bottom: 60px; }
+        .profile-pic {
+            width: 140px; height: 140px;
+            border-radius: 50%;
             object-fit: cover;
-            border: 1px solid #eee; /* 改為直角 */
-            margin-bottom: 40px;
-        }
-        
-        .contact-box {
             border: 1px solid #eee;
-            padding: 30px;
+            margin-bottom: 20px;
         }
-        .contact-item {
-            display: block;
-            text-decoration: none;
-            color: #111;
-            font-size: 12px;
-            letter-spacing: 0.1em;
-            margin-bottom: 15px;
-            transition: 0.3s;
-        }
-        .contact-item:last-child { margin-bottom: 0; }
-        .contact-item:hover { color: #999; }
 
-        /* 頁尾 */
+        /* 文字排版 */
+        .about-title {
+            font-size: 1.6rem; font-weight: 500; color: #111;
+            margin-bottom: 40px; text-align: center; letter-spacing: 0.1em;
+        }
+        .about-content p {
+            font-size: 1rem; color: #444; font-weight: 300;
+            margin-bottom: 28px; text-align: justify;
+        }
+
+        /* CTA Card (與 Post Page 統一) */
+        .cta-card {
+            background: #fff;
+            border: 1px solid #111;
+            padding: 50px 40px;
+            margin: 100px 0 40px;
+            text-align: center;
+        }
+        .cta-text { 
+            font-size: 16px; font-weight: 500; color: #111; 
+            margin-bottom: 30px; letter-spacing: 0.15em; 
+        }
+        .cta-btns {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .cta-btn-link {
+            padding: 12px 25px;
+            border: 1px solid #111;
+            color: #111;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            transition: 0.3s;
+            display: inline-block;
+        }
+        .cta-btn-link:hover {
+            background: #111;
+            color: #fff;
+        }
+
         footer {
-            padding: 100px 0 40px;
+            padding: 60px 0 40px;
             text-align: center; font-size: 9px; color: #ccc;
             letter-spacing: 0.3em;
             text-transform: uppercase;
         }
 
-        /* 手機版適應 */
-        @media (max-width: 800px) {
-            .about-wrapper { grid-template-columns: 1fr; gap: 50px; }
-            .profile-sidebar { position: static; }
-            .expertise-list { grid-template-columns: 1fr; }
+        @media (max-width: 600px) {
+            .about-title { font-size: 1.4rem; }
+            .cta-card { padding: 40px 20px; }
+            .cta-btns { flex-direction: column; align-items: center; }
+            .cta-btn-link { width: 100%; max-width: 280px; }
         }
     </style>
 </head>
@@ -129,46 +114,33 @@
         <a href="about.html">About</a>
     </nav>
 
-    <div class="container">
-        <div class="about-wrapper">
-            
-            <div class="profile-content">
-                <span class="section-label">Designer Profile</span>
-                <h1>KIRSTEN</h1>
-                <p>
-                    你好，我是 Kirsten。一名專注於 UXUI 設計與數位產品體驗的創作者。我熱衷於研究極簡美學與技術的結合，並相信設計不只是視覺的呈現，更是邏輯與情感的橋樑。
-                </p>
-                <p>
-                    目前我致力於透過 Notion API 與 AI 工具優化設計工作流，並在我的 Blog 記錄下這些探索過程。希望這些分享能為同樣在設計路上前行的你帶來一點啟發。
-                </p>
+    <main class="container">
+        <section class="profile-section">
+            <img src="profile.png" alt="Kirsten" class="profile-pic">
+        </section>
 
-                <div class="expertise">
-                    <span class="section-label">My Expertise</span>
-                    <ul class="expertise-list">
-                        <li>UX/UI Design</li>
-                        <li>Notion Workflow</li>
-                        <li>Digital Strategy</li>
-                        <li>Visual Identity</li>
-                        <li>Interaction Design</li>
-                        <li>No-Code Solution</li>
-                    </ul>
-                </div>
-            </div>
+        <h1 class="about-title">你好，我是來自香港的 Kirsten！</h1>
 
-            <div class="profile-sidebar">
-                <img src="profile.png" alt="Kirsten" class="profile-image">
-                
-                <div class="contact-box">
-                    <span class="section-label" style="margin-bottom: 15px;">Connect</span>
-                    <a href="mailto:your-email@example.com" class="contact-item">EMAIL</a>
-                    <a href="https://www.instagram.com/kirsten_uxui/" target="_blank" class="contact-item">INSTAGRAM</a>
-                    <a href="https://www.threads.net/@kirsten_uxui" target="_blank" class="contact-item">THREADS</a>
-                    <a href="https://www.behance.net" target="_blank" class="contact-item">BEHANCE</a>
-                </div>
-            </div>
-
+        <div class="about-content">
+            <p>
+                我原本是一位 Content Editor，每天寫文章、影相拍片、管理內容平台，直到 2022 年我開始研究世界各地的新聞平台 App，比較誰的設計比較出色，又思考用戶喜歡在哪個 App 看新聞⋯⋯於是我漸漸投入了 UXUI Design 世界，在網上自學設計流程、理論和概念，於是我的設計由「相片和文字」變成了「界面和流程」。
+            </p>
+            <p>
+                我作為 INFJ，天生對美和整齊有莫名的執著，加上本人凡事也喜歡雞蛋挑骨頭（笑），找問題和解難是最令我著迷的事，加上雙魚座的 MAX 共情力，所以 UXUI Design 像是我的天職一樣（已由 Gemini 證實），是 Perfect Match！現在的我是 UXUI Designer，也有做 content-related 工作，是一個 Slasher～
+            </p>
+            <p>
+                最近醉心研究將 AI 應用在 UXUI Design 之中，這個 Website 也是我學 Vibe Coding 的練習！在這個 AI 年代，我不害怕 AI 會取代自己，反而我認為 AI 是 UXUI Designer 的武器，如何好好利用是每個設計師也要做的功課，這個也是我經營 Social Media 和 Blog 的目的 ◡̈
+            </p>
         </div>
-    </div>
+
+        <div class="cta-card">
+            <div class="cta-text">追蹤我看更多 UXUI 設計筆記</div>
+            <div class="cta-btns">
+                <a href="https://www.instagram.com/kirsten_uxui/" target="_blank" class="cta-btn-link">在 Instagram 看 Case Study</a>
+                <a href="https://www.threads.net/@kirsten_uxui" target="_blank" class="cta-btn-link">在 Threads 看工作碎碎念</a>
+            </div>
+        </div>
+    </main>
 
     <footer>
         &copy; 2025 DESIGN WITH KIRSTEN
