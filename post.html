@@ -13,7 +13,7 @@
             font-family: "Noto Sans TC", "PingFang TC", sans-serif; 
             background-color: #fcfcfc; 
             margin: 0; color: #333; 
-            padding-top: 100px;
+            padding-top: 100px; /* 為固定導覽列留空間 */
         }
 
         /* 導覽列：精準對齊 Resources 標準 */
@@ -33,9 +33,14 @@
         }
         nav a:hover { color: #111; }
 
-        /* 內文容器與專業排版樣式 */
-        .container { max-width: 750px; margin: 0 auto; padding: 20px 25px; }
+        /* 內文容器：優化閱讀寬度與間距 */
+        .container { 
+            max-width: 750px; 
+            margin: 0 auto; 
+            padding: 20px 25px; 
+        }
         
+        /* 標題與日期樣式 */
         #post-date { 
             font-size: 12px; color: #bbb; letter-spacing: 0.15em; 
             display: block; margin-bottom: 10px; text-transform: uppercase;
@@ -45,6 +50,7 @@
             line-height: 1.3; margin: 0 0 40px 0; 
         }
 
+        /* 內文排版：行高 2.0 倍，閱讀更舒適 */
         #post-content { 
             line-height: 2; font-size: 16px; color: #444; font-weight: 300; 
         }
@@ -54,6 +60,7 @@
             margin: 30px auto; border: 1px solid #eee; 
         }
 
+        /* 返回鏈接 */
         .back-to-blog {
             display: inline-block; margin-top: 50px; padding-top: 20px;
             border-top: 1px solid #eee; width: 100%;
@@ -95,16 +102,17 @@
     <footer>&copy; 2025 DESIGN WITH KIRSTEN</footer>
 
     <script>
-        // 這段腳本嚴格遵循你最原本、可運作的邏輯
+        // 保持最原始、簡單的邏輯
         const urlParams = new URLSearchParams(window.location.search);
         const slug = urlParams.get('slug');
 
         async function loadPost() {
             if (!slug) return;
             try {
-                // 指向 posts.json
+                // 讀取 JSON 檔案
                 const response = await fetch('posts/posts.json');
                 const posts = await response.json();
+                // 尋找對應 slug 的文章
                 const post = posts.find(p => p.slug === slug);
 
                 if (post) {
@@ -112,10 +120,12 @@
                     document.getElementById('post-title').textContent = post.title;
                     document.getElementById('post-date').textContent = post.date;
 
-                    // 指向正確的 HTML 片段
+                    // 讀取文章 HTML 內容
                     const contentResponse = await fetch(`posts/${post.slug}.html`);
-                    const contentHtml = await contentResponse.text();
-                    document.getElementById('post-content').innerHTML = contentHtml;
+                    if (contentResponse.ok) {
+                        const contentHtml = await contentResponse.text();
+                        document.getElementById('post-content').innerHTML = contentHtml;
+                    }
                 }
             } catch (error) {
                 console.error('Error:', error);
