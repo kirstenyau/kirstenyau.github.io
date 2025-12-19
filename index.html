@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>DESIGN WITH KIRSTEN</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
 
@@ -20,7 +20,7 @@
             min-height: 100vh;
         }
 
-        /* 1. 導覽列 */
+        /* 導覽列 */
         nav { 
             position: fixed; 
             top: 0; width: 100%; height: 75px; 
@@ -38,7 +38,7 @@
         }
         nav a:hover { color: #111; }
 
-        /* 2. Hero 區塊 */
+        /* Hero 區塊 */
         .hero { 
             flex: 1;
             display: flex; flex-direction: column; 
@@ -74,7 +74,7 @@
             margin-bottom: 30px;
         }
 
-        /* 3. 直角按鈕群組 */
+        /* 直角按鈕群組 */
         .btn-container {
             display: flex;
             flex-direction: column;
@@ -91,7 +91,7 @@
             font-size: 11px; font-weight: 500; 
             letter-spacing: 0.3em; 
             transition: 0.3s; 
-            border-radius: 0; /* 強制直角 */
+            border-radius: 0;
             background: transparent;
             text-transform: uppercase;
         }
@@ -101,17 +101,18 @@
             color: #fff; 
         }
 
-        /* 4. 社群 Icon 按鈕 */
+        /* 社群 Icon 排版 */
         .social-container {
             display: flex;
             gap: 25px;
             margin-top: 10px;
         }
         .social-icon {
-            color: #aaa;
-            font-size: 1.2rem;
+            color: #bbb;
+            font-size: 1.4rem;
             text-decoration: none;
-            transition: 0.3s;
+            transition: 0.3s ease;
+            display: inline-block;
         }
         .social-icon:hover {
             color: #111;
@@ -158,10 +159,10 @@
         </div>
 
         <div class="social-container">
-            <a href="https://www.instagram.com/kirsten_uxui/" target="_blank" class="social-icon" title="Instagram">
+            <a href="https://www.instagram.com/kirsten_uxui/" target="_blank" class="social-icon">
                 <i class="fa-brands fa-instagram"></i>
             </a>
-            <a href="https://www.threads.net/@kirsten_uxui" target="_blank" class="social-icon" title="Threads">
+            <a href="https://www.threads.net/@kirsten_uxui" target="_blank" class="social-icon">
                 <i class="fa-brands fa-threads"></i>
             </a>
         </div>
