@@ -1,14 +1,12 @@
 [
   {
-    "slug": "my-first-post",
-    "title": "如何開始學習 UXUI 設計",
-    "date": "2025-01-20",
-    "description": "這篇文章將分享我從零開始學習設計的心路歷程，以及推薦的學習資源和工具..."
+    "title": "花了一整天，終於連好Notion API了",
+    "slug": "Blog",
+    "date": "2025-12-18"
   },
   {
-    "slug": "ai-tools-2025",
-    "title": "2025 年設計師必備的 AI 工具清單",
-    "date": "2025-01-18",
-    "description": "AI 正在改變設計工作流。從自動化佈局到生成式 UI，這是我目前最常用的五個工具..."
+    "title": "Testing on notion blog cms",
+    "slug": "my-first-post……",
+    "date": "2025-12-18"
   }
 ]
