@@ -56,12 +56,13 @@
         .resource-card {
             background: #fff;
             border: 1px solid #eee;
-            padding: 35px;
+            padding: 40px;
             display: flex;
             flex-direction: column;
             transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             text-decoration: none;
             color: inherit;
+            border-radius: 0;
         }
 
         .resource-card:hover {
@@ -81,26 +82,26 @@
         }
 
         .resource-title {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: 500;
             color: #111;
-            margin: 0 0 12px 0;
+            margin: 0 0 15px 0;
             letter-spacing: 0.05em;
         }
 
         .resource-desc {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: #888;
             line-height: 1.7;
             font-weight: 300;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             flex-grow: 1;
         }
 
         .resource-link {
             display: inline-block;
             align-self: flex-start;
-            padding: 8px 18px;
+            padding: 10px 20px;
             border: 1px solid #111;
             font-size: 10px;
             font-weight: 500;
@@ -127,6 +128,7 @@
         @media (max-width: 768px) {
             #resource-list { grid-template-columns: 1fr; }
             .page-header h1 { font-size: 1.4rem; }
+            .resource-card { padding: 30px; }
         }
     </style>
 </head>
@@ -146,8 +148,7 @@
         </header>
 
         <div id="resource-list">
-            <p style="text-align: center; color: #ccc; letter-spacing: 0.2em; font-size: 12px;">LOADING...</p>
-        </div>
+            </div>
     </div>
 
     <footer>
@@ -155,34 +156,73 @@
     </footer>
 
     <script>
-        async function fetchResources() {
-            try {
-                // 確保你有一個 resources.json 在同一目錄或指定位置
-                const response = await fetch('resources.json');
-                const resources = await response.json();
-                const list = document.getElementById('resource-list');
-                list.innerHTML = '';
-
-                resources.forEach(item => {
-                    const card = document.createElement('a');
-                    card.href = item.url || '#';
-                    card.target = "_blank";
-                    card.className = 'resource-card';
-
-                    card.innerHTML = `
-                        <span class="tag">${item.tag || '#Resources'}</span>
-                        <h3 class="resource-title">${item.title}</h3>
-                        <p class="resource-desc">${item.description || ''}</p>
-                        <span class="resource-link">${item.buttonText || 'VIEW MORE'}</span>
-                    `;
-                    list.appendChild(card);
-                });
-            } catch (e) {
-                console.error("Fetch error:", e);
-                document.getElementById('resource-list').innerHTML = '<p style="text-align:center; color:#999;">目前尚無資源內容</p>';
+        // 你的資源資料清單
+        const resources = [
+            {
+                tag: "#Design Tool",
+                title: "Figma",
+                description: "目前全球領先的協作式介面設計工具，無論是原型製作或系統化設計皆能輕鬆達成。",
+                url: "https://www.figma.com",
+                buttonText: "Visit Figma"
+            },
+            {
+                tag: "#Portfolio",
+                title: "Behance",
+                description: "Adobe 旗下的創意展示平台，是尋找完整專案細節與視覺包裝靈感的最佳去處。",
+                url: "https://www.behance.net",
+                buttonText: "Explore Works"
+            },
+            {
+                tag: "#Inspiration",
+                title: "Dribbble",
+                description: "匯集全球頂尖設計師的創意碎片，適合尋找 UI 細節、插畫以及最新視覺趨勢。",
+                url: "https://dribbble.com",
+                buttonText: "Get Inspired"
+            },
+            {
+                tag: "#UI UX Reference",
+                title: "Mobbin",
+                description: "最齊全的真實 App 介面資料庫，透過解析知名產品的 User Flow 來精進產品邏輯。",
+                url: "https://mobbin.com",
+                buttonText: "Check UI Flow"
+            },
+            {
+                tag: "#Visual Mood",
+                title: "Pinterest",
+                description: "視覺情緒板（Moodboard）的必備工具，幫助你在專案初期快速建立風格方向。",
+                url: "https://www.pinterest.com",
+                buttonText: "See Moodboards"
+            },
+            {
+                tag: "#Tech Trend",
+                title: "Product Hunt",
+                description: "每日更新全球最新的科技產品與 AI 工具，讓你始終走在數位趨勢的最前線。",
+                url: "https://www.producthunt.com",
+                buttonText: "Discover Products"
             }
+        ];
+
+        function renderResources() {
+            const list = document.getElementById('resource-list');
+            list.innerHTML = '';
+
+            resources.forEach(item => {
+                const card = document.createElement('a');
+                card.href = item.url;
+                card.target = "_blank";
+                card.className = 'resource-card';
+
+                card.innerHTML = `
+                    <span class="tag">${item.tag}</span>
+                    <h3 class="resource-title">${item.title}</h3>
+                    <p class="resource-desc">${item.description}</p>
+                    <span class="resource-link">${item.buttonText}</span>
+                `;
+                list.appendChild(card);
+            });
         }
-        fetchResources();
+
+        renderResources();
     </script>
 </body>
 </html>
