@@ -14,10 +14,10 @@
             background-color: #fcfcfc; 
             margin: 0; color: #333; 
             padding-top: 100px;
-            line-height: 2; /* 保持舒適的閱讀間距 */
+            line-height: 2;
         }
 
-        /* 導覽列 (全站統一) */
+        /* 全站統一導覽列 */
         nav { 
             position: fixed; top: 0; left: 0; width: 100%; height: 75px; 
             background: rgba(252, 252, 252, 0.85); 
@@ -36,7 +36,7 @@
 
         .container { max-width: 700px; margin: 0 auto; padding: 60px 25px; }
 
-        /* 個人圖片 */
+        /* 個人頭像區 */
         .profile-section { text-align: center; margin-bottom: 60px; }
         .profile-pic {
             width: 140px; height: 140px;
@@ -56,7 +56,7 @@
             margin-bottom: 28px; text-align: justify;
         }
 
-        /* CTA Card (與 Post Page 統一) */
+        /* CTA Card (全站統一) */
         .cta-card {
             background: #fff;
             border: 1px solid #111;
@@ -97,7 +97,10 @@
             text-transform: uppercase;
         }
 
+        /* 手機版適應 */
         @media (max-width: 600px) {
+            nav { height: 65px; }
+            nav a { margin: 0 10px; font-size: 11px; }
             .about-title { font-size: 1.4rem; }
             .cta-card { padding: 40px 20px; }
             .cta-btns { flex-direction: column; align-items: center; }
@@ -111,7 +114,7 @@
         <a href="index.html">Home</a>
         <a href="blog.html">Blog</a>
         <a href="resources.html">Resources</a>
-        <a href="about.html">About</a>
+        <a href="about.html" style="color:#111;">About</a>
     </nav>
 
     <main class="container">
@@ -123,10 +126,10 @@
 
         <div class="about-content">
             <p>
-                我原本是一位 Content Editor，每天寫文章、影相拍片、管理內容平台，直到 2022 年我開始研究世界各地的新聞平台 App，比較誰的設計比較出色，又思考用戶喜歡在哪個 App 看新聞⋯⋯於是我漸漸投入了 UXUI Design 世界，在網上自學設計流程、理論和概念，於是我的設計由「相片和文字」變成了「界面和流程」。
+                我原本是一位 Content Editor，每天寫文章、影相拍片、管理內容平台，直到 2022 年我開始研究世界各地的新聞平台 App，比較誰的設計比較出色，又思考用戶喜歡在哪個 App 看新聞⋯⋯我漸漸投入了 UXUI Design 世界，在網上自學設計流程、理論和概念，於是我的設計由「相片和文字」變成了「界面和流程」。
             </p>
             <p>
-                我作為 INFJ，天生對美和整齊有莫名的執著，加上本人凡事也喜歡雞蛋挑骨頭（笑），找問題和解難是最令我著迷的事，加上雙魚座的 MAX 共情力，所以 UXUI Design 像是我的天職一樣（已由 Gemini 證實），是 Perfect Match！現在的我是 UXUI Designer，也有做 content-related 工作，是一個 Slasher～
+                我作為 INFJ，天生對美感和整齊有莫名執著，加上本人凡事也喜歡雞蛋挑骨頭（笑），思考和解難是最令我著迷的事，加上雙魚座的 MAX 共情力，所以 UXUI Design 像是我的天職一樣（已由 Gemini 證實是 Perfect Match）！現在的我是 UXUI Designer，也有做 content-related 工作，是一個 Slasher～
             </p>
             <p>
                 最近醉心研究將 AI 應用在 UXUI Design 之中，這個 Website 也是我學 Vibe Coding 的練習！在這個 AI 年代，我不害怕 AI 會取代自己，反而我認為 AI 是 UXUI Designer 的武器，如何好好利用是每個設計師也要做的功課，這個也是我經營 Social Media 和 Blog 的目的 ◡̈
