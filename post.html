@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Article | DESIGN WITH KIRSTEN</title>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <title>加載中... | DESIGN WITH KIRSTEN</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
 
@@ -15,10 +15,10 @@
             background-color: #fcfcfc; 
             margin: 0; color: #333; 
             padding-top: 100px;
-            line-height: 1.9;
+            line-height: 1.8;
         }
 
-        /* 導覽列 (全站統一) */
+        /* 導覽列：對齊 Resources 標準 */
         nav { 
             position: fixed; top: 0; left: 0; width: 100%; height: 75px; 
             background: rgba(252, 252, 252, 0.85); 
@@ -35,93 +35,72 @@
         }
         nav a:hover { color: #111; }
 
+        /* 文章容器：限制在 750px 最適合閱讀 */
         .container { max-width: 750px; margin: 0 auto; padding: 40px 25px; }
 
         /* 文章標題區 */
-        .post-header { margin-bottom: 50px; }
-        .post-title { 
-            font-size: 2.2rem; font-weight: 500; color: #111; 
-            margin: 0 0 30px 0; line-height: 1.3; letter-spacing: 0.05em;
-        }
+        .post-header { margin-bottom: 50px; text-align: left; }
+        .post-date { font-size: 12px; color: #bbb; letter-spacing: 0.1em; display: block; margin-bottom: 15px; }
+        .post-title { font-size: 2.2rem; font-weight: 500; color: #111; line-height: 1.3; margin: 0; }
 
-        /* 作者欄位 */
-        .author-meta {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 40px;
-            padding-bottom: 30px;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        .author-pic {
-            width: 48px; height: 48px;
-            border-radius: 50%;
-            object-fit: cover;
+        /* 文章內文樣式 */
+        .post-content { font-size: 16px; color: #444; font-weight: 300; }
+        .post-content p { margin-bottom: 30px; text-align: justify; }
+        
+        /* 圖片處理：加入微陰影與呼吸感 */
+        .post-content img { 
+            max-width: 100%; height: auto; display: block; 
+            margin: 40px auto; 
             border: 1px solid #eee;
-            background-color: #f0f0f0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
         }
-        .author-info { display: flex; flex-direction: column; }
-        .author-name { font-size: 14px; font-weight: 500; color: #111; letter-spacing: 0.05em; }
-        .post-date { font-size: 12px; color: #bbb; letter-spacing: 0.1em; }
 
-        /* 文章內文 */
-        #post-content { font-size: 1.05rem; color: #444; font-weight: 300; }
-        #post-content h1, #post-content h2, #post-content h3 { color: #111; font-weight: 500; margin: 45px 0 20px; }
-        #post-content p { margin-bottom: 25px; }
-        #post-content img { max-width: 100%; height: auto; margin: 30px 0; border: 1px solid #eee; }
-        #post-content blockquote {
+        /* 引用樣式：適合強調金句 */
+        .post-content blockquote {
             border-left: 2px solid #111;
-            margin: 30px 0; padding: 10px 0 10px 25px;
-            color: #777; background: #f9f9f9;
+            margin: 40px 0;
+            padding: 10px 30px;
+            color: #777;
+            font-style: italic;
+            background: #f9f9f9;
         }
 
-        /* CTA Card */
-        .cta-card {
-            background: #fff;
-            border: 1px solid #111;
-            padding: 50px 40px;
-            margin: 80px 0 40px;
-            text-align: center;
-        }
-        .cta-text { 
-            font-size: 16px; font-weight: 500; color: #111; 
-            margin-bottom: 30px; letter-spacing: 0.15em; 
-        }
-        .cta-btns {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-        .cta-btn-link {
-            padding: 12px 25px;
-            border: 1px solid #111;
-            color: #111;
+        /* 返回按鈕 (回到 Blog 列表) */
+        .back-link {
+            display: inline-block;
+            margin-top: 60px;
             text-decoration: none;
-            font-size: 11px;
-            font-weight: 500;
+            color: #bbb;
+            font-size: 12px;
             letter-spacing: 0.1em;
             transition: 0.3s;
-            display: inline-block;
         }
-        .cta-btn-link:hover {
-            background: #111;
-            color: #fff;
-        }
+        .back-link:hover { color: #111; }
 
-        /* 頁尾 */
+        /* 返回頂部按鈕樣式 */
+        #backToTop {
+            position: fixed; bottom: 40px; right: 40px;
+            width: 45px; height: 45px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #999; border: 1px solid #eee;
+            border-radius: 50%; cursor: pointer;
+            display: none; align-items: center; justify-content: center;
+            font-size: 16px; transition: 0.3s;
+            z-index: 999; backdrop-filter: blur(5px);
+        }
+        #backToTop:hover { background: #111; color: #fff; border-color: #111; transform: translateY(-3px); }
+
         footer {
-            padding: 60px 0 40px;
-            text-align: center; font-size: 9px; color: #ccc;
-            letter-spacing: 0.3em;
+            padding: 80px 0 40px; text-align: center; 
+            font-size: 9px; color: #ccc; letter-spacing: 0.3em;
             text-transform: uppercase;
         }
 
         @media (max-width: 600px) {
-            .post-title { font-size: 1.75rem; }
-            .cta-card { padding: 40px 20px; }
-            .cta-btns { flex-direction: column; align-items: center; }
-            .cta-btn-link { width: 100%; max-width: 280px; }
+            nav { height: 65px; }
+            .container { padding: 30px 20px; }
+            .post-title { font-size: 1.7rem; }
+            #backToTop { bottom: 20px; right: 20px; }
         }
     </style>
 </head>
@@ -134,81 +113,64 @@
         <a href="about.html">About</a>
     </nav>
 
-    <article class="container">
-        <header class="post-header">
-            <h1 id="post-title" class="post-title">——</h1>
-            
-            <div class="author-meta">
-                <img src="profile.png" alt="Kirsten" class="author-pic">
-                <div class="author-info">
-                    <span class="author-name">kirsten_uxui</span>
-                    <span id="post-date" class="post-date">YYYY-MM-DD</span>
+    <main class="container">
+        <article>
+            <header class="post-header">
+                <span id="date" class="post-date">Loading date...</span>
+                <h1 id="title" class="post-title">Loading title...</h1>
+            </header>
+
+            <div id="content" class="post-content">
                 </div>
-            </div>
-        </header>
 
-        <div id="post-content">
-            <p style="color: #ccc;">Loading content...</p>
-        </div>
+            <a href="blog.html" class="back-link">← Back to Blog</a>
+        </article>
+    </main>
 
-        <div class="cta-card">
-            <div class="cta-text">追蹤我看更多 UXUI 設計筆記</div>
-            <div class="cta-btns">
-                <a href="https://www.instagram.com/kirsten_uxui/" target="_blank" class="cta-btn-link">在 Instagram 看 Case Study</a>
-                <a href="https://www.threads.net/@kirsten_uxui" target="_blank" class="cta-btn-link">在 Threads 看工作碎碎念</a>
-            </div>
-        </div>
+    <button id="backToTop"><i class="fa-solid fa-chevron-up"></i></button>
 
-        <div style="text-align: center; margin-top: 40px;">
-            <a href="blog.html" style="font-size: 11px; color: #bbb; text-decoration: none; letter-spacing: 0.2em;">← BACK TO BLOG</a>
-        </div>
-    </article>
-
-    <footer>
-        &copy; 2025 DESIGN WITH KIRSTEN
-    </footer>
+    <footer>&copy; 2025 DESIGN WITH KIRSTEN</footer>
 
     <script>
+        // 獲取 Slug
+        const urlParams = new URLSearchParams(window.location.search);
+        const slug = urlParams.get('slug');
+
         async function loadPost() {
-            const params = new URLSearchParams(window.location.search);
-            const slug = params.get('slug');
-            if (!slug) { window.location.href = 'blog.html'; return; }
-
             try {
-                // 1. 抓取 posts.json 取得元數據
-                const resList = await fetch('posts/posts.json');
-                const posts = await resList.json();
-                const postInfo = posts.find(p => p.slug === slug);
+                const res = await fetch('posts/posts.json');
+                const posts = await res.json();
+                const post = posts.find(p => p.slug === slug);
 
-                if (postInfo) {
-                    document.getElementById('post-title').innerText = postInfo.title;
-                    document.getElementById('post-date').innerText = postInfo.date;
-                    document.title = `${postInfo.title} | Kirsten`;
+                if (post) {
+                    document.title = `${post.title} | DESIGN WITH KIRSTEN`;
+                    document.getElementById('title').innerText = post.title;
+                    document.getElementById('date').innerText = post.date;
+                    
+                    // 加載對應的 HTML 內容
+                    const contentRes = await fetch(`posts/${post.slug}.html`);
+                    const contentHtml = await contentRes.text();
+                    document.getElementById('content').innerHTML = contentHtml;
                 }
-
-                // 2. 抓取 Markdown 內容
-                const resContent = await fetch(`posts/${slug}.md`);
-                let markdown = await resContent.text();
-
-                /** * 自動化過濾邏輯：
-                 * 移除 Notion 匯出時自動帶入的 Front Matter (title, date 等)
-                 */
-                if (markdown.trim().startsWith('---')) {
-                    // 過濾 --- 格式
-                    markdown = markdown.replace(/^---[\s\S]*?---/, '');
-                } else {
-                    // 過濾開頭直接顯示的 title: 或 date: 行
-                    markdown = markdown.replace(/^(title:|date:|slug:|layout:).*\n?/gm, '');
-                }
-
-                // 3. 渲染並注入 HTML
-                document.getElementById('post-content').innerHTML = marked.parse(markdown.trim());
-
             } catch (e) {
-                console.error(e);
-                document.getElementById('post-content').innerHTML = '<p style="color: #999;">內容載入失敗。</p>';
+                console.error("加載文章失敗:", e);
+                document.getElementById('content').innerHTML = "<p>抱歉，找不到該文章內容。</p>";
             }
         }
+
+        // 返回頂部功能
+        const btn = document.getElementById("backToTop");
+        window.onscroll = function() {
+            if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
+                btn.style.display = "flex";
+            } else {
+                btn.style.display = "none";
+            }
+        };
+        btn.onclick = function() {
+            window.scrollTo({top: 0, behavior: "smooth"});
+        };
+
         loadPost();
     </script>
 </body>
