@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>DESIGN WITH KIRSTEN</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
 
@@ -16,10 +17,10 @@
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
-            min-height: 100vh; /* 確保內容撐開整個頁面高度 */
+            min-height: 100vh;
         }
 
-        /* 導覽列 */
+        /* 導覽列 (與 Resources 對齊) */
         nav { 
             position: fixed; top: 0; left: 0; width: 100%; height: 75px; 
             background: rgba(252, 252, 252, 0.85); 
@@ -36,20 +37,17 @@
         }
         nav a:hover { color: #111; }
 
-        /* Hero 核心區域 */
         .hero {
-            flex-grow: 1; /* 讓 hero 區塊佔據剩餘空間 */
+            flex-grow: 1;
             display: flex;
             flex-direction: column;
-            justify-content: center; /* 垂直居中 */
-            align-items: center; /* 水平居中 */
+            justify-content: center;
+            align-items: center;
             text-align: center;
-            padding: 100px 20px 60px; /* 增加頂部 padding 避開 nav */
+            padding: 100px 20px 60px;
             position: relative;
-            z-index: 1;
         }
 
-        /* 圓形頭像 */
         .profile-pic {
             width: 110px; height: 110px;
             border-radius: 50%;
@@ -57,11 +55,6 @@
             border: 1px solid #eee;
             margin-bottom: 30px;
             transition: 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-            background-color: #fff; /* 確保頭像背景是白色，更清爽 */
-        }
-        .profile-pic:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05); /* 微妙陰影 */
         }
 
         .hero h1 {
@@ -70,29 +63,26 @@
             letter-spacing: 0.4em;
             margin: 0 0 12px 0;
             color: #111;
-            text-transform: uppercase;
         }
 
-        /* 副標題 */
         .hero p {
             font-size: 0.8rem;
             font-weight: 300;
             color: #aaa;
             letter-spacing: 0.25em;
-            margin-bottom: 50px;
+            margin-bottom: 45px;
             text-transform: uppercase;
         }
 
-        /* 按鈕組 */
         .btn-group {
             display: flex;
             flex-direction: column;
             gap: 15px;
             width: 100%;
             max-width: 320px;
+            margin-bottom: 35px; /* 為下方的 Icon 留空間 */
         }
 
-        /* 直角按鈕樣式 */
         .cta-btn {
             display: block;
             padding: 16px 20px;
@@ -101,7 +91,7 @@
             color: #111;
             font-size: 12px;
             font-weight: 500;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.1em;
             transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             background: #fff;
         }
@@ -112,27 +102,43 @@
             transform: translateY(-2px);
         }
 
-        /* 頁尾 */
+        /* ✨ 社交 Icon 樣式 */
+        .social-icons {
+            display: flex;
+            gap: 25px;
+            margin-top: 10px;
+        }
+        .social-icons a {
+            color: #bbb; /* 低調的淺灰色 */
+            font-size: 20px;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+        .social-icons a:hover {
+            color: #111; /* 懸停變深 */
+            transform: translateY(-2px);
+        }
+
         footer {
             padding: 40px 0;
             text-align: center; font-size: 9px; color: #ccc;
             letter-spacing: 0.3em;
             text-transform: uppercase;
-            margin-top: auto; /* 讓頁尾始終在底部 */
         }
 
         @media (max-width: 600px) {
+            nav { height: 65px; }
+            nav a { margin: 0 12px; font-size: 11px; }
             .hero h1 { font-size: 1.4rem; letter-spacing: 0.3em; }
-            .profile-pic { width: 90px; height: 90px; margin-bottom: 25px;}
+            .profile-pic { width: 90px; height: 90px; }
             .btn-group { max-width: 280px; }
-            .hero p { margin-bottom: 40px; }
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="index.html">Home</a>
+        <a href="index.html" style="color:#111;">Home</a>
         <a href="blog.html">Blog</a>
         <a href="resources.html">Resources</a>
         <a href="about.html">About</a>
@@ -148,6 +154,15 @@
             <a href="blog.html" class="cta-btn">在 Blog 看 UX & AI 學習筆記</a>
             <a href="resources.html" class="cta-btn">學習 UXUI 必備資源</a>
             <a href="about.html" class="cta-btn">想認識我更多嗎？</a>
+        </div>
+
+        <div class="social-icons">
+            <a href="https://www.instagram.com/kirsten_uxui/" target="_blank" title="Instagram">
+                <i class="fa-brands fa-instagram"></i>
+            </a>
+            <a href="https://www.threads.net/@kirsten_uxui" target="_blank" title="Threads">
+                <i class="fa-brands fa-threads"></i>
+            </a>
         </div>
     </section>
 
