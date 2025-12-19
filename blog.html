@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Blog | DESIGN WITH KIRSTEN</title>
+    <title>UXUI設計筆記 | DESIGN WITH KIRSTEN</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
 
@@ -13,10 +13,10 @@
             font-family: "Noto Sans TC", "PingFang TC", sans-serif; 
             background-color: #fcfcfc; 
             margin: 0; color: #333; 
-            padding-top: 100px; /* 確保內容不被固定導覽列遮住 */
+            padding-top: 100px;
         }
 
-        /* 全站統一導覽列 */
+        /* ✨ 全站統一導覽列 (與 Index, About 一致) */
         nav { 
             position: fixed; top: 0; left: 0; width: 100%; height: 75px; 
             background: rgba(252, 252, 252, 0.85); 
@@ -35,13 +35,14 @@
 
         .container { max-width: 900px; margin: 0 auto; padding: 40px 25px; }
 
-        /* 文章清單排版 (日式直角卡片) */
+        /* 標題區：恢復為「UXUI設計筆記」 */
         .page-header { margin-bottom: 60px; text-align: left; }
         .page-title { 
             font-size: 1.8rem; font-weight: 500; color: #111; 
             letter-spacing: 0.15em; margin: 0;
         }
 
+        /* 文章清單排版 (恢復原本的設計) */
         #post-list {
             display: grid;
             grid-template-columns: 1fr;
@@ -53,7 +54,7 @@
             text-decoration: none;
             color: inherit;
             background: #fff;
-            border: 1px solid #eee; /* 直角邊框 */
+            border: 1px solid #eee;
             padding: 40px;
             transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
@@ -75,13 +76,12 @@
             text-transform: uppercase;
         }
 
-        /* 手機版適應：修正 Nav Bar 擠壓與卡片內距 */
+        /* 📱 手機版適應：確保全站 Nav Bar 高度與間距一模一樣 */
         @media (max-width: 600px) {
             nav { height: 65px; }
             nav a { margin: 0 10px; font-size: 11px; letter-spacing: 0.1em; }
             .container { padding: 20px 20px; }
             .post-item { padding: 30px 20px; }
-            .post-item h2 { font-size: 1.2rem; }
             .page-title { font-size: 1.5rem; }
         }
     </style>
@@ -97,7 +97,7 @@
 
     <main class="container">
         <header class="page-header">
-            <h1 class="page-title">Blog</h1>
+            <h1 class="page-title">UXUI設計筆記</h1>
         </header>
 
         <div id="post-list">
@@ -129,8 +129,7 @@
                     list.appendChild(item);
                 });
             } catch (e) {
-                console.error("載入文章失敗:", e);
-                document.getElementById('post-list').innerHTML = '<p>暫時無法載入文章。</p>';
+                console.error("載入失敗:", e);
             }
         }
         loadPosts();
