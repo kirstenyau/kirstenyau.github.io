@@ -16,7 +16,7 @@
             padding-top: 100px;
         }
 
-        /* ✨ 導覽列：對齊 Resources 標準 (13px, 400字重, 0.15em間距) */
+        /* 導覽列：對齊 Resources 標準 */
         nav { 
             position: fixed; top: 0; left: 0; width: 100%; height: 75px; 
             background: rgba(252, 252, 252, 0.85); 
@@ -33,79 +33,29 @@
         }
         nav a:hover { color: #111; }
 
-        /* ✨ 提議的專業內文容器 */
-        .container { 
-            max-width: 750px; /* 最佳黃金閱讀寬度 */
-            margin: 0 auto; 
-            padding: 40px 25px; 
-        }
+        .container { max-width: 750px; margin: 0 auto; padding: 40px 25px; }
 
-        /* ✨ 優化的標題區 */
-        .post-date { 
-            font-size: 12px; 
-            color: #bbb; 
-            letter-spacing: 0.15em; 
-            display: block; 
-            margin-bottom: 15px;
-            text-transform: uppercase;
-        }
-        .post-title { 
-            font-size: 2.2rem; 
-            font-weight: 500; 
-            color: #111; 
-            line-height: 1.3; 
-            margin: 0 0 50px 0; 
-            letter-spacing: 0.02em;
-        }
+        .post-date { font-size: 12px; color: #bbb; letter-spacing: 0.15em; display: block; margin-bottom: 15px; text-transform: uppercase;}
+        .post-title { font-size: 2.2rem; font-weight: 500; color: #111; line-height: 1.3; margin: 0 0 50px 0; }
 
-        /* ✨ 專業閱讀排版 (行高 2.0, 輕量字重) */
-        .post-content { 
-            line-height: 2; 
-            font-size: 16px; 
-            color: #444;
-            font-weight: 300;
-        }
+        .post-content { line-height: 2; font-size: 16px; color: #444; font-weight: 300; }
         .post-content p { margin-bottom: 30px; text-align: justify; }
-        
-        /* 內文圖片樣式 */
-        .post-content img { 
-            max-width: 100%; 
-            height: auto; 
-            display: block;
-            margin: 45px auto; 
-            border: 1px solid #eee;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
-        }
+        .post-content img { max-width: 100%; height: auto; display: block; margin: 40px auto; border: 1px solid #eee; }
 
-        /* 文章底部的返回鏈接 */
         .back-to-blog {
-            display: inline-block;
-            margin-top: 60px;
-            padding-top: 30px;
-            border-top: 1px solid #eee;
-            width: 100%;
-            text-decoration: none;
-            color: #bbb;
-            font-size: 12px;
-            letter-spacing: 0.1em;
-            transition: 0.3s;
+            display: inline-block; margin-top: 60px; padding-top: 30px;
+            border-top: 1px solid #eee; width: 100%;
+            text-decoration: none; color: #bbb; font-size: 12px;
+            letter-spacing: 0.1em; transition: 0.3s;
         }
         .back-to-blog:hover { color: #111; }
 
-        footer {
-            padding: 80px 0 40px; 
-            text-align: center; 
-            font-size: 9px; color: #ccc; 
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
-        }
+        footer { padding: 80px 0 40px; text-align: center; font-size: 9px; color: #ccc; letter-spacing: 0.3em; text-transform: uppercase; }
 
-        /* 手機版適配 */
         @media (max-width: 600px) {
             nav { height: 65px; }
-            nav a { margin: 0 10px; font-size: 11px; }
             .container { padding: 30px 20px; }
-            .post-title { font-size: 1.8rem; margin-bottom: 35px; }
+            .post-title { font-size: 1.8rem; }
         }
     </style>
 </head>
@@ -120,7 +70,7 @@
 
     <main class="container">
         <span id="post-date" class="post-date"></span>
-        <h1 id="post-title" class="post-title"></h1>
+        <h1 id="post-title" class="post-title">加載中...</h1>
         
         <article id="post-content" class="post-content">
             </article>
@@ -128,40 +78,52 @@
         <a href="blog.html" class="back-to-blog">← Back to Blog List</a>
     </main>
 
-    <footer>
-        &copy; 2025 DESIGN WITH KIRSTEN
-    </footer>
+    <footer>&copy; 2025 DESIGN WITH KIRSTEN</footer>
 
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const slug = urlParams.get('slug');
+        // 1. 取得 URL 中的 slug (例如 post.html?slug=my-article)
+        const params = new URLSearchParams(window.location.search);
+        const slug = params.get('slug');
 
         async function loadPost() {
-            if (!slug) return;
-            
+            if (!slug) {
+                document.getElementById('post-title').innerText = "未找到文章標籤";
+                return;
+            }
+
             try {
-                // 1. 讀取 JSON 獲取標題和日期
+                // 2. 獲取 JSON 資料
                 const response = await fetch('posts/posts.json');
                 const posts = await response.json();
                 const post = posts.find(p => p.slug === slug);
 
                 if (post) {
+                    // 3. 設定標題與日期
                     document.title = `${post.title} | DESIGN WITH KIRSTEN`;
-                    document.getElementById('post-title').textContent = post.title;
-                    document.getElementById('post-date').textContent = post.date;
+                    document.getElementById('post-title').innerText = post.title;
+                    document.getElementById('post-date').innerText = post.date;
 
-                    // 2. 讀取對應的獨立 HTML 內容檔案
-                    const contentResponse = await fetch(`posts/${post.slug}.html`);
+                    // 4. 關鍵修正：嘗試載入對應的 .html 檔案
+                    // 請確認你的檔案確實放在 posts/ 目錄下，且檔名正確
+                    const contentPath = `posts/${post.slug}.html`;
+                    console.log("正在嘗試從此路徑讀取內容:", contentPath);
+
+                    const contentResponse = await fetch(contentPath);
+                    
                     if (contentResponse.ok) {
-                        const contentHtml = await contentResponse.text();
-                        document.getElementById('post-content').innerHTML = contentHtml;
+                        const htmlContent = await contentResponse.text();
+                        document.getElementById('post-content').innerHTML = htmlContent;
                     } else {
-                        document.getElementById('post-content').innerHTML = "<p>抱歉，無法載入文章內容。</p>";
+                        document.getElementById('post-content').innerHTML = 
+                            `<p style="color:red;">找不到文章內容檔案 (${contentPath})。請確認檔案是否存在於 posts 資料夾中。</p>`;
                     }
+                } else {
+                    document.getElementById('post-title').innerText = "文章不存在";
                 }
             } catch (error) {
-                console.error('加載錯誤:', error);
-                document.getElementById('post-content').innerHTML = "<p>加載出錯，請檢查網絡連接。</p>";
+                console.error("載入出錯:", error);
+                document.getElementById('post-title').innerText = "載入失敗";
+                document.getElementById('post-content').innerHTML = "<p>請檢查網路連線或 posts.json 格式是否正確。</p>";
             }
         }
 
