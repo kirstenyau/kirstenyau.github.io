@@ -15,7 +15,7 @@
             background-color: #fcfcfc; 
             margin: 0; color: #333; 
             padding-top: 100px;
-            line-height: 1.8;
+            line-height: 1.9; /* 稍微增加行高，提升閱讀舒適度 */
         }
 
         /* 導覽列 */
@@ -50,9 +50,11 @@
             align-items: center;
             gap: 15px;
             margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #f0f0f0;
         }
         .author-pic {
-            width: 45px; height: 45px;
+            width: 48px; height: 48px;
             border-radius: 50%;
             object-fit: cover;
             border: 1px solid #eee;
@@ -61,11 +63,19 @@
         .author-name { font-size: 14px; font-weight: 500; color: #111; letter-spacing: 0.05em; }
         .post-date { font-size: 12px; color: #bbb; letter-spacing: 0.1em; }
 
-        /* 文章內文 */
+        /* 文章內文樣式 */
         #post-content { font-size: 1.05rem; color: #444; font-weight: 300; }
-        #post-content h2 { font-size: 1.6rem; color: #111; margin: 60px 0 25px; font-weight: 500; }
+        #post-content h1, #post-content h2, #post-content h3 { 
+            color: #111; font-weight: 500; margin: 45px 0 20px; 
+        }
         #post-content p { margin-bottom: 25px; }
         #post-content img { max-width: 100%; height: auto; margin: 30px 0; border: 1px solid #eee; }
+        #post-content blockquote {
+            border-left: 2px solid #111;
+            margin: 30px 0; padding: 10px 0 10px 25px;
+            color: #777; font-style: normal;
+            background: #f9f9f9;
+        }
 
         /* CTA Card 設計 */
         .cta-card {
@@ -86,7 +96,7 @@
             flex-wrap: wrap;
         }
         .cta-btn-link {
-            padding: 12px 20px;
+            padding: 12px 25px;
             border: 1px solid #111;
             color: #111;
             text-decoration: none;
@@ -110,9 +120,10 @@
         }
 
         @media (max-width: 600px) {
-            .post-title { font-size: 1.7rem; }
+            .post-title { font-size: 1.75rem; }
             .cta-card { padding: 40px 20px; }
             .cta-btns { flex-direction: column; }
+            .cta-btn-link { width: 100%; }
         }
     </style>
 </head>
@@ -127,7 +138,7 @@
 
     <article class="container">
         <header class="post-header">
-            <h1 id="post-title" class="post-title">載入中...</h1>
+            <h1 id="post-title" class="post-title">——</h1>
             
             <div class="author-meta">
                 <img src="profile.png" alt="Kirsten" class="author-pic">
@@ -139,7 +150,8 @@
         </header>
 
         <div id="post-content">
-            </div>
+            <p style="color: #ccc;">Loading content...</p>
+        </div>
 
         <div class="cta-card">
             <div class="cta-text">追蹤我看更多 UXUI 設計筆記</div>
@@ -165,6 +177,7 @@
             if (!slug) { window.location.href = 'blog.html'; return; }
 
             try {
+                // 1. 抓取 posts.json 取得標題與日期
                 const resList = await fetch('posts/posts.json');
                 const posts = await resList.json();
                 const postInfo = posts.find(p => p.slug === slug);
@@ -175,11 +188,27 @@
                     document.title = `${postInfo.title} | Kirsten`;
                 }
 
+                // 2. 抓取 Markdown 內容
                 const resContent = await fetch(`posts/${slug}.md`);
-                const markdown = await resContent.text();
-                document.getElementById('post-content').innerHTML = marked.parse(markdown);
+                let markdown = await resContent.text();
+
+                /** * 核心邏輯：過濾重複的元數據 (Front Matter)
+                 * 過濾掉開頭的 title: "..." 和 date: "..." 等行
+                 */
+                // 如果檔案以 --- 開頭（YAML 格式），過濾掉兩個 --- 之間的內容
+                if (markdown.trim().startsWith('---')) {
+                    markdown = markdown.replace(/^---[\s\S]*?---/, '');
+                } else {
+                    // 如果是直接顯示的屬性行，過濾掉開頭的特定標籤
+                    markdown = markdown.replace(/^(title:|date:|slug:|layout:).*\n?/gm, '');
+                }
+
+                // 3. 渲染過濾後的乾淨內容
+                document.getElementById('post-content').innerHTML = marked.parse(markdown.trim());
+
             } catch (e) {
-                document.getElementById('post-content').innerHTML = '<p>內容載入失敗。</p>';
+                console.error("Markdown loading error:", e);
+                document.getElementById('post-content').innerHTML = '<p style="color: #999;">內容載入失敗，請稍後再試。</p>';
             }
         }
         loadPost();
