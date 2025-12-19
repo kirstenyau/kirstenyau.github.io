@@ -16,7 +16,7 @@
             padding-top: 100px;
         }
 
-        /* 導覽列：完全對齊 Resources 頁面參數 */
+        /* ✨ 導覽列：完全比照 Resources 頁面 */
         nav { 
             position: fixed; top: 0; left: 0; width: 100%; height: 75px; 
             background: rgba(252, 252, 252, 0.85); 
@@ -27,17 +27,17 @@
         }
         nav a { 
             margin: 0 18px; text-decoration: none; 
-            color: #999; /* 淺灰色文字 */
-            font-size: 13px; font-weight: 400; /* 統一字重 */
-            transition: 0.3s; letter-spacing: 0.15em; /* 統一間距 */
+            color: #999; /* 恢復淺灰色 */
+            font-size: 13px; font-weight: 400; /* 恢復細字重 */
+            transition: 0.3s; letter-spacing: 0.15em; /* 恢復寬字距 */
             text-transform: uppercase;
         }
         nav a:hover { color: #111; }
 
-        /* 限制容器寬度，與 About/Resources 對齊 */
+        /* 限制容器寬度 */
         .container { max-width: 700px; margin: 0 auto; padding: 40px 25px; }
 
-        /* 標題區：置中排版 */
+        /* 置中標題區 */
         .page-header { text-align: center; margin-bottom: 80px; }
         .page-title { 
             font-size: 1.7rem; font-weight: 500; color: #111; 
@@ -55,7 +55,7 @@
             gap: 25px;
         }
 
-        /* 精簡卡片設計 (與截圖一致) */
+        /* 精簡卡片設計 (日期 + 標題) */
         .post-item {
             display: block;
             text-decoration: none;
@@ -79,7 +79,7 @@
         }
         
         .post-item h2 { 
-            font-size: 1.35rem; font-weight: 500; margin: 0; 
+            font-size: 1.3rem; font-weight: 500; margin: 0; 
             color: #111; line-height: 1.5; 
             letter-spacing: 0.05em;
         }
@@ -91,15 +91,14 @@
             text-transform: uppercase;
         }
 
-        /* 手機版適應：完全同步 Resources 頁面 */
+        /* 手機版適應：完全對齊 Resources */
         @media (max-width: 600px) {
             nav { height: 65px; }
-            nav a { margin: 0 10px; font-size: 11px; letter-spacing: 0.1em; }
+            nav a { margin: 0 12px; font-size: 11px; letter-spacing: 0.12em; }
             .container { padding: 20px 20px; }
-            .page-header { margin-bottom: 60px; }
-            .page-title { font-size: 1.5rem; letter-spacing: 0.25em; }
+            .page-title { font-size: 1.5rem; }
             .post-item { padding: 30px 25px; }
-            .post-item h2 { font-size: 1.2rem; }
+            .post-item h2 { font-size: 1.15rem; }
         }
     </style>
 </head>
@@ -107,7 +106,8 @@
 
     <nav>
         <a href="index.html">Home</a>
-        <a href="blog.html" style="color:#111;">Blog</a> <a href="resources.html">Resources</a>
+        <a href="blog.html" style="color:#111;">Blog</a>
+        <a href="resources.html">Resources</a>
         <a href="about.html">About</a>
     </nav>
 
