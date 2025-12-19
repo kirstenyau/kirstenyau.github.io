@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Resources | DESIGN WITH KIRSTEN</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
 
@@ -48,7 +47,7 @@
         }
 
         /* 資源網格佈局 */
-        .resource-grid {
+        #resource-list {
             display: grid;
             grid-template-columns: repeat(2, 1fr); /* 雙欄 */
             gap: 25px;
@@ -78,6 +77,7 @@
             text-transform: uppercase;
             margin-bottom: 12px;
             font-weight: 500;
+            display: block;
         }
 
         .resource-title {
@@ -94,10 +94,9 @@
             line-height: 1.7;
             font-weight: 300;
             margin-bottom: 25px;
-            flex-grow: 1; /* 確保按鈕始終對齊底部 */
+            flex-grow: 1;
         }
 
-        /* 資源卡片的直角小按鈕 */
         .resource-link {
             display: inline-block;
             align-self: flex-start;
@@ -109,6 +108,7 @@
             text-decoration: none;
             color: #111;
             transition: 0.3s;
+            text-transform: uppercase;
         }
 
         .resource-card:hover .resource-link {
@@ -124,10 +124,8 @@
             text-transform: uppercase;
         }
 
-        /* 手機版優化：轉為單欄 */
         @media (max-width: 768px) {
-            .resource-grid { grid-template-columns: 1fr; }
-            .resource-card { padding: 30px; }
+            #resource-list { grid-template-columns: 1fr; }
             .page-header h1 { font-size: 1.4rem; }
         }
     </style>
@@ -147,34 +145,8 @@
             <div class="sub-title">CURATED TOOLS FOR DESIGN & PRODUCTIVITY</div>
         </header>
 
-        <div class="resource-grid">
-            <a href="https://www.notion.so" target="_blank" class="resource-card">
-                <span class="tag">#Productivity</span>
-                <h3 class="resource-title">Notion Templates</h3>
-                <p class="resource-desc">我平常使用的專案管理與設計進度追蹤模板，幫助你更有效率地整理靈感。</p>
-                <span class="resource-link">GET ACCESS</span>
-            </a>
-
-            <a href="https://www.figma.com" target="_blank" class="resource-card">
-                <span class="tag">#Design Tool</span>
-                <h3 class="resource-title">UXUI Design Guide</h3>
-                <p class="resource-desc">適合新手的介面設計入門指南，包含基本原則、網格系統與配色邏輯。</p>
-                <span class="resource-link">LEARN MORE</span>
-            </a>
-
-            <a href="#" class="resource-card">
-                <span class="tag">#AI Tips</span>
-                <h3 class="resource-title">Midjourney Prompts</h3>
-                <p class="resource-desc">精選的生成式圖片指令集，專為網頁設計師優化的視覺參考與素材製作。</p>
-                <span class="resource-link">DOWNLOAD</span>
-            </a>
-
-            <a href="#" class="resource-card">
-                <span class="tag">#Tech</span>
-                <h3 class="resource-title">MacBook Setup</h3>
-                <p class="resource-desc">設計師的筆記型電腦環境配置，從開發工具到必備的 UI 插件推薦。</p>
-                <span class="resource-link">READ LIST</span>
-            </a>
+        <div id="resource-list">
+            <p style="text-align: center; color: #ccc; letter-spacing: 0.2em; font-size: 12px;">LOADING...</p>
         </div>
     </div>
 
@@ -182,5 +154,35 @@
         &copy; 2025 DESIGN WITH KIRSTEN
     </footer>
 
+    <script>
+        async function fetchResources() {
+            try {
+                // 確保你有一個 resources.json 在同一目錄或指定位置
+                const response = await fetch('resources.json');
+                const resources = await response.json();
+                const list = document.getElementById('resource-list');
+                list.innerHTML = '';
+
+                resources.forEach(item => {
+                    const card = document.createElement('a');
+                    card.href = item.url || '#';
+                    card.target = "_blank";
+                    card.className = 'resource-card';
+
+                    card.innerHTML = `
+                        <span class="tag">${item.tag || '#Resources'}</span>
+                        <h3 class="resource-title">${item.title}</h3>
+                        <p class="resource-desc">${item.description || ''}</p>
+                        <span class="resource-link">${item.buttonText || 'VIEW MORE'}</span>
+                    `;
+                    list.appendChild(card);
+                });
+            } catch (e) {
+                console.error("Fetch error:", e);
+                document.getElementById('resource-list').innerHTML = '<p style="text-align:center; color:#999;">目前尚無資源內容</p>';
+            }
+        }
+        fetchResources();
+    </script>
 </body>
 </html>
