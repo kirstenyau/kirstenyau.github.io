@@ -14,12 +14,29 @@
             background-color: #fcfcfc; 
             margin: 0; color: #333; 
             overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* 🎨 全長漸變垂直線設計 */
+        .vertical-line-bg {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 45vh; /* 線條延伸到頁面約 45% 的高度 */
+            background: linear-gradient(to bottom, 
+                rgba(0,0,0,0) 0%, 
+                rgba(0,0,0,0.1) 20%, 
+                rgba(0,0,0,0.8) 100%);
+            z-index: 0;
         }
 
         /* 導覽列 */
         nav { 
             position: fixed; top: 0; left: 0; width: 100%; height: 75px; 
-            background: rgba(252, 252, 252, 0.85); 
+            background: rgba(252, 252, 252, 0.6); 
             backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
             display: flex; align-items: center; justify-content: center; 
             border-bottom: 0.5px solid rgba(0,0,0,0.06); 
@@ -33,59 +50,44 @@
         }
         nav a:hover { color: #111; }
 
-        /* Hero 核心區域 */
         .hero {
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-end; /* 讓內容靠下方，與長線銜接 */
             align-items: center;
             text-align: center;
-            padding: 120px 20px 80px;
+            padding-bottom: 12vh;
+            position: relative;
+            z-index: 1;
         }
 
-        /* ✨ 垂直極細線條設計 */
-        .v-line {
-            width: 1px;
-            height: 60px;
-            background: #111;
-            margin-bottom: 40px;
-        }
-
-        /* 圓形頭像 */
         .profile-pic {
-            width: 110px;
-            height: 110px;
+            width: 110px; height: 110px;
             border-radius: 50%;
             object-fit: cover;
-            border: 1px solid #eee;
+            border: 1px solid #fff;
+            box-shadow: 0 0 0 1px #eee;
             margin-bottom: 30px;
-            transition: 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
-        .profile-pic:hover {
-            transform: scale(1.05);
+            background: #fff;
         }
 
         .hero h1 {
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 500;
-            letter-spacing: 0.35em;
-            margin: 0 0 10px 0;
+            letter-spacing: 0.4em;
+            margin: 0 0 12px 0;
             color: #111;
-            text-transform: uppercase;
         }
 
-        /* 副標題：UXUI DESIGN ｜ AI TIPS ｜ TECH LIFESTYLE */
         .hero p {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 300;
             color: #aaa;
-            letter-spacing: 0.2em;
-            margin-bottom: 60px;
-            text-transform: uppercase;
+            letter-spacing: 0.25em;
+            margin-bottom: 50px;
         }
 
-        /* 按鈕組 */
         .btn-group {
             display: flex;
             flex-direction: column;
@@ -94,7 +96,6 @@
             max-width: 320px;
         }
 
-        /* 直角按鈕樣式 */
         .cta-btn {
             display: block;
             padding: 16px 20px;
@@ -114,23 +115,22 @@
             transform: translateY(-2px);
         }
 
-        /* 頁尾 */
         footer {
-            padding: 40px 0;
+            position: absolute; bottom: 30px;
             text-align: center; font-size: 9px; color: #ccc;
             letter-spacing: 0.3em;
-            text-transform: uppercase;
         }
 
         @media (max-width: 600px) {
-            .hero h1 { font-size: 1.5rem; letter-spacing: 0.25em; }
-            .v-line { height: 40px; }
-            .profile-pic { width: 90px; height: 90px; }
+            .hero h1 { font-size: 1.4rem; letter-spacing: 0.3em; }
+            .vertical-line-bg { height: 35vh; }
             .btn-group { max-width: 280px; }
         }
     </style>
 </head>
 <body>
+
+    <div class="vertical-line-bg"></div>
 
     <nav>
         <a href="index.html">Home</a>
@@ -140,8 +140,6 @@
     </nav>
 
     <section class="hero">
-        <div class="v-line"></div>
-        
         <img src="profile.png" alt="Kirsten" class="profile-pic">
         
         <h1>DESIGN WITH KIRSTEN</h1>
