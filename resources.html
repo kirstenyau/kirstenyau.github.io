@@ -3,41 +3,184 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Resources - Design with Kirsten</title>
+    <title>Resources | DESIGN WITH KIRSTEN</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { font-family: -apple-system, system-ui, sans-serif; background: #fafafa; margin: 0; padding-top: 100px; color: #333; min-height: 100vh; }
-        nav { position: fixed; top: 0; left: 0; width: 100%; height: 70px; background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #eee; z-index: 9999; }
-        nav a { margin: 0 18px; text-decoration: none; color: #666; font-weight: 600; font-size: 15px; transition: 0.2s; letter-spacing: 0.5px; }
-        nav a:hover { color: #007bff; }
-        .header { text-align: center; padding: 20px 20px 40px; }
-        h1 { font-size: 2.2rem; margin-bottom: 10px; font-weight: 800; }
-        .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; max-width: 1100px; margin: 0 auto; padding: 0 25px 100px; }
-        .card { background: #fff; border: 1px solid #eee; border-radius: 20px; padding: 25px; text-decoration: none; color: inherit; transition: 0.3s; display: flex; flex-direction: column; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
-        .card:hover { transform: translateY(-5px); border-color: #007bff; box-shadow: 0 12px 25px rgba(0,0,0,0.08); }
-        .card-tag { font-size: 0.7rem; font-weight: bold; color: #007bff; text-transform: uppercase; margin-bottom: 12px; }
-        .card h3 { margin: 0 0 10px 0; font-size: 1.25rem; font-weight: 700; }
-        .card p { margin: 0; font-size: 0.9rem; color: #666; line-height: 1.6; }
-        @media (max-width: 600px) {
-            nav { height: 60px; }
-            nav a { margin: 0 12px; font-size: 14px; }
-            body { padding-top: 80px; }
-            .resources-grid { grid-template-columns: 1fr; }
+        
+        body { 
+            font-family: "Noto Sans TC", "PingFang TC", sans-serif; 
+            background-color: #fcfcfc; 
+            margin: 0; color: #333; 
+            padding-top: 100px;
+        }
+
+        /* 導覽列 (全站統一) */
+        nav { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 75px; 
+            background: rgba(252, 252, 252, 0.85); 
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            display: flex; align-items: center; justify-content: center; 
+            border-bottom: 0.5px solid rgba(0,0,0,0.06); 
+            z-index: 9999; 
+        }
+        nav a { 
+            margin: 0 18px; text-decoration: none; 
+            color: #999; font-size: 13px; font-weight: 400;
+            transition: 0.3s; letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+        nav a:hover { color: #111; }
+
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+
+        /* 標題區 */
+        .page-header { text-align: center; margin-bottom: 80px; }
+        .page-header h1 { 
+            font-size: 1.7rem; font-weight: 500; letter-spacing: 0.35em; 
+            color: #111; margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+        .page-header .sub-title { 
+            font-size: 0.8rem; color: #aaa; letter-spacing: 0.15em; font-weight: 300; 
+        }
+
+        /* 資源網格佈局 */
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 雙欄 */
+            gap: 25px;
+        }
+
+        .resource-card {
+            background: #fff;
+            border: 1px solid #eee;
+            padding: 35px;
+            display: flex;
+            flex-direction: column;
+            transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .resource-card:hover {
+            border-color: #111;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.03);
+        }
+
+        .tag {
+            font-size: 10px;
+            color: #bbb;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .resource-title {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #111;
+            margin: 0 0 12px 0;
+            letter-spacing: 0.05em;
+        }
+
+        .resource-desc {
+            font-size: 0.85rem;
+            color: #888;
+            line-height: 1.7;
+            font-weight: 300;
+            margin-bottom: 25px;
+            flex-grow: 1; /* 確保按鈕始終對齊底部 */
+        }
+
+        /* 資源卡片的直角小按鈕 */
+        .resource-link {
+            display: inline-block;
+            align-self: flex-start;
+            padding: 8px 18px;
+            border: 1px solid #111;
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-decoration: none;
+            color: #111;
+            transition: 0.3s;
+        }
+
+        .resource-card:hover .resource-link {
+            background: #111;
+            color: #fff;
+        }
+
+        /* 頁尾 */
+        footer {
+            padding: 80px 0 40px;
+            text-align: center; font-size: 9px; color: #ccc;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+        }
+
+        /* 手機版優化：轉為單欄 */
+        @media (max-width: 768px) {
+            .resource-grid { grid-template-columns: 1fr; }
+            .resource-card { padding: 30px; }
+            .page-header h1 { font-size: 1.4rem; }
         }
     </style>
 </head>
 <body>
-    <nav><a href="index.html">Home</a><a href="blog.html">Blog</a><a href="resources.html">Resources</a><a href="about.html">About</a></nav>
-    <div class="header"><h1>Resources</h1><p style="color:#888">UXUI Design 工具與靈感來源</p></div>
-    <div class="resources-grid">
-        <a href="https://www.figma.com" target="_blank" class="card"><span class="card-tag">Tool</span><h3>Figma</h3><p>業界領先的協作設計工具。</p></a>
-        <a href="https://www.behance.net" target="_blank" class="card"><span class="card-tag">Inspiration</span><h3>Behance</h3><p>全球設計作品展示平台。</p></a>
-        <a href="https://dribbble.com" target="_blank" class="card"><span class="card-tag">Inspiration</span><h3>Dribbble</h3><p>掌握 UI 視覺趨勢的最佳去處。</p></a>
-        <a href="https://mobbin.com" target="_blank" class="card"><span class="card-tag">Patterns</span><h3>Mobbin</h3><p>真實 App 截圖百科全書。</p></a>
-        <a href="https://www.pinterest.com" target="_blank" class="card"><span class="card-tag">Inspiration</span><h3>Pinterest</h3><p>視覺搜尋引擎與創意靈感。</p></a>
-        <a href="https://m3.material.io" target="_blank" class="card"><span class="card-tag">System</span><h3>Material</h3><p>Google 開發的設計語言規範。</p></a>
-        <a href="https://ant.design" target="_blank" class="card"><span class="card-tag">System</span><h3>Ant Design</h3><p>企業級產品設計體系。</p></a>
-        <a href="https://www.producthunt.com" target="_blank" class="card"><span class="card-tag">Trending</span><h3>Product Hunt</h3><p>每日挖掘全球最新科技產品。</p></a>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="resources.html">Resources</a>
+        <a href="about.html">About</a>
+    </nav>
+
+    <div class="container">
+        <header class="page-header">
+            <h1>Resources</h1>
+            <div class="sub-title">CURATED TOOLS FOR DESIGN & PRODUCTIVITY</div>
+        </header>
+
+        <div class="resource-grid">
+            <a href="https://www.notion.so" target="_blank" class="resource-card">
+                <span class="tag">#Productivity</span>
+                <h3 class="resource-title">Notion Templates</h3>
+                <p class="resource-desc">我平常使用的專案管理與設計進度追蹤模板，幫助你更有效率地整理靈感。</p>
+                <span class="resource-link">GET ACCESS</span>
+            </a>
+
+            <a href="https://www.figma.com" target="_blank" class="resource-card">
+                <span class="tag">#Design Tool</span>
+                <h3 class="resource-title">UXUI Design Guide</h3>
+                <p class="resource-desc">適合新手的介面設計入門指南，包含基本原則、網格系統與配色邏輯。</p>
+                <span class="resource-link">LEARN MORE</span>
+            </a>
+
+            <a href="#" class="resource-card">
+                <span class="tag">#AI Tips</span>
+                <h3 class="resource-title">Midjourney Prompts</h3>
+                <p class="resource-desc">精選的生成式圖片指令集，專為網頁設計師優化的視覺參考與素材製作。</p>
+                <span class="resource-link">DOWNLOAD</span>
+            </a>
+
+            <a href="#" class="resource-card">
+                <span class="tag">#Tech</span>
+                <h3 class="resource-title">MacBook Setup</h3>
+                <p class="resource-desc">設計師的筆記型電腦環境配置，從開發工具到必備的 UI 插件推薦。</p>
+                <span class="resource-link">READ LIST</span>
+            </a>
+        </div>
     </div>
+
+    <footer>
+        &copy; 2025 DESIGN WITH KIRSTEN
+    </footer>
+
 </body>
 </html>
