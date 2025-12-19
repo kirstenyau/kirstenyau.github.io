@@ -3,52 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Blog - Design with Kirsten</title>
+    <title>Article | DESIGN WITH KIRSTEN</title>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { font-family: -apple-system, system-ui, sans-serif; background: #fafafa; margin: 0; padding-top: 100px; color: #333; line-height: 1.8; }
         
-        /* 1. 統一 Nav Bar */
-        nav { position: fixed; top: 0; left: 0; width: 100%; height: 70px; background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #eee; z-index: 9999; }
-        nav a { margin: 0 18px; text-decoration: none; color: #666; font-weight: 600; font-size: 15px; transition: 0.2s; letter-spacing: 0.5px; }
-        nav a:hover { color: #007bff; }
+        body { 
+            font-family: "Noto Sans TC", "PingFang TC", sans-serif; 
+            background-color: #fcfcfc; 
+            margin: 0; color: #333; 
+            padding-top: 100px;
+            line-height: 1.8;
+        }
 
-        .container { max-width: 750px; margin: 0 auto; padding: 0 20px 80px; }
-        .back-link { display: inline-block; margin-bottom: 25px; color: #007bff; text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: 0.2s; }
-        .back-link:hover { opacity: 0.6; }
+        /* 導覽列 (全站統一) */
+        nav { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 75px; 
+            background: rgba(252, 252, 252, 0.85); 
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            display: flex; align-items: center; justify-content: center; 
+            border-bottom: 0.5px solid rgba(0,0,0,0.06); 
+            z-index: 9999; 
+        }
+        nav a { 
+            margin: 0 18px; text-decoration: none; 
+            color: #999; font-size: 13px; font-weight: 400;
+            transition: 0.3s; letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+        nav a:hover { color: #111; }
 
-        /* 2. 文章卡片 */
-        article { background: #fff; padding: 50px; border-radius: 30px; border: 1px solid #eee; box-shadow: 0 4px 20px rgba(0,0,0,0.03); }
+        .container { max-width: 750px; margin: 0 auto; padding: 40px 25px; }
 
-        /* 3. 標題與作者/日期資訊 */
-        .post-header { margin-bottom: 40px; }
-        #post-title { font-size: 2.4rem; line-height: 1.2; font-weight: 800; color: #111; margin: 0 0 15px 0; letter-spacing: -0.5px; }
-        
-        /* 作者欄 UI */
-        .author-meta { display: flex; align-items: center; gap: 10px; color: #bbb; font-size: 0.85rem; }
-        .author-img { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; border: 1px solid #eee; }
-        .author-name { color: #888; font-weight: 600; }
-        .dot-divider { margin: 0 5px; }
+        /* 文章頭部 */
+        .post-header { margin-bottom: 60px; text-align: left; }
+        .post-date { 
+            font-size: 0.8rem; color: #bbb; letter-spacing: 0.2em;
+            display: block; margin-bottom: 20px;
+        }
+        .post-title { 
+            font-size: 2rem; font-weight: 500; color: #111; 
+            margin: 0; line-height: 1.4; letter-spacing: 0.05em;
+        }
+        .header-line {
+            width: 40px; height: 1px; background: #111;
+            margin: 30px 0;
+        }
 
-        /* 4. 內文樣式 */
-        #post-content { font-size: 1.1rem; color: #444; }
-        #post-content img { max-width: 100%; border-radius: 20px; margin: 30px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        #post-content h2 { font-size: 1.6rem; margin-top: 45px; color: #111; font-weight: 700; }
+        /* Markdown 內容樣式優化 */
+        #post-content { font-size: 1.05rem; color: #444; font-weight: 300; }
+        #post-content h2 { 
+            font-size: 1.5rem; color: #111; margin-top: 50px; margin-bottom: 20px;
+            font-weight: 500; letter-spacing: 0.05em;
+        }
+        #post-content p { margin-bottom: 25px; }
+        #post-content img { 
+            max-width: 100%; height: auto; margin: 30px 0;
+            border: 1px solid #eee;
+        }
+        #post-content blockquote {
+            border-left: 2px solid #111;
+            margin: 30px 0; padding-left: 25px;
+            color: #777; font-style: italic;
+        }
 
-        /* 5. 文末 Follow 區塊 */
-        .follow-section { margin-top: 60px; padding: 40px 20px; border-top: 1px solid #f8f9fa; text-align: center; background: #fafafa; border-radius: 20px; }
-        .follow-text { font-weight: 700; font-size: 1.05rem; color: #333; margin-bottom: 20px; line-height: 1.5; }
-        .social-group { display: flex; gap: 12px; justify-content: center; }
-        .social-btn { padding: 12px 25px; border: 1px solid #ddd; border-radius: 50px; text-decoration: none; color: #444; font-weight: 600; font-size: 0.9rem; transition: 0.3s; background: #fff; }
-        .social-btn:hover { border-color: #007bff; color: #007bff; transform: translateY(-2px); }
+        /* 返回按鈕 (直角風格) */
+        .back-container {
+            margin-top: 80px; padding-top: 40px;
+            border-top: 1px solid #eee;
+        }
+        .back-btn {
+            display: inline-block;
+            padding: 12px 25px;
+            border: 1px solid #111;
+            color: #111;
+            text-decoration: none;
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+        .back-btn:hover {
+            background: #111;
+            color: #fff;
+        }
+
+        /* 頁尾 */
+        footer {
+            padding: 80px 0 40px;
+            text-align: center; font-size: 9px; color: #ccc;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+        }
 
         @media (max-width: 600px) {
-            nav { height: 60px; }
-            body { padding-top: 85px; }
-            article { padding: 35px 20px; border-radius: 20px; }
-            #post-title { font-size: 1.8rem; }
-            .social-group { flex-direction: column; align-items: stretch; }
+            .post-title { font-size: 1.6rem; }
+            .container { padding: 20px; }
         }
     </style>
 </head>
@@ -61,65 +113,56 @@
         <a href="about.html">About</a>
     </nav>
 
-    <div class="container">
-        <a href="blog.html" class="back-link">← Back to Stories</a>
-        
-        <article>
-            <div class="post-header">
-                <h1 id="post-title">載入中...</h1>
-                <div class="author-meta">
-                    <img src="profile.png" alt="kirsten_uxui" class="author-img">
-                    <span class="author-name">kirsten_uxui</span>
-                    <span class="dot-divider">•</span>
-                    <span id="post-date">YYYY-MM-DD</span>
-                </div>
+    <article class="container">
+        <header class="post-header">
+            <span id="post-date" class="post-date">LOADING...</span>
+            <h1 id="post-title" class="post-title">——</h1>
+            <div class="header-line"></div>
+        </header>
+
+        <div id="post-content">
             </div>
 
-            <div id="post-content">內容讀取中...</div>
+        <div class="back-container">
+            <a href="blog.html" class="back-btn">← Back to Blog</a>
+        </div>
+    </article>
 
-            <div class="follow-section">
-                <div class="follow-text">想看更多 UXUI Design 和 AI Tips，<br>記得 Follow 我的 Instagram 和 Threads！</div>
-                <div class="social-group">
-                    <a href="https://www.instagram.com/kirsten_uxui/" target="_blank" class="social-btn">Instagram</a>
-                    <a href="https://www.threads.net/@kirsten_uxui" target="_blank" class="social-btn">Threads</a>
-                </div>
-            </div>
-        </article>
-    </div>
+    <footer>
+        &copy; 2025 DESIGN WITH KIRSTEN
+    </footer>
 
     <script>
         async function loadPost() {
-            const slug = new URLSearchParams(window.location.search).get('slug');
-            if (!slug) return;
+            const params = new URLSearchParams(window.location.search);
+            const slug = params.get('slug');
+            
+            if (!slug) {
+                window.location.href = 'blog.html';
+                return;
+            }
 
             try {
-                const response = await fetch(`./posts/${slug}.md?v=${Date.now()}`);
-                if (!response.ok) throw new Error();
-                const mdText = await response.text();
+                // 1. 先抓取 posts.json 取得標題與日期
+                const resList = await fetch('posts/posts.json');
+                const posts = await resList.json();
+                const postInfo = posts.find(p => p.slug === slug);
 
-                // 1. 處理日期與元數據
-                const dateMatch = mdText.match(/date:\s*(.*)/);
-                let publishDate = dateMatch ? dateMatch[1].trim() : "Unknown Date";
+                if (postInfo) {
+                    document.getElementById('post-title').innerText = postInfo.title;
+                    document.getElementById('post-date').innerText = postInfo.date;
+                    document.title = `${postInfo.title} | DESIGN WITH KIRSTEN`;
+                }
+
+                // 2. 抓取對應的 .md 檔案內容
+                const resContent = await fetch(`posts/${slug}.md`);
+                if (!resContent.ok) throw new Error('Markdown 檔案不存在');
                 
-                // 確保日期格式為 YYYY-MM-DD (簡單過濾引號或多餘文字)
-                publishDate = publishDate.replace(/['"]/g, ''); 
-                document.getElementById('post-date').innerText = publishDate;
+                const markdown = await resContent.content ? await resContent.content : await resContent.text();
+                document.getElementById('post-content').innerHTML = marked.parse(markdown);
 
-                // 2. 移除 Front Matter
-                const cleanMd = mdText.replace(/^---[\s\S]*?---/, '');
-
-                // 3. 提取標題
-                const titleMatch = cleanMd.match(/^#\s+(.*)/);
-                const title = titleMatch ? titleMatch[1] : slug;
-                document.getElementById('post-title').innerText = title;
-                document.title = `${title} - Kirsten`;
-
-                // 4. 渲染內容 (移除 H1 標題行避免重複顯示)
-                const contentOnly = cleanMd.replace(/^#\s+.*\n/, '');
-                document.getElementById('post-content').innerHTML = marked.parse(contentOnly);
-
-            } catch (err) {
-                document.getElementById('post-content').innerHTML = "<h1>文章載入失敗</h1>";
+            } catch (e) {
+                document.getElementById('post-content').innerHTML = '<p>文章內容載入失敗。</p>';
             }
         }
         loadPost();
