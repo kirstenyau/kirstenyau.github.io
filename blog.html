@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>UXUI學習筆記 | Kirsten</title>
+    <title>UXUI學習筆記 | DESIGN WITH KIRSTEN</title>
     <style>
+        /* 1. 基礎日系字體與配色 */
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -14,10 +15,10 @@
             background-color: #fcfcfc; 
             margin: 0; 
             color: #333; 
-            padding-top: 100px;
+            padding-top: 100px; /* 為了固定 nav 留空 */
         }
 
-        /* 1. 導覽列 (與 Index 完全一致) */
+        /* 2. 導覽列：與 Index 完全一致 */
         nav { 
             position: fixed; 
             top: 0; left: 0; width: 100%; height: 75px; 
@@ -37,52 +38,55 @@
 
         .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
 
-        /* 2. 頁面標題 */
-        .page-header { text-align: center; margin-bottom: 60px; }
+        /* 3. 標題區：與 Index 垂直線感應 */
+        .page-header { text-align: center; margin-bottom: 80px; }
         .page-header h1 { 
-            font-size: 1.8rem; font-weight: 500; letter-spacing: 0.3em; 
+            font-size: 1.7rem; font-weight: 500; letter-spacing: 0.35em; 
             color: #111; margin-bottom: 15px;
             text-transform: uppercase;
         }
-        .page-header .sub-title { font-size: 0.8rem; color: #aaa; letter-spacing: 0.15em; font-weight: 300; }
+        .page-header .sub-title { 
+            font-size: 0.8rem; color: #aaa; letter-spacing: 0.15em; font-weight: 300; 
+        }
 
-        /* 3. Blog 卡片設計 */
-        #post-list { display: flex; flex-direction: column; gap: 30px; }
+        /* 4. Blog 卡片：日式直角與呼吸感 */
+        #post-list { display: flex; flex-direction: column; gap: 40px; }
 
         .post-card {
             background: #fff;
-            border: 1px solid #eee;
-            padding: 45px;
+            border: 1px solid #eeeeee; /* 極細邊框 */
+            padding: 50px;
             text-decoration: none;
             color: inherit;
             transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             display: block;
-            border-radius: 0;
+            border-radius: 0; /* 堅持直角 */
             position: relative;
         }
         
         .post-card:hover {
             border-color: #111;
             transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.04);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.03);
         }
 
         .post-date { 
             font-size: 0.75rem; color: #bbb; 
-            margin-bottom: 15px; letter-spacing: 0.15em;
+            margin-bottom: 18px; letter-spacing: 0.2em;
             display: block;
             font-weight: 400;
         }
 
         .post-title { 
-            font-size: 1.4rem; font-weight: 500; color: #111; 
-            margin: 0 0 18px 0; line-height: 1.5;
+            font-size: 1.5rem; font-weight: 500; color: #111; 
+            margin: 0 0 20px 0; line-height: 1.5;
             letter-spacing: 0.05em;
         }
 
         .post-description { 
-            font-size: 0.9rem; color: #888; line-height: 1.8;
+            font-size: 0.95rem; color: #777; line-height: 1.8;
             font-weight: 300;
+            /* 限制兩行溢出 */
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
@@ -90,7 +94,7 @@
             text-overflow: ellipsis;
         }
 
-        /* 頁尾 */
+        /* 5. 頁尾 */
         footer {
             padding: 80px 0 40px;
             text-align: center; font-size: 9px; color: #ccc;
@@ -98,10 +102,12 @@
             text-transform: uppercase;
         }
 
+        /* 手機版優化 */
         @media (max-width: 600px) {
-            .page-header h1 { font-size: 1.4rem; }
+            .page-header h1 { font-size: 1.35rem; letter-spacing: 0.2em; }
             .post-card { padding: 35px 25px; }
-            .post-title { font-size: 1.25rem; }
+            .post-title { font-size: 1.2rem; }
+            nav a { margin: 0 10px; font-size: 11px; }
         }
     </style>
 </head>
@@ -117,11 +123,11 @@
     <div class="container">
         <header class="page-header">
             <h1>UXUI學習筆記</h1>
-            <div class="sub-title">Thoughts on Design, AI & Tech Lifestyle</div>
+            <div class="sub-title">THOUGHTS ON DESIGN, AI & TECH LIFESTYLE</div>
         </header>
 
         <div id="post-list">
-            <p style="text-align: center; color: #ccc; font-size: 12px; letter-spacing: 0.2em;">LOADING...</p>
+            <p style="text-align: center; color: #ccc; letter-spacing: 0.2em; font-size: 12px;">LOADING...</p>
         </div>
     </div>
 
@@ -131,28 +137,16 @@
 
     <script>
         async function fetchPosts() {
-            const list = document.getElementById('post-list');
-            // 注意：這裡加上 v=Date.now() 是為了防止瀏覽器緩存舊的資料
-            const jsonUrl = `posts/posts.json?v=${Date.now()}`;
-
             try {
-                const response = await fetch(jsonUrl);
-                
-                if (!response.ok) {
-                    throw new Error(`找不到 JSON 檔案 (Status: ${response.status})`);
-                }
-
+                // 這裡路徑維持你原本專案的 posts/posts.json
+                const response = await fetch('posts/posts.json');
                 const posts = await response.json();
-                
-                if (posts.length === 0) {
-                    list.innerHTML = '<p style="text-align:center; color:#ccc;">目前尚無文章</p>';
-                    return;
-                }
-
-                list.innerHTML = ''; // 清除 Loading 字樣
+                const list = document.getElementById('post-list');
+                list.innerHTML = '';
 
                 posts.forEach(post => {
                     const card = document.createElement('a');
+                    // 維持原本的跳轉邏輯
                     card.href = `post.html?slug=${post.slug}`;
                     card.className = 'post-card';
 
@@ -164,14 +158,8 @@
                     list.appendChild(card);
                 });
             } catch (e) {
-                console.error("載入失敗：", e);
-                list.innerHTML = `
-                    <div style="text-align:center; color:#999; padding: 40px; border: 1px dashed #eee;">
-                        <p style="font-size:14px;">載入文章失敗</p>
-                        <p style="font-size:10px; color:#ccc; letter-spacing:0;">錯誤原因: ${e.message}</p>
-                        <p style="font-size:10px; color:#ccc; margin-top:10px;">請確保 posts/posts.json 存在且格式正確</p>
-                    </div>
-                `;
+                console.error("Fetch error:", e);
+                document.getElementById('post-list').innerHTML = '<p style="text-align:center; color:#999;">目前尚無文章</p>';
             }
         }
         fetchPosts();
