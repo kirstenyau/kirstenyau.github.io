@@ -14,10 +14,9 @@
             background-color: #fcfcfc; 
             margin: 0; color: #333; 
             padding-top: 100px;
-            line-height: 2;
         }
 
-        /* 全站統一導覽列 */
+        /* 導覽列：對齊 Resources 標準 */
         nav { 
             position: fixed; top: 0; left: 0; width: 100%; height: 75px; 
             background: rgba(252, 252, 252, 0.85); 
@@ -36,46 +35,51 @@
 
         .container { max-width: 700px; margin: 0 auto; padding: 60px 25px; }
 
-        /* 個人頭像區 */
-        .profile-section { text-align: center; margin-bottom: 60px; }
-        .profile-pic {
-            width: 140px; height: 140px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 1px solid #eee;
-            margin-bottom: 20px;
-        }
-
-        /* 文字排版 */
-        .about-title {
-            font-size: 1.6rem; font-weight: 500; color: #111;
-            margin-bottom: 40px; text-align: center; letter-spacing: 0.1em;
-        }
-        .about-content p {
-            font-size: 1rem; color: #444; font-weight: 300;
-            margin-bottom: 28px; text-align: justify;
-        }
-
-        /* CTA Card (全站統一) */
-        .cta-card {
+        /* ✨ 個人檔案卡片設計 */
+        .profile-card {
             background: #fff;
-            border: 1px solid #111;
-            padding: 50px 40px;
-            margin: 100px 0 40px;
+            border: 1px solid #111; /* 延續全站直角黑框設計 */
+            padding: 80px 50px 50px;
+            margin-top: 70px; /* 為上方半疊頭像留空間 */
+            position: relative;
             text-align: center;
         }
-        .cta-text { 
-            font-size: 16px; font-weight: 500; color: #111; 
-            margin-bottom: 30px; letter-spacing: 0.15em; 
+
+        .profile-pic {
+            width: 130px; height: 130px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid #111;
+            position: absolute;
+            top: -65px; /* 頭像向上位移半個高度 */
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fff;
         }
+
+        .about-title {
+            font-size: 1.5rem; font-weight: 500; color: #111;
+            margin-bottom: 35px; letter-spacing: 0.1em;
+        }
+
+        .about-content {
+            text-align: justify; /* 文字對齊 */
+            font-size: 1rem; color: #444; font-weight: 300;
+            line-height: 2;
+        }
+        .about-content p { margin-bottom: 25px; }
+
+        /* CTA 按鈕區（在卡片內） */
         .cta-btns {
             display: flex;
             justify-content: center;
             gap: 15px;
-            flex-wrap: wrap;
+            margin-top: 40px;
+            border-top: 1px solid #eee;
+            padding-top: 40px;
         }
-        .cta-btn-link {
-            padding: 12px 25px;
+        .cta-link {
+            padding: 12px 20px;
             border: 1px solid #111;
             color: #111;
             text-decoration: none;
@@ -83,28 +87,20 @@
             font-weight: 500;
             letter-spacing: 0.1em;
             transition: 0.3s;
-            display: inline-block;
         }
-        .cta-btn-link:hover {
-            background: #111;
-            color: #fff;
-        }
+        .cta-link:hover { background: #111; color: #fff; }
 
         footer {
             padding: 60px 0 40px;
             text-align: center; font-size: 9px; color: #ccc;
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
+            letter-spacing: 0.3em; text-transform: uppercase;
         }
 
-        /* 手機版適應 */
         @media (max-width: 600px) {
             nav { height: 65px; }
-            nav a { margin: 0 10px; font-size: 11px; }
-            .about-title { font-size: 1.4rem; }
-            .cta-card { padding: 40px 20px; }
-            .cta-btns { flex-direction: column; align-items: center; }
-            .cta-btn-link { width: 100%; max-width: 280px; }
+            .profile-card { padding: 70px 25px 40px; }
+            .about-title { font-size: 1.3rem; }
+            .cta-btns { flex-direction: column; }
         }
     </style>
 </head>
@@ -118,36 +114,31 @@
     </nav>
 
     <main class="container">
-        <section class="profile-section">
+        <div class="profile-card">
             <img src="profile.png" alt="Kirsten" class="profile-pic">
-        </section>
 
-        <h1 class="about-title">你好，我是來自香港的 Kirsten！</h1>
+            <h1 class="about-title">你好，我是來自香港的 Kirsten！</h1>
 
-        <div class="about-content">
-            <p>
-                我原本是一位 Content Editor，每天寫文章、影相拍片、管理內容平台，直到 2022 年我開始研究世界各地的新聞平台 App，比較誰的設計比較出色，又思考用戶喜歡在哪個 App 看新聞⋯⋯我漸漸投入了 UXUI Design 世界，在網上自學設計流程、理論和概念，於是我的設計由「相片和文字」變成了「界面和流程」。
-            </p>
-            <p>
-                我作為 INFJ，天生對美感和整齊有莫名執著，加上本人凡事也喜歡雞蛋挑骨頭（笑），思考和解難是最令我著迷的事，加上雙魚座的 MAX 共情力，所以 UXUI Design 像是我的天職一樣（已由 Gemini 證實是 Perfect Match）！現在的我是 UXUI Designer，也有做 content-related 工作，是一個 Slasher～
-            </p>
-            <p>
-                最近醉心研究將 AI 應用在 UXUI Design 之中，這個 Website 也是我學 Vibe Coding 的練習！在這個 AI 年代，我不害怕 AI 會取代自己，反而我認為 AI 是 UXUI Designer 的武器，如何好好利用是每個設計師也要做的功課，這個也是我經營 Social Media 和 Blog 的目的 ◡̈
-            </p>
-        </div>
+            <div class="about-content">
+                <p>
+                    我原本是一位 Content Editor，每天寫文章、影相拍片、管理內容平台，直到 2022 年我開始研究世界各地的新聞平台 App，比較誰的設計比較出色，又思考用戶喜歡在哪個 App 看新聞⋯⋯我漸漸投入了 UXUI Design 世界，在網上自學設計流程、理論和概念。
+                </p>
+                <p>
+                    作為 INFJ，天生對美感和整齊有莫名執著，思考和解難是最令我著迷的事，加上雙魚座的 MAX 共情力，UXUI Design 像是我的天職一樣（已由 Gemini 證實是 Perfect Match）！
+                </p>
+                <p>
+                    最近醉心研究將 AI 應用在 UXUI Design 之中，這個 Website 也是我學 Vibe Coding 的練習！我認為 AI 是 UXUI Designer 的武器，如何好好利用是每個設計師也要做的功課。
+                </p>
+            </div>
 
-        <div class="cta-card">
-            <div class="cta-text">追蹤我看更多 UXUI 設計筆記</div>
             <div class="cta-btns">
-                <a href="https://www.instagram.com/kirsten_uxui/" target="_blank" class="cta-btn-link">在 Instagram 看 Case Study</a>
-                <a href="https://www.threads.net/@kirsten_uxui" target="_blank" class="cta-btn-link">在 Threads 看工作碎碎念</a>
+                <a href="https://www.instagram.com/kirsten_uxui/" target="_blank" class="cta-link">Instagram</a>
+                <a href="https://www.threads.net/@kirsten_uxui" target="_blank" class="cta-link">Threads</a>
             </div>
         </div>
     </main>
 
-    <footer>
-        &copy; 2025 DESIGN WITH KIRSTEN
-    </footer>
+    <footer>&copy; 2025 DESIGN WITH KIRSTEN</footer>
 
 </body>
 </html>
