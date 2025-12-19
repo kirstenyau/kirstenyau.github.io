@@ -16,7 +16,7 @@
             padding-top: 100px;
         }
 
-        /* 全站統一導覽列 */
+        /* 導覽列：完全對齊 Resources 頁面參數 */
         nav { 
             position: fixed; top: 0; left: 0; width: 100%; height: 75px; 
             background: rgba(252, 252, 252, 0.85); 
@@ -27,16 +27,17 @@
         }
         nav a { 
             margin: 0 18px; text-decoration: none; 
-            color: #999; font-size: 13px; font-weight: 400;
-            transition: 0.3s; letter-spacing: 0.15em;
+            color: #999; /* 淺灰色文字 */
+            font-size: 13px; font-weight: 400; /* 統一字重 */
+            transition: 0.3s; letter-spacing: 0.15em; /* 統一間距 */
             text-transform: uppercase;
         }
         nav a:hover { color: #111; }
 
-        /* 限制容器寬度 (700px 與 About 一致) */
+        /* 限制容器寬度，與 About/Resources 對齊 */
         .container { max-width: 700px; margin: 0 auto; padding: 40px 25px; }
 
-        /* 置中標題區 */
+        /* 標題區：置中排版 */
         .page-header { text-align: center; margin-bottom: 80px; }
         .page-title { 
             font-size: 1.7rem; font-weight: 500; color: #111; 
@@ -54,7 +55,7 @@
             gap: 25px;
         }
 
-        /* 精簡版卡片設計 */
+        /* 精簡卡片設計 (與截圖一致) */
         .post-item {
             display: block;
             text-decoration: none;
@@ -73,12 +74,12 @@
 
         .post-date { 
             font-size: 11px; color: #bbb; letter-spacing: 0.15em; 
-            display: block; margin-bottom: 10px; 
+            display: block; margin-bottom: 12px; 
             font-weight: 400;
         }
         
         .post-item h2 { 
-            font-size: 1.3rem; font-weight: 500; margin: 0; 
+            font-size: 1.35rem; font-weight: 500; margin: 0; 
             color: #111; line-height: 1.5; 
             letter-spacing: 0.05em;
         }
@@ -90,14 +91,15 @@
             text-transform: uppercase;
         }
 
-        /* 手機版適應 */
+        /* 手機版適應：完全同步 Resources 頁面 */
         @media (max-width: 600px) {
             nav { height: 65px; }
-            nav a { margin: 0 10px; font-size: 11px; }
+            nav a { margin: 0 10px; font-size: 11px; letter-spacing: 0.1em; }
             .container { padding: 20px 20px; }
-            .page-title { font-size: 1.5rem; }
+            .page-header { margin-bottom: 60px; }
+            .page-title { font-size: 1.5rem; letter-spacing: 0.25em; }
             .post-item { padding: 30px 25px; }
-            .post-item h2 { font-size: 1.15rem; }
+            .post-item h2 { font-size: 1.2rem; }
         }
     </style>
 </head>
@@ -105,8 +107,7 @@
 
     <nav>
         <a href="index.html">Home</a>
-        <a href="blog.html" style="color:#111;">Blog</a>
-        <a href="resources.html">Resources</a>
+        <a href="blog.html" style="color:#111;">Blog</a> <a href="resources.html">Resources</a>
         <a href="about.html">About</a>
     </nav>
 
@@ -117,8 +118,7 @@
         </header>
 
         <div id="post-list">
-            <p style="color: #ccc; text-align: center;">Loading...</p>
-        </div>
+            </div>
     </main>
 
     <footer>
@@ -145,6 +145,7 @@
                 });
             } catch (e) {
                 console.error("載入失敗:", e);
+                document.getElementById('post-list').innerHTML = '<p style="text-align:center;color:#ccc;">Loading...</p>';
             }
         }
         loadPosts();
