@@ -35,38 +35,45 @@
 
         /* Hero 核心區域 */
         .hero {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 0 20px;
+            padding: 100px 20px 60px;
         }
 
-        /* 裝飾用的極細垂直線 */
-        .v-line {
-            width: 1px;
-            height: 80px;
-            background: #111;
-            margin-bottom: 40px;
+        /* 恢復圓形頭像排版 */
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%; /* 圓形 */
+            object-fit: cover;
+            border: 1px solid #eee;
+            margin-bottom: 30px;
+            /* 輕微浮動效果 */
+            transition: 0.5s ease;
+        }
+        .profile-pic:hover {
+            transform: scale(1.05);
         }
 
         .hero h1 {
-            font-size: 2.2rem;
+            font-size: 2rem;
             font-weight: 500;
-            letter-spacing: 0.4em;
-            margin: 0 0 15px 0;
+            letter-spacing: 0.35em;
+            margin: 0 0 10px 0;
             color: #111;
             text-transform: uppercase;
         }
 
         .hero p {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 300;
-            color: #888;
+            color: #aaa;
             letter-spacing: 0.2em;
-            margin-bottom: 60px;
+            margin-bottom: 50px;
         }
 
         /* 按鈕組區塊 */
@@ -87,9 +94,9 @@
             color: #111;
             font-size: 12px;
             font-weight: 500;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.05em;
             transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            background: transparent;
+            background: #fff;
         }
 
         .cta-btn:hover {
@@ -100,15 +107,15 @@
 
         /* 頁尾 */
         footer {
-            position: absolute; bottom: 40px; width: 100%;
+            padding: 40px 0;
             text-align: center; font-size: 9px; color: #ccc;
             letter-spacing: 0.3em;
             text-transform: uppercase;
         }
 
         @media (max-width: 600px) {
-            .hero h1 { font-size: 1.6rem; letter-spacing: 0.3em; }
-            .hero p { font-size: 0.8rem; }
+            .hero h1 { font-size: 1.5rem; letter-spacing: 0.25em; }
+            .profile-pic { width: 100px; height: 100px; }
             .btn-group { max-width: 280px; }
         }
     </style>
@@ -123,7 +130,8 @@
     </nav>
 
     <section class="hero">
-        <div class="v-line"></div>
+        <img src="profile.png" alt="Kirsten" class="profile-pic">
+        
         <h1>DESIGN WITH KIRSTEN</h1>
         <p>UXUI DESIGN / NOTION / AI WORKFLOW</p>
         
