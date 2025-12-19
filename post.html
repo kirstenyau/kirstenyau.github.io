@@ -21,24 +21,27 @@
         /* 2. 文章卡片 */
         article { background: #fff; padding: 50px; border-radius: 30px; border: 1px solid #eee; box-shadow: 0 4px 20px rgba(0,0,0,0.03); }
 
-        /* 3. 標題與日期 (極簡化) */
+        /* 3. 標題與作者/日期資訊 */
         .post-header { margin-bottom: 40px; }
-        #post-title { font-size: 2.4rem; line-height: 1.2; font-weight: 800; color: #111; margin: 0 0 10px 0; letter-spacing: -0.5px; }
-        /* 日期：小小的不強調 */
-        #post-date { font-size: 0.85rem; color: #bbb; font-weight: 400; letter-spacing: 0.5px; }
+        #post-title { font-size: 2.4rem; line-height: 1.2; font-weight: 800; color: #111; margin: 0 0 15px 0; letter-spacing: -0.5px; }
+        
+        /* 作者欄 UI */
+        .author-meta { display: flex; align-items: center; gap: 10px; color: #bbb; font-size: 0.85rem; }
+        .author-img { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; border: 1px solid #eee; }
+        .author-name { color: #888; font-weight: 600; }
+        .dot-divider { margin: 0 5px; }
 
         /* 4. 內文樣式 */
         #post-content { font-size: 1.1rem; color: #444; }
         #post-content img { max-width: 100%; border-radius: 20px; margin: 30px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
         #post-content h2 { font-size: 1.6rem; margin-top: 45px; color: #111; font-weight: 700; }
-        #post-content p { margin-bottom: 1.6em; }
 
         /* 5. 文末 Follow 區塊 */
         .follow-section { margin-top: 60px; padding: 40px 20px; border-top: 1px solid #f8f9fa; text-align: center; background: #fafafa; border-radius: 20px; }
         .follow-text { font-weight: 700; font-size: 1.05rem; color: #333; margin-bottom: 20px; line-height: 1.5; }
         .social-group { display: flex; gap: 12px; justify-content: center; }
         .social-btn { padding: 12px 25px; border: 1px solid #ddd; border-radius: 50px; text-decoration: none; color: #444; font-weight: 600; font-size: 0.9rem; transition: 0.3s; background: #fff; }
-        .social-btn:hover { border-color: #007bff; color: #007bff; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .social-btn:hover { border-color: #007bff; color: #007bff; transform: translateY(-2px); }
 
         @media (max-width: 600px) {
             nav { height: 60px; }
@@ -46,7 +49,6 @@
             article { padding: 35px 20px; border-radius: 20px; }
             #post-title { font-size: 1.8rem; }
             .social-group { flex-direction: column; align-items: stretch; }
-            .follow-section { padding: 30px 15px; }
         }
     </style>
 </head>
@@ -65,7 +67,12 @@
         <article>
             <div class="post-header">
                 <h1 id="post-title">載入中...</h1>
-                <div id="post-date">Loading date</div>
+                <div class="author-meta">
+                    <img src="profile.png" alt="kirsten_uxui" class="author-img">
+                    <span class="author-name">kirsten_uxui</span>
+                    <span class="dot-divider">•</span>
+                    <span id="post-date">YYYY-MM-DD</span>
+                </div>
             </div>
 
             <div id="post-content">內容讀取中...</div>
@@ -90,21 +97,24 @@
                 if (!response.ok) throw new Error();
                 const mdText = await response.text();
 
-                // 1. 提取日期
+                // 1. 處理日期與元數據
                 const dateMatch = mdText.match(/date:\s*(.*)/);
-                const publishDate = dateMatch ? dateMatch[1] : "";
+                let publishDate = dateMatch ? dateMatch[1].trim() : "Unknown Date";
+                
+                // 確保日期格式為 YYYY-MM-DD (簡單過濾引號或多餘文字)
+                publishDate = publishDate.replace(/['"]/g, ''); 
                 document.getElementById('post-date').innerText = publishDate;
 
-                // 2. 移除 Front Matter 區塊
+                // 2. 移除 Front Matter
                 const cleanMd = mdText.replace(/^---[\s\S]*?---/, '');
 
-                // 3. 提取標題並更新頁面
+                // 3. 提取標題
                 const titleMatch = cleanMd.match(/^#\s+(.*)/);
                 const title = titleMatch ? titleMatch[1] : slug;
                 document.getElementById('post-title').innerText = title;
                 document.title = `${title} - Kirsten`;
 
-                // 4. 渲染剩下內容
+                // 4. 渲染內容 (移除 H1 標題行避免重複顯示)
                 const contentOnly = cleanMd.replace(/^#\s+.*\n/, '');
                 document.getElementById('post-content').innerHTML = marked.parse(contentOnly);
 
