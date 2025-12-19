@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>DESIGN WITH KIRSTEN</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
 
@@ -13,17 +12,13 @@
         body { 
             font-family: "Noto Sans TC", "PingFang TC", sans-serif; 
             background-color: #fcfcfc; 
-            margin: 0; 
-            color: #333; 
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            margin: 0; color: #333; 
+            overflow-x: hidden;
         }
 
         /* 導覽列 */
         nav { 
-            position: fixed; 
-            top: 0; width: 100%; height: 75px; 
+            position: fixed; top: 0; left: 0; width: 100%; height: 75px; 
             background: rgba(252, 252, 252, 0.85); 
             backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
             display: flex; align-items: center; justify-content: center; 
@@ -38,109 +33,83 @@
         }
         nav a:hover { color: #111; }
 
-        /* Hero 區塊 */
-        .hero { 
-            flex: 1;
-            display: flex; flex-direction: column; 
-            align-items: center; justify-content: center; 
-            text-align: center; padding: 120px 20px 80px;
+        /* Hero 核心區域 */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
         }
 
-        /* Profile Pic 與 Hover 效果 */
-        .profile-container { margin-bottom: 25px; }
-        .profile-img { 
-            width: 120px; height: 120px; 
-            border-radius: 50%; 
-            object-fit: cover;
-            border: 1px solid #f0f0f0;
-            padding: 5px;
-            background: #fff;
-            /* 動態過渡效果 */
-            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease;
-            /* 保持預設游標，不顯示點擊手勢 */
-            cursor: default; 
-        }
-        
-        /* 當滑鼠移入時放大 5% */
-        .profile-img:hover { 
-            transform: scale(1.05); 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        /* 裝飾用的極細垂直線 */
+        .v-line {
+            width: 1px;
+            height: 80px;
+            background: #111;
+            margin-bottom: 40px;
         }
 
-        .hero h1 { 
-            font-size: 1.5rem; font-weight: 500; color: #111; 
-            margin: 0 0 10px 0; letter-spacing: 0.3em; 
+        .hero h1 {
+            font-size: 2.2rem;
+            font-weight: 500;
+            letter-spacing: 0.4em;
+            margin: 0 0 15px 0;
+            color: #111;
             text-transform: uppercase;
         }
-        
-        .description { 
-            font-size: 0.85rem; color: #a0a0a0; 
-            margin: 0 0 15px 0; letter-spacing: 0.15em;
+
+        .hero p {
+            font-size: 0.9rem;
             font-weight: 300;
+            color: #888;
+            letter-spacing: 0.2em;
+            margin-bottom: 60px;
         }
 
-        .vertical-line {
-            width: 1px; height: 50px;
-            background: linear-gradient(to bottom, #d0d0d0, transparent);
-            margin-bottom: 30px;
-        }
-
-        /* 直角按鈕群組 */
-        .btn-container {
+        /* 按鈕組區塊 */
+        .btn-group {
             display: flex;
             flex-direction: column;
             gap: 15px;
             width: 100%;
-            max-width: 280px;
-            margin-bottom: 30px;
-        }
-        
-        .cta-button { 
-            padding: 14px 20px; 
-            border: 1px solid #111; 
-            color: #111; text-decoration: none; 
-            font-size: 11px; font-weight: 500; 
-            letter-spacing: 0.3em; 
-            transition: 0.3s; 
-            border-radius: 0;
-            background: transparent;
-            text-transform: uppercase;
-        }
-        
-        .cta-button:hover { 
-            background: #111;
-            color: #fff; 
+            max-width: 320px;
         }
 
-        /* 社群 Icon 排版 */
-        .social-container {
-            display: flex;
-            gap: 25px;
-            margin-top: 10px;
-        }
-        .social-icon {
-            color: #bbb;
-            font-size: 1.4rem;
+        /* 直角按鈕樣式 */
+        .cta-btn {
+            display: block;
+            padding: 16px 20px;
+            border: 1px solid #111;
             text-decoration: none;
-            transition: 0.3s ease;
-            display: inline-block;
-        }
-        .social-icon:hover {
             color: #111;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            background: transparent;
+        }
+
+        .cta-btn:hover {
+            background: #111;
+            color: #fff;
             transform: translateY(-2px);
         }
 
         /* 頁尾 */
         footer {
-            padding: 40px 0;
+            position: absolute; bottom: 40px; width: 100%;
             text-align: center; font-size: 9px; color: #ccc;
             letter-spacing: 0.3em;
             text-transform: uppercase;
         }
 
         @media (max-width: 600px) {
-            .hero h1 { font-size: 1.3rem; }
-            .btn-container { max-width: 240px; }
+            .hero h1 { font-size: 1.6rem; letter-spacing: 0.3em; }
+            .hero p { font-size: 0.8rem; }
+            .btn-group { max-width: 280px; }
         }
     </style>
 </head>
@@ -153,31 +122,17 @@
         <a href="about.html">About</a>
     </nav>
 
-    <div class="hero">
-        <div class="profile-container">
-            <img src="profile.png" alt="Kirsten" class="profile-img">
-        </div>
-        
+    <section class="hero">
+        <div class="v-line"></div>
         <h1>DESIGN WITH KIRSTEN</h1>
-        <div class="description">UXUI Designer｜AI Tips｜Tech Lifestyle</div>
+        <p>UXUI DESIGN / NOTION / AI WORKFLOW</p>
         
-        <div class="vertical-line"></div>
-        
-        <div class="btn-container">
-            <a href="blog.html" class="cta-button">EXPLORE BLOG</a>
-            <a href="resources.html" class="cta-button">RESOURCES</a>
-            <a href="about.html" class="cta-button">MY STORY</a>
+        <div class="btn-group">
+            <a href="blog.html" class="cta-btn">在 Blog 看 UX & AI 學習筆記</a>
+            <a href="resources.html" class="cta-btn">學習 UXUI 必備資源</a>
+            <a href="about.html" class="cta-btn">想認識我更多嗎？</a>
         </div>
-
-        <div class="social-container">
-            <a href="https://www.instagram.com/kirsten_uxui/" target="_blank" class="social-icon">
-                <i class="fa-brands fa-instagram"></i>
-            </a>
-            <a href="https://www.threads.net/@kirsten_uxui" target="_blank" class="social-icon">
-                <i class="fa-brands fa-threads"></i>
-            </a>
-        </div>
-    </div>
+    </section>
 
     <footer>
         &copy; 2025 DESIGN WITH KIRSTEN
