@@ -33,7 +33,7 @@
         }
         nav a:hover { color: #111; }
 
-        /* Hero 區域 */
+        /* Hero 核心區域 */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -41,18 +41,26 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 100px 20px 60px;
+            padding: 120px 20px 80px;
+        }
+
+        /* ✨ 垂直極細線條設計 */
+        .v-line {
+            width: 1px;
+            height: 60px;
+            background: #111;
+            margin-bottom: 40px;
         }
 
         /* 圓形頭像 */
         .profile-pic {
-            width: 120px;
-            height: 120px;
+            width: 110px;
+            height: 110px;
             border-radius: 50%;
             object-fit: cover;
             border: 1px solid #eee;
             margin-bottom: 30px;
-            transition: 0.5s ease;
+            transition: 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
         .profile-pic:hover {
             transform: scale(1.05);
@@ -67,13 +75,13 @@
             text-transform: uppercase;
         }
 
-        /* 修正後的副標題 */
+        /* 副標題：UXUI DESIGN ｜ AI TIPS ｜ TECH LIFESTYLE */
         .hero p {
             font-size: 0.85rem;
             font-weight: 300;
             color: #aaa;
             letter-spacing: 0.2em;
-            margin-bottom: 50px;
+            margin-bottom: 60px;
             text-transform: uppercase;
         }
 
@@ -86,7 +94,7 @@
             max-width: 320px;
         }
 
-        /* 直角按鈕 */
+        /* 直角按鈕樣式 */
         .cta-btn {
             display: block;
             padding: 16px 20px;
@@ -116,7 +124,8 @@
 
         @media (max-width: 600px) {
             .hero h1 { font-size: 1.5rem; letter-spacing: 0.25em; }
-            .profile-pic { width: 100px; height: 100px; }
+            .v-line { height: 40px; }
+            .profile-pic { width: 90px; height: 90px; }
             .btn-group { max-width: 280px; }
         }
     </style>
@@ -131,6 +140,8 @@
     </nav>
 
     <section class="hero">
+        <div class="v-line"></div>
+        
         <img src="profile.png" alt="Kirsten" class="profile-pic">
         
         <h1>DESIGN WITH KIRSTEN</h1>
