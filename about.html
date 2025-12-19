@@ -39,12 +39,16 @@
 
         /* 文字內容 */
         .about-text { flex-grow: 1; }
-        .about-text h1 { font-size: 2.2rem; margin: 0 0 10px 0; font-weight: 800; color: #111; }
-        .about-text .tag { display: inline-block; background: #f0f7ff; color: #007bff; padding: 4px 14px; border-radius: 50px; font-size: 0.85rem; font-weight: 700; margin-bottom: 20px; letter-spacing: 0.5px; }
-        .about-text p { font-size: 1.05rem; color: #4a4a4a; margin-bottom: 25px; line-height: 1.8; text-align: justify; }
+        .about-text h1 { font-size: 2.2rem; margin: 0 0 10px 0; font-weight: 800; color: #111; letter-spacing: -0.5px; }
+        
+        /* 藍色標籤：更新文字內容 */
+        .about-text .tag { display: inline-block; background: #f0f7ff; color: #007bff; padding: 4px 14px; border-radius: 50px; font-size: 0.8rem; font-weight: 700; margin-bottom: 20px; letter-spacing: 1px; text-transform: uppercase; }
+        
+        /* 內文：統一字距，移除粗體 */
+        .about-text p { font-size: 1.05rem; color: #4a4a4a; margin-bottom: 25px; line-height: 1.8; text-align: justify; letter-spacing: 0.02em; font-weight: 400; }
 
         /* 社群按鈕區 */
-        .cta-text { font-weight: 700; color: #222; margin-bottom: 15px; display: block; }
+        .cta-text { font-weight: 600; color: #222; margin-bottom: 15px; display: block; font-size: 0.95rem; }
         .social-links { display: flex; gap: 12px; }
         .social-btn { 
             padding: 12px 24px; 
@@ -53,7 +57,7 @@
             text-decoration: none; 
             color: #444; 
             font-weight: 600; 
-            font-size: 0.95rem; 
+            font-size: 0.9rem; 
             transition: 0.3s; 
             background: #fff; 
         }
@@ -64,15 +68,12 @@
             box-shadow: 0 8px 15px rgba(0,0,0,0.05); 
         }
 
-        /* 手機版適應排版 */
         @media (max-width: 768px) {
             .about-card { flex-direction: column; padding: 40px 25px; text-align: center; }
             .about-image { width: 180px; height: 180px; margin-bottom: 10px; }
             .social-links { justify-content: center; flex-direction: column; }
-            .social-btn { width: 100%; }
             nav { height: 60px; }
             nav a { margin: 0 10px; font-size: 14px; }
-            body { padding-top: 80px; }
         }
     </style>
 </head>
@@ -90,16 +91,17 @@
             <img src="profile.png" alt="Kirsten" class="about-image">
             
             <div class="about-text">
-                <span class="tag">INFJ / UXUI DESIGNER</span>
+                <span class="tag">UXUI DESIGNER / INFJ / Miffy Lover</span>
                 <h1>Hi, I'm Kirsten.</h1>
+                
                 <p>
-                    從 <strong>Content Editor 轉職 UXUI Designer</strong>，我熱衷於挖掘使用者需求，並將複雜的邏輯和內容，轉化為容易操作和消化的互動體驗。
+                    從 Content Editor 轉職 UXUI Designer，過程靠自學和邊做邊累積經驗。身為 INFJ，我對美感有天生的執着，加上喜歡思考和解決問題，設計變了我的天職。
                 </p>
                 <p>
-                    身為 <strong>INFJ</strong>，我對美感有天生的執着，喜歡設計和思考，同時也熱愛分享所學。
+                    設計不只是我的工作，在日常生活中遇到難題也能學以致用，希望在這裡跟大家分享我的 UX 學習筆記！
                 </p>
 
-                <span class="cta-text">想跟我互動嗎？立即追蹤我：</span>
+                <span class="cta-text">想跟我互動嗎？歡迎追蹤：</span>
                 <div class="social-links">
                     <a href="https://www.instagram.com/kirsten_uxui/" target="_blank" class="social-btn">Instagram</a>
                     <a href="https://www.threads.net/@kirsten_uxui" target="_blank" class="social-btn">Threads</a>
