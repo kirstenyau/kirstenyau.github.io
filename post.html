@@ -7,27 +7,77 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
-        * { box-sizing: border-box; }
-        body { font-family: "Noto Sans TC", sans-serif; background-color: #fcfcfc; margin: 0; padding-top: 100px; }
         
-        /* 導覽列：維持原本樣式 */
-        nav { position: fixed; top: 0; left: 0; width: 100%; height: 75px; background: rgba(252,252,252,0.85); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; border-bottom: 0.5px solid rgba(0,0,0,0.06); z-index: 9999; }
-        nav a { margin: 0 18px; text-decoration: none; color: #999; font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
-        .container { max-width: 750px; margin: 0 auto; padding: 20px 25px; }
-        #date { font-size: 12px; color: #bbb; display: block; margin-bottom: 10px; }
-        #title { font-size: 2.2rem; font-weight: 500; margin-bottom: 40px; color: #111; }
+        body { 
+            font-family: "Noto Sans TC", "PingFang TC", sans-serif; 
+            background-color: #fcfcfc; 
+            margin: 0; color: #333; 
+            padding-top: 100px;
+        }
+
+        /* 導覽列：維持原本設計 */
+        nav { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 75px; 
+            background: rgba(252, 252, 252, 0.85); 
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            display: flex; align-items: center; justify-content: center; 
+            border-bottom: 0.5px solid rgba(0,0,0,0.06); 
+            z-index: 9999; 
+        }
+        nav a { 
+            margin: 0 18px; text-decoration: none; 
+            color: #999; font-size: 13px; font-weight: 400;
+            transition: 0.3s; letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+        nav a:hover { color: #111; }
+
+        .container { max-width: 700px; margin: 0 auto; padding: 20px 25px; }
         
-        /* 文章內容樣式優化 */
-        #content { line-height: 1.8; font-size: 16px; color: #444; }
-        #content h1, #content h2 { color: #111; margin-top: 30px; }
-        #content p { margin-bottom: 20px; }
-        #content img { max-width: 100%; height: auto; display: block; margin: 30px auto; }
+        /* 頁面標題區塊樣式 */
+        #date { font-size: 11px; color: #bbb; letter-spacing: 0.2em; display: block; margin-bottom: 12px; text-transform: uppercase; }
+        #title { font-size: 2rem; font-weight: 500; color: #111; line-height: 1.4; margin: 0 0 45px 0; letter-spacing: 0.02em; }
         
-        .back-link { display: inline-block; margin-top: 50px; padding-top: 20px; border-top: 1px solid #eee; width: 100%; text-decoration: none; color: #bbb; font-size: 11px; }
+        /* 內文設計：優化字體權重與行距 */
+        #content { 
+            line-height: 2; 
+            font-size: 15px; 
+            color: #444; 
+            font-weight: 300; /* 使用細體增加高級感 */
+        }
+        
+        /* Markdown 元素樣式微調 */
+        #content p { margin-bottom: 28px; text-align: justify; }
+        #content h1, #content h2, #content h3 { 
+            color: #111; font-weight: 500; margin: 40px 0 20px; line-height: 1.4; 
+        }
+        #content img { 
+            max-width: 100%; height: auto; display: block; 
+            margin: 40px auto; border-radius: 2px;
+        }
+        #content a { color: #111; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: #eee; transition: 0.3s; }
+        #content a:hover { text-decoration-color: #111; }
+
+        .back-link { 
+            display: inline-block; margin-top: 60px; padding-top: 25px; 
+            border-top: 1px solid #f0f0f0; width: 100%; 
+            text-decoration: none; color: #bbb; font-size: 11px; 
+            letter-spacing: 0.1em; transition: 0.3s;
+        }
+        .back-link:hover { color: #111; }
+
+        footer { padding: 60px 0 40px; text-align: center; font-size: 9px; color: #ccc; letter-spacing: 0.3em; text-transform: uppercase; }
+
+        @media (max-width: 600px) {
+            #title { font-size: 1.6rem; }
+            body { padding-top: 80px; }
+        }
     </style>
 </head>
 <body>
+
     <nav>
         <a href="index.html">Home</a>
         <a href="blog.html">Blog</a>
@@ -39,8 +89,10 @@
         <span id="date"></span>
         <h1 id="title"></h1>
         <div id="content">載入中...</div>
-        <a href="blog.html" class="back-link">← Back to Blog</a>
+        <a href="blog.html" class="back-link">← BACK TO BLOG</a>
     </main>
+
+    <footer>&copy; 2025 DESIGN WITH KIRSTEN</footer>
 
     <script>
         const urlParams = new URLSearchParams(window.location.search);
@@ -49,31 +101,33 @@
         async function loadPost() {
             if (!slug) return;
             try {
-                // 1. 從 posts/ 資料夾抓取最新 json
                 const res = await fetch(`posts/posts.json?t=${Date.now()}`);
                 const posts = await res.json();
                 const post = posts.find(p => p.slug === slug);
 
                 if (post) {
+                    document.title = post.title + " | DESIGN WITH KIRSTEN";
                     document.getElementById('title').textContent = post.title;
                     document.getElementById('date').textContent = post.date;
 
-                    // 2. 關鍵修正：去讀取截圖中顯示的 .md 檔案路徑
-                    // 根據截圖，檔案路徑應為 posts/Blog.md
                     const contentPath = `posts/${post.slug}.md?t=${Date.now()}`;
                     const contentRes = await fetch(contentPath);
                     
                     if (contentRes.ok) {
-                        const markdownText = await contentRes.text();
-                        // 使用 marked 將 Markdown 轉換為 HTML 並放入頁面
+                        let markdownText = await contentRes.text();
+                        
+                        // ✨ 核心修正：使用正則表達式刪除 Markdown 第一行的 # 標題
+                        // 這樣就不會跟頁面原本顯示的標題重複
+                        markdownText = markdownText.replace(/^#\s+.*/, '');
+
                         document.getElementById('content').innerHTML = marked.parse(markdownText);
                     } else {
-                        document.getElementById('content').innerHTML = "找不到檔案：" + contentPath;
+                        document.getElementById('content').innerHTML = "Content not found.";
                     }
                 }
             } catch (e) {
-                console.error("載入失敗:", e);
-                document.getElementById('content').innerHTML = "載入失敗，請確認 JSON 格式是否正確。";
+                console.error(e);
+                document.getElementById('content').innerHTML = "Error loading content.";
             }
         }
         loadPost();
