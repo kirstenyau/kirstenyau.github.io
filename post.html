@@ -1,21 +1,54 @@
-const urlParams = new URLSearchParams(window.location.search);
-const slug = urlParams.get('slug');
+document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const slug = urlParams.get('slug');
 
-if (slug) {
-    // 同時抓取 JSON (拿正確標題) 和 MD (拿正確內文)
+    if (!slug) {
+        console.error("未提供文章 slug");
+        document.getElementById('post-content').innerHTML = "<p>找不到文章識別碼。</p>";
+        return;
+    }
+
+    // 💡 同時發起請求，提高載入效率
     Promise.all([
-        fetch('posts/posts.json').then(res => res.json()),
-        fetch(`posts/${slug}.md`).then(res => res.text())
-    ]).then(([posts, mdText]) => {
-        // 💡 關鍵：從 JSON 中找出 slug 匹配的那一筆
+        fetch('posts/posts.json').then(res => {
+            if (!res.ok) throw new Error("無法讀取文章清單");
+            return res.json();
+        }),
+        fetch(`posts/${slug}.md`).then(res => {
+            if (!res.ok) throw new Error("無法讀取文章內容");
+            return res.text();
+        })
+    ])
+    .then(([posts, mdText]) => {
+        // 1. 根據 slug 找到 JSON 中對應的元數據
         const currentPost = posts.find(p => p.slug === slug);
         
         if (currentPost) {
             document.getElementById('post-title').innerText = currentPost.title;
             document.getElementById('post-date').innerText = currentPost.date;
+            // 同步更新瀏覽器分頁標籤的標題
+            document.title = `${currentPost.title} | Kirsten's Blog`;
+        } else {
+            console.warn("在 JSON 中找不到對應的 slug，將嘗試解析 Markdown 標題");
         }
 
-        const cleanMd = mdText.replace(/^---[\s\S]+?---/, '');
-        document.getElementById('post-content').innerHTML = marked.parse(cleanMd);
+        // 2. 清理 Markdown 內容並渲染
+        // 移除 Front Matter (--- 之間的內容)
+        const cleanMd = mdText.replace(/^---[\s\S]+?---/, '').trim();
+        
+        if (typeof marked !== 'undefined') {
+            document.getElementById('post-content').innerHTML = marked.parse(cleanMd);
+        } else {
+            console.error("Marked 函式庫未載入");
+        }
+    })
+    .catch(err => {
+        console.error("讀取文章時發生錯誤:", err);
+        document.getElementById('post-content').innerHTML = `
+            <div style="text-align: center; padding: 50px;">
+                <p>抱歉，無法載入文章內容。</p>
+                <a href="index.html">返回首頁</a>
+            </div>
+        `;
     });
-}
+});
