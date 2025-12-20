@@ -2,34 +2,126 @@
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <title>載入中... | Kirsten's Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文章內容 | Kirsten's Blog</title>
+    
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
     <style>
-        /* 簡單的樣式確保閱讀舒適 */
-        #post-content img { max-width: 100%; height: auto; }
-        .post-meta { color: #666; margin-bottom: 20px; }
+        :root { --primary-color: #333; --text-color: #444; --light-gray: #f9f9f9; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; color: var(--text-color); margin: 0; padding: 0; background: #fff; }
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        
+        /* 返回按鈕樣式 */
+        .back-btn { display: inline-block; margin-bottom: 30px; text-decoration: none; color: #888; font-size: 0.9rem; transition: color 0.3s; }
+        .back-btn:hover { color: var(--primary-color); }
+
+        /* 文章標題區 */
+        .post-header { margin-bottom: 40px; }
+        #post-title { font-size: 2.5rem; margin: 10px 0; color: var(--primary-color); line-height: 1.2; }
+        #post-date { color: #999; font-size: 0.9rem; }
+
+        /* 作者 Profile 樣式 */
+        .author-profile { display: flex; align-items: center; padding: 20px 0; border-top: 1px solid #eee; border-bottom: 1px solid #eee; margin-bottom: 40px; }
+        .author-avatar { width: 50px; height: 50px; border-radius: 50%; background: #ddd; margin-right: 15px; overflow: hidden; }
+        .author-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .author-info b { display: block; font-size: 1rem; color: #333; }
+        .author-info span { font-size: 0.85rem; color: #777; }
+
+        /* 文章內容樣式 */
+        #post-content { font-size: 1.1rem; color: #333; }
+        #post-content img { max-width: 100%; height: auto; border-radius: 8px; margin: 20px 0; }
+        #post-content h2 { margin-top: 40px; border-left: 4px solid #333; padding-left: 15px; }
+        #post-content p { margin-bottom: 1.5em; }
+
+        /* 錯誤提示 */
+        .error-msg { text-align: center; padding: 100px 20px; color: #ff4d4f; }
     </style>
 </head>
 <body>
-    <nav><a href="index.html">← 返回首頁</a></nav>
 
-    <article>
-        <h1 id="post-title">載入中...</h1>
-        
-        <div class="post-meta">發佈日期：<span id="post-date"></span></div>
-        
-        <hr>
+    <div class="container">
+        <a href="index.html" class="back-btn">← Back to Blog</a>
 
-        <div id="post-content">正在準備文章內容...</div>
-    </article>
+        <article>
+            <header class="post-header">
+                <div id="post-date">Loading date...</div>
+                <h1 id="post-title">Loading title...</h1>
+            </header>
+
+            <div class="author-profile">
+                <div class="author-avatar">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Kirsten" alt="Kirsten">
+                </div>
+                <div class="author-info">
+                    <b>Kirsten Yau</b>
+                    <span>UX/UI Designer & Writer</span>
+                </div>
+            </div>
+
+            <div id="post-content">
+                <p>Loading content...</p>
+            </div>
+        </article>
+    </div>
 
     <script>
-        // 這裡放入你剛才貼的那段 JavaScript 代碼
-        document.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const slug = urlParams.get('slug');
-            // ... (中間省略，放入你剛才提供的完整 code)
+    document.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const slug = urlParams.get('slug');
+
+        if (!slug) {
+            showError("No article identifier found.");
+            return;
+        }
+
+        // 💡 修正路徑邏輯：確保從正確路徑抓取
+        const jsonPath = 'posts/posts.json';
+        const mdPath = `posts/${slug}.md`;
+
+        Promise.all([
+            fetch(jsonPath).then(res => {
+                if (!res.ok) throw new Error("Missing posts.json");
+                return res.json();
+            }),
+            fetch(mdPath).then(res => {
+                if (!res.ok) throw new Error("Missing .md file");
+                return res.text();
+            })
+        ])
+        .then(([posts, mdText]) => {
+            // 1. 匹配正確的標題資料
+            const currentPost = posts.find(p => p.slug === slug);
+            if (currentPost) {
+                document.getElementById('post-title').innerText = currentPost.title;
+                document.getElementById('post-date').innerText = currentPost.date;
+                document.title = `${currentPost.title} | Kirsten's Blog`;
+            }
+
+            // 2. 轉換 Markdown
+            // 移除 Front Matter (--- ... ---)
+            const cleanMd = mdText.replace(/^---[\s\S]+?---/, '').trim();
+            
+            if (window.marked) {
+                document.getElementById('post-content').innerHTML = marked.parse(cleanMd);
+            } else {
+                throw new Error("Marked library not loaded");
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            showError(`Failed to load article: ${err.message}`);
         });
+
+        function showError(msg) {
+            document.getElementById('post-content').innerHTML = `
+                <div class="error-msg">
+                    <h3>Oops!</h3>
+                    <p>${msg}</p>
+                    <a href="index.html" style="color: #333;">Return to home</a>
+                </div>`;
+        }
+    });
     </script>
 </body>
 </html>
