@@ -1,10 +1,12 @@
 const { Client } = require("@notionhq/client");
-const { NotionToMarkdown } = require("notion-to-markdown");
+const { NotionToMarkdown } = require("notion-to-md"); // 💡 修正這裡
 const fs = require("fs");
 const path = require("path");
 
 const notion = new Client({ auth: process.env.NOTION_TOKEN });
 const n2m = new NotionToMarkdown({ notionClient: notion });
+
+// ...其餘程式碼保持不變...
 
 async function sync() {
   console.log("🚀 啟動同步程序...");
