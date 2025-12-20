@@ -39,11 +39,11 @@
         /* 標題區塊 */
         #page-title { font-size: 2.1rem; font-weight: 500; color: #111; line-height: 1.3; margin: 0 0 25px 0; letter-spacing: -0.01em; }
         
-        /* 作者資訊區塊：移除分隔線與 padding */
+        /* 作者資訊區塊 - 移除所有橫線 */
         .author-info {
             display: flex;
             align-items: center;
-            margin-bottom: 45px; /* 增加一點底部空間，讓內容自然分隔 */
+            margin-bottom: 30px; /* 已依照要求縮減間距 */
         }
         .author-profile-pic {
             width: 44px;
@@ -81,9 +81,8 @@
             max-width: 100%; height: auto; display: block; 
             margin: 40px auto; border-radius: 4px;
         }
-        #content strong { font-weight: 500; color: #111; }
 
-        /* Back to Blog 按鈕 */
+        /* Back to Blog 按鈕 - Hover 顏色加深 */
         .back-link { 
             display: inline-block; margin-top: 60px; padding-top: 25px; 
             border-top: 1px solid #f0f0f0; width: 100%; 
@@ -96,7 +95,6 @@
 
         @media (max-width: 600px) {
             #page-title { font-size: 1.7rem; }
-            .author-info { margin-bottom: 35px; }
         }
     </style>
 </head>
@@ -146,7 +144,7 @@
                     if (contentRes.ok) {
                         let markdownText = await contentRes.text();
                         
-                        // 過濾重複標題與 Front Matter
+                        // 移除 Markdown 中的重複資訊與 Front Matter
                         markdownText = markdownText
                             .replace(/title:\s*".*?"/g, '')  
                             .replace(/date:\s*".*?"/g, '')   
