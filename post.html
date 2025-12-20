@@ -37,15 +37,13 @@
         .container { max-width: 680px; margin: 0 auto; padding: 20px 25px; }
         
         /* 標題區塊 */
-        #page-title { font-size: 2.1rem; font-weight: 500; color: #111; line-height: 1.3; margin: 0 0 30px 0; letter-spacing: -0.01em; }
+        #page-title { font-size: 2.1rem; font-weight: 500; color: #111; line-height: 1.3; margin: 0 0 25px 0; letter-spacing: -0.01em; }
         
-        /* 作者資訊區塊 */
+        /* 作者資訊區塊：移除分隔線與 padding */
         .author-info {
             display: flex;
             align-items: center;
-            margin-bottom: 30px; /* 已調整為 30px */
-            padding-bottom: 25px; 
-            border-bottom: 0.5px solid rgba(0,0,0,0.06); 
+            margin-bottom: 45px; /* 增加一點底部空間，讓內容自然分隔 */
         }
         .author-profile-pic {
             width: 44px;
@@ -85,22 +83,20 @@
         }
         #content strong { font-weight: 500; color: #111; }
 
-        /* Back to Blog 按鈕優化 */
+        /* Back to Blog 按鈕 */
         .back-link { 
             display: inline-block; margin-top: 60px; padding-top: 25px; 
             border-top: 1px solid #f0f0f0; width: 100%; 
             text-decoration: none; color: #bbb; font-size: 11px; 
-            letter-spacing: 0.1em; transition: 0.3s ease; /* 平滑過渡 */
+            letter-spacing: 0.1em; transition: 0.3s ease;
         }
-        .back-link:hover { 
-            color: #111; /* Hover 時加深顏色 */
-        }
+        .back-link:hover { color: #111; }
 
         footer { padding: 60px 0 40px; text-align: center; font-size: 9px; color: #ccc; letter-spacing: 0.3em; }
 
         @media (max-width: 600px) {
-            #page-title { font-size: 1.7rem; margin-bottom: 20px; }
-            .author-info { margin-bottom: 25px; }
+            #page-title { font-size: 1.7rem; }
+            .author-info { margin-bottom: 35px; }
         }
     </style>
 </head>
@@ -150,7 +146,7 @@
                     if (contentRes.ok) {
                         let markdownText = await contentRes.text();
                         
-                        // 移除重複標題與 Front Matter
+                        // 過濾重複標題與 Front Matter
                         markdownText = markdownText
                             .replace(/title:\s*".*?"/g, '')  
                             .replace(/date:\s*".*?"/g, '')   
