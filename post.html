@@ -1,54 +1,35 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const slug = urlParams.get('slug');
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>載入中... | Kirsten's Blog</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        /* 簡單的樣式確保閱讀舒適 */
+        #post-content img { max-width: 100%; height: auto; }
+        .post-meta { color: #666; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <nav><a href="index.html">← 返回首頁</a></nav>
 
-    if (!slug) {
-        console.error("未提供文章 slug");
-        document.getElementById('post-content').innerHTML = "<p>找不到文章識別碼。</p>";
-        return;
-    }
-
-    // 💡 同時發起請求，提高載入效率
-    Promise.all([
-        fetch('posts/posts.json').then(res => {
-            if (!res.ok) throw new Error("無法讀取文章清單");
-            return res.json();
-        }),
-        fetch(`posts/${slug}.md`).then(res => {
-            if (!res.ok) throw new Error("無法讀取文章內容");
-            return res.text();
-        })
-    ])
-    .then(([posts, mdText]) => {
-        // 1. 根據 slug 找到 JSON 中對應的元數據
-        const currentPost = posts.find(p => p.slug === slug);
+    <article>
+        <h1 id="post-title">載入中...</h1>
         
-        if (currentPost) {
-            document.getElementById('post-title').innerText = currentPost.title;
-            document.getElementById('post-date').innerText = currentPost.date;
-            // 同步更新瀏覽器分頁標籤的標題
-            document.title = `${currentPost.title} | Kirsten's Blog`;
-        } else {
-            console.warn("在 JSON 中找不到對應的 slug，將嘗試解析 Markdown 標題");
-        }
-
-        // 2. 清理 Markdown 內容並渲染
-        // 移除 Front Matter (--- 之間的內容)
-        const cleanMd = mdText.replace(/^---[\s\S]+?---/, '').trim();
+        <div class="post-meta">發佈日期：<span id="post-date"></span></div>
         
-        if (typeof marked !== 'undefined') {
-            document.getElementById('post-content').innerHTML = marked.parse(cleanMd);
-        } else {
-            console.error("Marked 函式庫未載入");
-        }
-    })
-    .catch(err => {
-        console.error("讀取文章時發生錯誤:", err);
-        document.getElementById('post-content').innerHTML = `
-            <div style="text-align: center; padding: 50px;">
-                <p>抱歉，無法載入文章內容。</p>
-                <a href="index.html">返回首頁</a>
-            </div>
-        `;
-    });
-});
+        <hr>
+
+        <div id="post-content">正在準備文章內容...</div>
+    </article>
+
+    <script>
+        // 這裡放入你剛才貼的那段 JavaScript 代碼
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const slug = urlParams.get('slug');
+            // ... (中間省略，放入你剛才提供的完整 code)
+        });
+    </script>
+</body>
+</html>
