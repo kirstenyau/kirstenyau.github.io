@@ -3,125 +3,224 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>文章內容 | Kirsten's Blog</title>
+    <title>Blog Post | Kirsten's Blog</title>
     
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     
     <style>
-        :root { --primary-color: #333; --text-color: #444; --light-gray: #f9f9f9; }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; color: var(--text-color); margin: 0; padding: 0; background: #fff; }
-        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
-        
-        /* 返回按鈕樣式 */
-        .back-btn { display: inline-block; margin-bottom: 30px; text-decoration: none; color: #888; font-size: 0.9rem; transition: color 0.3s; }
+        :root {
+            --primary-color: #1a1a1a;
+            --secondary-color: #757575;
+            --bg-color: #ffffff;
+            --accent-color: #2b2b2b;
+            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body {
+            font-family: var(--font-main);
+            line-height: 1.8;
+            color: var(--primary-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* 頂部進度條 */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: var(--primary-color);
+            z-index: 1000;
+        }
+
+        .container {
+            max-width: 720px; /* Medium 經典閱讀寬度 */
+            margin: 0 auto;
+            padding: 60px 24px;
+        }
+
+        /* 返回按鈕 */
+        .nav-back {
+            margin-bottom: 40px;
+        }
+        .back-btn {
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.2s;
+        }
         .back-btn:hover { color: var(--primary-color); }
 
-        /* 文章標題區 */
-        .post-header { margin-bottom: 40px; }
-        #post-title { font-size: 2.5rem; margin: 10px 0; color: var(--primary-color); line-height: 1.2; }
-        #post-date { color: #999; font-size: 0.9rem; }
+        /* 文章頭部 */
+        .post-header { margin-bottom: 32px; }
+        #post-title {
+            font-size: 2.6rem;
+            font-weight: 800;
+            line-height: 1.25;
+            margin: 0 0 20px 0;
+            letter-spacing: -0.02em;
+        }
 
-        /* 作者 Profile 樣式 */
-        .author-profile { display: flex; align-items: center; padding: 20px 0; border-top: 1px solid #eee; border-bottom: 1px solid #eee; margin-bottom: 40px; }
-        .author-avatar { width: 50px; height: 50px; border-radius: 50%; background: #ddd; margin-right: 15px; overflow: hidden; }
-        .author-avatar img { width: 100%; height: 100%; object-fit: cover; }
-        .author-info b { display: block; font-size: 1rem; color: #333; }
-        .author-info span { font-size: 0.85rem; color: #777; }
+        /* 作者資訊區塊 (Medium Style) */
+        .author-meta {
+            display: flex;
+            align-items: center;
+            margin-bottom: 32px;
+            padding: 8px 0;
+        }
+        .author-img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            margin-right: 16px;
+            object-fit: cover;
+            border: 1px solid #f0f0f0;
+        }
+        .author-text {
+            display: flex;
+            flex-direction: column;
+        }
+        .author-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+        }
+        .post-details {
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+        }
 
-        /* 文章內容樣式 */
-        #post-content { font-size: 1.1rem; color: #333; }
-        #post-content img { max-width: 100%; height: auto; border-radius: 8px; margin: 20px 0; }
-        #post-content h2 { margin-top: 40px; border-left: 4px solid #333; padding-left: 15px; }
-        #post-content p { margin-bottom: 1.5em; }
+        /* 文章內文渲染區 */
+        #post-content {
+            font-size: 1.25rem;
+            color: #292929;
+            letter-spacing: -0.003em;
+        }
+        #post-content p { margin-bottom: 24px; }
+        #post-content h2 { 
+            margin: 48px 0 16px 0; 
+            font-size: 1.8rem; 
+            font-weight: 700;
+        }
+        #post-content img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin: 32px 0;
+        }
+        #post-content blockquote {
+            border-left: 3px solid var(--primary-color);
+            padding-left: 20px;
+            margin-left: 0;
+            font-style: italic;
+            color: var(--secondary-color);
+        }
 
-        /* 錯誤提示 */
-        .error-msg { text-align: center; padding: 100px 20px; color: #ff4d4f; }
+        /* 載入中動畫 */
+        .loading-shimmer {
+            color: #ccc;
+            text-align: center;
+            padding: 100px 0;
+        }
+
+        @media (max-width: 640px) {
+            #post-title { font-size: 2rem; }
+            .container { padding-top: 40px; }
+        }
     </style>
 </head>
 <body>
 
+    <div class="progress-bar" id="reading-progress"></div>
+
     <div class="container">
-        <a href="index.html" class="back-btn">← Back to Blog</a>
+        <nav class="nav-back">
+            <a href="index.html" class="back-btn">← Back to Stories</a>
+        </nav>
 
-        <article>
-            <header class="post-header">
-                <div id="post-date">Loading date...</div>
-                <h1 id="post-title">Loading title...</h1>
-            </header>
-
-            <div class="author-profile">
-                <div class="author-avatar">
-                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Kirsten" alt="Kirsten">
-                </div>
+        <header class="post-header">
+            <h1 id="post-title">...</h1>
+            
+            <div class="author-meta">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Kirsten" class="author-img" alt="Kirsten">
                 <div class="author-info">
-                    <b>Kirsten Yau</b>
-                    <span>UX/UI Designer & Writer</span>
+                    <span class="author-name">Kirsten Yau</span>
+                    <div class="post-details">
+                        <span id="post-date">...</span> · 5 min read
+                    </div>
                 </div>
             </div>
+        </header>
 
-            <div id="post-content">
-                <p>Loading content...</p>
-            </div>
+        <article id="post-content" class="loading-shimmer">
+            正在為您準備精彩內容...
         </article>
+        
+        <footer style="margin-top: 80px; padding-top: 40px; border-top: 1px solid #eee;">
+            <a href="index.html" class="back-btn" style="justify-content: center;">Read more stories from Kirsten</a>
+        </footer>
     </div>
 
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const slug = urlParams.get('slug');
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const slug = urlParams.get('slug');
 
-        if (!slug) {
-            showError("No article identifier found.");
-            return;
-        }
+            if (!slug) {
+                window.location.href = 'index.html';
+                return;
+            }
 
-        // 💡 修正路徑邏輯：確保從正確路徑抓取
-        const jsonPath = 'posts/posts.json';
-        const mdPath = `posts/${slug}.md`;
+            // 同時獲取 JSON 和 MD
+            Promise.all([
+                fetch('posts/posts.json').then(res => res.json()),
+                fetch(`posts/${slug}.md`).then(res => {
+                    if (!res.ok) throw new Error("Article not found");
+                    return res.text();
+                })
+            ])
+            .then(([posts, mdText]) => {
+                // 1. 設置標題與日期
+                const post = posts.find(p => p.slug === slug);
+                if (post) {
+                    document.getElementById('post-title').innerText = post.title;
+                    document.getElementById('post-date').innerText = post.date;
+                    document.title = `${post.title} - Kirsten Yau`;
+                }
 
-        Promise.all([
-            fetch(jsonPath).then(res => {
-                if (!res.ok) throw new Error("Missing posts.json");
-                return res.json();
-            }),
-            fetch(mdPath).then(res => {
-                if (!res.ok) throw new Error("Missing .md file");
-                return res.text();
+                // 2. 解析內容並移除 Front Matter
+                const cleanMd = mdText.replace(/^---[\s\S]+?---/, '').trim();
+                
+                // 3. 渲染 Markdown
+                const contentEl = document.getElementById('post-content');
+                contentEl.classList.remove('loading-shimmer');
+                contentEl.innerHTML = marked.parse(cleanMd);
+                
+                // 4. 進度條功能
+                window.onscroll = () => {
+                    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                    const scrolled = (winScroll / height) * 100;
+                    document.getElementById("reading-progress").style.width = scrolled + "%";
+                };
             })
-        ])
-        .then(([posts, mdText]) => {
-            // 1. 匹配正確的標題資料
-            const currentPost = posts.find(p => p.slug === slug);
-            if (currentPost) {
-                document.getElementById('post-title').innerText = currentPost.title;
-                document.getElementById('post-date').innerText = currentPost.date;
-                document.title = `${currentPost.title} | Kirsten's Blog`;
-            }
-
-            // 2. 轉換 Markdown
-            // 移除 Front Matter (--- ... ---)
-            const cleanMd = mdText.replace(/^---[\s\S]+?---/, '').trim();
-            
-            if (window.marked) {
-                document.getElementById('post-content').innerHTML = marked.parse(cleanMd);
-            } else {
-                throw new Error("Marked library not loaded");
-            }
-        })
-        .catch(err => {
-            console.error(err);
-            showError(`Failed to load article: ${err.message}`);
+            .catch(err => {
+                console.error(err);
+                document.getElementById('post-content').innerHTML = `
+                    <div style="text-align:center; padding: 50px;">
+                        <h3>文章暫時無法載入</h3>
+                        <p>請確認該文章是否已正確同步到 GitHub。</p>
+                        <a href="index.html">返回部落格</a>
+                    </div>`;
+            });
         });
-
-        function showError(msg) {
-            document.getElementById('post-content').innerHTML = `
-                <div class="error-msg">
-                    <h3>Oops!</h3>
-                    <p>${msg}</p>
-                    <a href="index.html" style="color: #333;">Return to home</a>
-                </div>`;
-        }
-    });
     </script>
 </body>
 </html>
