@@ -1,41 +1,37 @@
-name: Sync Notion to Blog
+name: Notion Sync
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: # 允許手動觸發
   schedule:
     - cron: '0 * * * *' # 每小時自動執行一次
 
 jobs:
-  build:
+  notion-sync:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: write # 💡 關鍵：給予寫入權限
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '18' # 確保支援 fetch 功能
+          node-version: '18'
 
-      - name: Install dependencies
-        run: npm install @notionhq/client notion-to-md
+      - name: Install Dependencies
+        run: npm install @notionhq/client @notion-to-markdown/js
 
-      - name: Run sync script
+      - name: Run Sync Script
         env:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
         run: node sync.js
 
-      - name: Commit and push changes
+      - name: Commit and Push Changes
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          
-          # 關鍵：這裡必須同時加入 posts 資料夾下的 md 檔案，以及根目錄的 posts.json
-          git add posts/*.md
-          git add posts.json
-          
-          # 檢查是否有變動，有的話才 commit
-          git commit -m "Update posts and index from Notion" || echo "No changes to commit"
+          git add .
+          git commit -m "Update posts from Notion" || exit 0
           git push
