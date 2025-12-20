@@ -1,54 +1,51 @@
-const { NotionToMarkdown } = require("notion-to-md");
 const fs = require("fs");
 const path = require("path");
-
-const NOTION_TOKEN = process.env.NOTION_TOKEN;
-const DATABASE_ID = process.env.NOTION_DATABASE_ID;
-
-// 這裡我們只手動處理資料庫查詢，內文轉換仍交給 notion-to-md
-async function getNotionDatabase() {
-  const url = `https://api.notion.com/v1/databases/${DATABASE_ID}/query`;
-  const response = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Authorization": `Bearer ${NOTION_TOKEN}`,
-      "Notion-Version": "2022-06-28",
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      filter: {
-        property: "Status",
-        select: { equals: "Published" }
-      }
-    })
-  });
-  
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(`Notion API 錯誤: ${JSON.stringify(errorData)}`);
-  }
-  return await response.json();
-}
+const { NotionToMarkdown } = require("notion-to-md");
+const { Client } = require("@notionhq/client");
 
 async function sync() {
-  console.log("🚀 啟動同步程序 (Fetch 模式)...");
+  console.log("🚀 啟動同步程序 (穩定模式)...");
+  
+  const token = process.env.NOTION_TOKEN;
+  const databaseId = process.env.NOTION_DATABASE_ID;
   const postsDir = path.join(__dirname, "posts");
+
   if (!fs.existsSync(postsDir)) fs.mkdirSync(postsDir);
 
   try {
-    const data = await getNotionDatabase();
+    console.log("📡 正在從 Notion 獲取資料...");
+
+    // 使用原生 fetch 直接請求資料庫，避開 SDK 報錯
+    const response = await fetch(`https://api.notion.com/v1/databases/${databaseId}/query`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Notion-Version': '2022-06-28',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        filter: { property: "Status", select: { equals: "Published" } }
+      })
+    });
+
+    if (!response.ok) {
+        const error = await response.json();
+        throw new Error(`Notion API 報錯: ${error.message}`);
+    }
+
+    const data = await response.json();
     console.log(`✅ 成功獲取 ${data.results.length} 篇文章。`);
 
-    // 為了讓 notion-to-md 運作，我們還是需要一個簡單的 client 偽裝
-    const { Client } = require("@notionhq/client");
-    const notionProxy = new Client({ auth: NOTION_TOKEN });
-    const n2m = new NotionToMarkdown({ notionClient: notionProxy });
+    // 為了轉換內文，我們還是需要初始化一個簡單的 notion 客戶端給 n2m 使用
+    const notionClient = new Client({ auth: token });
+    const n2m = new NotionToMarkdown({ notionClient });
 
     const postsList = [];
 
     for (const page of data.results) {
-      const title = page.properties.Name?.title[0]?.plain_text || 
-                    page.properties.Title?.title[0]?.plain_text || "Untitled";
+      // 獲取標題 (相容 Name 或 Title 欄位)
+      const titleProp = page.properties.Name || page.properties.Title;
+      const title = titleProp?.title[0]?.plain_text || "Untitled";
       
       const date = page.properties.Date?.date?.start || new Date().toISOString().split('T')[0];
       
@@ -59,7 +56,7 @@ async function sync() {
 
       postsList.push({ title, slug, date });
 
-      console.log(`📝 正在轉換：${title} (slug: ${slug})`);
+      console.log(`📝 正在轉換：${title}`);
       const mdblocks = await n2m.pageToMarkdown(page.id);
       const mdString = n2m.toMarkdownString(mdblocks);
       
@@ -67,11 +64,13 @@ async function sync() {
       fs.writeFileSync(path.join(postsDir, `${slug}.md`), content);
     }
 
+    // 儲存清單到 posts/posts.json
     fs.writeFileSync(path.join(postsDir, "posts.json"), JSON.stringify(postsList, null, 2));
-    console.log("📋 posts.json 已更新！");
+    console.log("📋 posts.json 清單已更新！");
     console.log("🎉 所有文章同步完成！");
+
   } catch (error) {
-    console.error("❌ 執行失敗：", error.message);
+    console.error("❌ 發生錯誤：", error.message);
     process.exit(1);
   }
 }
