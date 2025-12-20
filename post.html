@@ -7,109 +7,36 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
-        
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        
-        body { 
-            font-family: "Noto Sans TC", sans-serif; 
-            background-color: #fcfcfc; 
-            margin: 0; color: #333; 
-            padding-top: 100px;
-        }
-
-        /* 導覽列 */
-        nav { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 75px; 
-            background: rgba(252, 252, 252, 0.85); 
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            display: flex; align-items: center; justify-content: center; 
-            border-bottom: 0.5px solid rgba(0,0,0,0.06); 
-            z-index: 9999; 
-        }
-        nav a { 
-            margin: 0 18px; text-decoration: none; 
-            color: #999; font-size: 13px; font-weight: 400;
-            transition: 0.3s; letter-spacing: 0.15em;
-            text-transform: uppercase;
-        }
+        body { font-family: "Noto Sans TC", sans-serif; background-color: #fcfcfc; margin: 0; color: #333; padding-top: 100px; }
+        nav { position: fixed; top: 0; left: 0; width: 100%; height: 75px; background: rgba(252, 252, 252, 0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; border-bottom: 0.5px solid rgba(0,0,0,0.06); z-index: 9999; }
+        nav a { margin: 0 18px; text-decoration: none; color: #999; font-size: 13px; font-weight: 400; transition: 0.3s; letter-spacing: 0.15em; text-transform: uppercase; }
         nav a:hover { color: #111; }
-
         .container { max-width: 680px; margin: 0 auto; padding: 20px 25px; }
-        
-        /* 標題區塊 */
         #page-title { font-size: 2.1rem; font-weight: 500; color: #111; line-height: 1.3; margin: 0 0 25px 0; letter-spacing: -0.01em; }
-        
-        /* 作者資訊區塊 - 移除所有橫線 */
-        .author-info {
-            display: flex;
-            align-items: center;
-            margin-bottom: 30px; /* 已依照要求縮減間距 */
-        }
-        .author-profile-pic {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            margin-right: 12px;
-            object-fit: cover;
-        }
-        .author-details {
-            display: flex;
-            flex-direction: column;
-        }
-        .author-name {
-            font-size: 14px;
-            font-weight: 500;
-            color: #111;
-            line-height: 1.4;
-        }
-        .post-date {
-            font-size: 12px;
-            color: #999;
-            line-height: 1.4;
-        }
-
-        /* 內文風格 */
-        #content { 
-            line-height: 2.1; 
-            font-size: 16px; 
-            color: #444; 
-            font-weight: 300;
-        }
+        .author-info { display: flex; align-items: center; margin-bottom: 30px; }
+        .author-profile-pic { width: 44px; height: 44px; border-radius: 50%; margin-right: 12px; object-fit: cover; }
+        .author-details { display: flex; flex-direction: column; }
+        .author-name { font-size: 14px; font-weight: 500; color: #111; line-height: 1.4; }
+        .post-date { font-size: 12px; color: #999; line-height: 1.4; }
+        #content { line-height: 2.1; font-size: 16px; color: #444; font-weight: 300; }
         #content p { margin-bottom: 30px; text-align: justify; }
         #content h2 { font-size: 1.5rem; color: #111; margin-top: 45px; font-weight: 500; }
-        #content img { 
-            max-width: 100%; height: auto; display: block; 
-            margin: 40px auto; border-radius: 4px;
-        }
-
-        /* Back to Blog 按鈕 - Hover 顏色加深 */
-        .back-link { 
-            display: inline-block; margin-top: 60px; padding-top: 25px; 
-            border-top: 1px solid #f0f0f0; width: 100%; 
-            text-decoration: none; color: #bbb; font-size: 11px; 
-            letter-spacing: 0.1em; transition: 0.3s ease;
-        }
+        #content img { max-width: 100%; height: auto; display: block; margin: 40px auto; border-radius: 4px; }
+        .back-link { display: inline-block; margin-top: 60px; padding-top: 25px; border-top: 1px solid #f0f0f0; width: 100%; text-decoration: none; color: #bbb; font-size: 11px; letter-spacing: 0.1em; transition: 0.3s ease; }
         .back-link:hover { color: #111; }
-
         footer { padding: 60px 0 40px; text-align: center; font-size: 9px; color: #ccc; letter-spacing: 0.3em; }
-
-        @media (max-width: 600px) {
-            #page-title { font-size: 1.7rem; }
-        }
     </style>
 </head>
 <body>
-
     <nav>
         <a href="index.html">Home</a>
         <a href="blog.html">Blog</a>
         <a href="resources.html">Resources</a>
         <a href="about.html">About</a>
     </nav>
-
     <main class="container">
         <h1 id="page-title"></h1> 
-        
         <div class="author-info">
             <img src="profile.png" alt="Profile" class="author-profile-pic">
             <div class="author-details">
@@ -117,43 +44,35 @@
                 <span id="post-date" class="post-date"></span> 
             </div>
         </div>
-        
         <div id="content">載入中...</div>
         <a href="blog.html" class="back-link">← BACK TO BLOG</a>
     </main>
-
     <footer>&copy; 2025 DESIGN WITH KIRSTEN</footer>
-
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const slug = urlParams.get('slug');
-
         async function loadPost() {
             if (!slug) return;
             try {
                 const res = await fetch(`posts/posts.json?t=${Date.now()}`);
                 const posts = await res.json();
                 const post = posts.find(p => p.slug === slug);
-
                 if (post) {
                     document.title = post.title + " | DESIGN WITH KIRSTEN";
                     document.getElementById('page-title').textContent = post.title;
                     document.getElementById('post-date').textContent = post.date;
-
                     const contentRes = await fetch(`posts/${post.slug}.md?t=${Date.now()}`);
                     if (contentRes.ok) {
                         let markdownText = await contentRes.text();
-                        
-                        // 移除 Markdown 中的重複資訊與 Front Matter
+                        // ✨ 關鍵修正：同時移除標籤資訊與多餘橫線
                         markdownText = markdownText
-                            .replace(/title:\s*".*?"/g, '')  
-                            .replace(/date:\s*".*?"/g, '')   
-                            .replace(/^#\s+.*/m, '')         
+                            .replace(/---[\s\S]*?---/, '')    // 移除 Front Matter (--- 包圍的部分)
+                            .replace(/title:\s*".*?"/g, '')  // 保險起見移除 title
+                            .replace(/date:\s*".*?"/g, '')   // 保險起見移除 date
+                            .replace(/^#\s+.*/m, '')         // 移除大標題
+                            .replace(/^\s*-{3,}\s*$/gm, '')  // 移除獨立橫線
                             .trim();                         
-
                         document.getElementById('content').innerHTML = marked.parse(markdownText);
-                    } else {
-                        document.getElementById('content').innerHTML = "Content not found.";
                     }
                 }
             } catch (e) { console.error(e); }
