@@ -1,14 +1,27 @@
 ---
-title: "花了一整天，終於連好Notion API了"
+title: "從文字編輯到 UX/UI 設計師：我如何從「講故事」轉向「設計體驗」？"
 date: "2025-12-18"
 ---
 
 
-我花了一天終於做好了這個Notion對接，UI還是醜醜的，但總算做到。不知道這方法笨不笨，但先嘗試了再改進吧！
+Hello大家好，我是Kirsten！
 
 
-😬
+3年前我由content editor轉職UXUI Designer，搵工的時候被問：你大學4年讀Media，加4年Editor經驗，現在才決定轉行？不覺得浪費嗎？老實說：我沒有一刻覺得浪費。
 
 
-![IMG_6083.jpeg](https://prod-files-secure.s3.us-west-2.amazonaws.com/5417d659-4d95-4440-9874-00e8e92299ab/0f4d611e-1a7f-4ce2-8ef3-9cf15cf4a016/IMG_6083.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB46632WWBFCJ%2F20251220%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20251220T034215Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEPT%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJGMEQCIGiDayZ62Vrfrq0V2OCJf%2Fh8%2BA3sb9FgSwc3e3GzyEuPAiBg%2Fd%2FNPhj9DUzw8eGCajr1HEp3X8ctbIHwWTN1YPUXgiqIBAi8%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDYzNzQyMzE4MzgwNSIMKafv7FRj%2BQhsggEyKtwD1xDIAnUzJ%2Ba%2BauFYEx306YYnRRBnPOZy8QtLcgDVYbVsQxRdhZmjN3JjhRzOfOMrZ%2FzBdRY6%2FBXrm54PCvomNL9FhtdZpDSaLduV47HbpxlQW6L4%2FvDTYU6Ql%2FoUlvHKfUTk%2B%2F1noUtfcPWB29aT37k%2Fk08%2FXTzk%2FqpGXM%2BGReb1SOVkPdXfjlamCkGWGEXOG6PRAE2ttntxRlo05wLUaHg3bcrQhcmylC2e%2FopMAic14h%2FXooRidVThVXwpgYlarOcpBmN8CChWDP323nPa9REpCwn7eiye9bTN6oDILbqGbxspatcs5NaYmkQnvSMRq%2FbmfKvxJHnlRv5ForOKtBCUVoYcO4ZA3Em9iVj8potGihuYPb6kHxSmcMkBN7%2BaXJD6PZeKNoNQwcT7CVRAEtHEDrjYNuXc8ZOA1yV3Z71NVstVTxZGK9Vdx7T1Rm4VA0OcnNM4S%2Bv1R2oJ82U%2F%2FJu1LNMPFp3bMLcEDWkJpZkRoaPyVXtaNIrpSddPsgNJZWce6YqCsYMSM1Y0J2B4IG5GoxMP%2B00Yl%2FGsP1pkovARrtijuKtpvylu1N7WPo3Bb0Rkk2%2FwOreOjSCZfFHm04rg3SGZrK%2Bs5zB7vM%2BNJ0h0hKNbMj5QDFyyXGkws6uYygY6pgHCDguPAxJN0zE2nVSF9OJwjKgbviGJIfpmyjSXFrbBdjncI46U8bpbb2IA6VivYVvN%2FKpQhK124DRxdvGf69AGiOlkUy5sKd8t6EJYD3gMA0njpEsWkQw49EXEKVODPvChaeETD0w93o6gil5FdGi1zca2deMrh1EGjskwiqu0YMVjrg3wz%2F2PY7KPFCe4mCU1dDM0mluXzohQouu5INA6n8lXHYpQ&X-Amz-Signature=3632a8b23b661c8c1aaac90356d30df7f7a12db1db90b6af5e9e7b52affdf852&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+在編輯生涯中，我每日寫文執稿，快速Research、整理雜亂資訊，再用最易入口、最吸引讀者的方式表達，節奏急促的媒體生態下，這套Workflow每分每秒都在Run，沒有一刻停下來。
+
+
+
+日復一日，這套Workflow Run到開始滑牙。我開始不再滿足於在螢幕上「講故事」，我開始觀察讀者如何滑動頁面、在哪個位置停頓，開始思考讀者不看我的文章，會否因為廣告太多？於是我的興趣漸漸由「講故事」，變成設計「講故事的舞台」。
+
+
+於是我開始自學UXUI Design，學基本概念、設計工具、Design System、看Case Studies、培養美感和邏輯。如果要概括這趟學習歷程，我會形容為「如魚得水」。大概因為我INFJ+雙魚座屬性，天生對美感和條理的執著，加上喜愛思考（挑剔）又共情感MAX，容許我引用Gemini的分析結論：Perfect Match（笑）。
+
+
+性格當然有影響，但更重要是多得我4年的編輯訓練。因為有快速收集和整理資訊的技能，令我做User Interview時自帶採訪觸覺，自動找出重點，問題清晰有效率。因為有長期寫作和編輯文字功力，能確保UX Writing準確易讀，跟團隊溝通設計時亦能有邏輯條理地表達。最最最重要的是：多年的內容創作讓我習慣站在讀者視角思考，這與UX設計的User-centric特質不謀而合。
+
+
+所以我真的沒有一刻覺得轉職是浪費了編輯經驗，反而令我在云云設計師中突出。
 
