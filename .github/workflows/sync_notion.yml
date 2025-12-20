@@ -1,4 +1,5 @@
-name: Notion Sync
+- name: Install Dependencies
+        run: npm install @notionhq/client notion-to-md
 
 on:
   workflow_dispatch: # 允許手動觸發
