@@ -10,176 +10,95 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
 
-        * { 
-            box-sizing: border-box; 
-            -webkit-tap-highlight-color: transparent; 
-        }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body { 
             font-family: "Noto Sans TC", sans-serif; 
             background-color: #fcfcfc; 
             margin: 0; 
             color: #333; 
-            padding-top: 100px; /* 為固定導航留出空間 */
+            padding-top: 100px; 
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Navigation Bar - 日式極簡玻璃擬態 */
+        /* Navigation Bar */
         nav { 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 75px; 
-            background: rgba(252, 252, 252, 0.85); 
-            backdrop-filter: blur(10px); 
-            -webkit-backdrop-filter: blur(10px); 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            border-bottom: 0.5px solid rgba(0,0,0,0.06); 
-            z-index: 9999; 
+            position: fixed; top: 0; left: 0; width: 100%; height: 75px; 
+            background: rgba(252, 252, 252, 0.85); backdrop-filter: blur(10px); 
+            -webkit-backdrop-filter: blur(10px); display: flex; align-items: center; 
+            justify-content: center; border-bottom: 0.5px solid rgba(0,0,0,0.06); z-index: 9999; 
         }
-
         nav a { 
-            margin: 0 18px; 
-            text-decoration: none; 
-            color: #999; 
-            font-size: 13px; 
-            font-weight: 400; 
-            transition: 0.3s; 
-            letter-spacing: 0.15em; 
-            text-transform: uppercase; 
+            margin: 0 18px; text-decoration: none; color: #999; font-size: 13px; 
+            font-weight: 400; transition: 0.3s; letter-spacing: 0.15em; text-transform: uppercase; 
         }
+        nav a:hover { color: #111; }
 
-        nav a:hover { 
-            color: #111; 
-        }
+        .container { max-width: 680px; margin: 0 auto; padding: 20px 25px; }
 
-        /* 內容容器 */
-        .container { 
-            max-width: 680px; 
-            margin: 0 auto; 
-            padding: 20px 25px; 
-        }
-
-        /* 文章標題 */
         #page-title { 
-            font-size: 2.1rem; 
-            font-weight: 500; 
-            color: #111; 
-            line-height: 1.3; 
-            margin: 0 0 25px 0; 
-            letter-spacing: -0.01em; 
+            font-size: 2.1rem; font-weight: 500; color: #111; line-height: 1.3; 
+            margin: 0 0 25px 0; letter-spacing: -0.01em; 
         }
 
-        /* 作者資訊區塊 */
-        .author-info { 
-            display: flex; 
-            align-items: center; 
-            margin-bottom: 40px; 
-        }
+        .author-info { display: flex; align-items: center; margin-bottom: 40px; }
+        .author-profile-pic { width: 44px; height: 44px; border-radius: 50%; margin-right: 12px; object-fit: cover; }
+        .author-details { display: flex; flex-direction: column; }
+        .author-name { font-size: 14px; font-weight: 500; color: #111; line-height: 1.4; }
+        .post-date { font-size: 12px; color: #999; line-height: 1.4; }
 
-        .author-profile-pic { 
-            width: 44px; 
-            height: 44px; 
-            border-radius: 50%; 
-            margin-right: 12px; 
-            object-fit: cover; 
-        }
+        #content { line-height: 2.1; font-size: 16px; color: #444; font-weight: 300; }
+        #content p { margin-bottom: 30px; text-align: justify; }
+        #content h2 { font-size: 1.5rem; color: #111; margin-top: 50px; font-weight: 500; }
+        #content img { max-width: 100%; height: auto; display: block; margin: 40px auto; border-radius: 4px; }
 
-        .author-details { 
-            display: flex; 
-            flex-direction: column; 
+        /* CTA Card Style */
+        .cta-card {
+            margin: 80px 0 40px 0;
+            padding: 50px 20px;
+            background-color: #fff;
+            border: 1px solid #f2f2f2;
+            text-align: center;
+            border-radius: 4px;
         }
-
-        .author-name { 
-            font-size: 14px; 
-            font-weight: 500; 
-            color: #111; 
-            line-height: 1.4; 
-        }
-
-        .post-date { 
-            font-size: 12px; 
-            color: #999; 
-            line-height: 1.4; 
-        }
-
-        /* 文章內文樣式 */
-        #content { 
-            line-height: 2.1; 
-            font-size: 16px; 
-            color: #444; 
-            font-weight: 300; 
-        }
-
-        #content p { 
-            margin-bottom: 30px; 
-            text-align: justify; 
-        }
-
-        #content h2 { 
-            font-size: 1.5rem; 
-            color: #111; 
-            margin-top: 50px; 
-            margin-bottom: 20px;
-            font-weight: 500; 
-        }
-
-        #content img { 
-            max-width: 100%; 
-            height: auto; 
-            display: block; 
-            margin: 40px auto; 
-            border-radius: 4px; 
-        }
-
-        #content blockquote {
-            border-left: 2px solid #111;
-            padding-left: 20px;
-            margin-left: 0;
-            font-style: italic;
-            color: #666;
-        }
-
-        /* 返回按鈕 */
-        .back-link-container {
-            margin-top: 80px;
-            padding-top: 25px;
-            border-top: 1px solid #f0f0f0;
-        }
-
-        .back-link { 
-            display: inline-block; 
-            text-decoration: none; 
-            color: #bbb; 
-            font-size: 11px; 
-            letter-spacing: 0.1em; 
-            transition: 0.3s ease; 
+        .cta-title {
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            color: #111;
+            margin-bottom: 30px;
             text-transform: uppercase;
         }
-
-        .back-link:hover { 
-            color: #111; 
+        .cta-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
         }
-
-        /* 頁腳 */
-        footer { 
-            padding: 80px 0 40px; 
-            text-align: center; 
-            font-size: 9px; 
-            color: #ccc; 
-            letter-spacing: 0.3em; 
-        }
-
-        /* 載入動畫 */
-        .loading-text {
-            color: #ccc;
+        .cta-btn {
+            text-decoration: none;
+            font-size: 12px;
             letter-spacing: 0.1em;
-            text-align: center;
-            padding: 50px 0;
+            padding: 14px 0;
+            width: 100%;
+            max-width: 240px;
+            transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border-radius: 2px;
         }
+        .btn-ig { border: 1px solid #111; color: #111; font-weight: 400; }
+        .btn-ig:hover { background: #111; color: #fff; }
+        .btn-threads { background: #f9f9f9; color: #777; border: 1px solid #f9f9f9; }
+        .btn-threads:hover { background: #f0f0f0; color: #111; }
+
+        @media (min-width: 600px) {
+            .cta-buttons { flex-direction: row; justify-content: center; }
+        }
+
+        .back-link-container { margin-top: 40px; padding-top: 25px; border-top: 1px solid #f0f0f0; }
+        .back-link { text-decoration: none; color: #bbb; font-size: 11px; letter-spacing: 0.1em; transition: 0.3s; text-transform: uppercase; }
+        .back-link:hover { color: #111; }
+
+        footer { padding: 80px 0 40px; text-align: center; font-size: 9px; color: #ccc; letter-spacing: 0.3em; }
     </style>
 </head>
 <body>
@@ -202,7 +121,15 @@
             </div>
         </div>
 
-        <div id="content" class="loading-text">Loading story...</div>
+        <div id="content">Loading story...</div>
+
+        <section class="cta-card">
+            <div class="cta-title">追蹤看更多 Case Study</div>
+            <div class="cta-buttons">
+                <a href="https://www.instagram.com/kirsten_uxui/" target="_blank" class="cta-btn btn-ig">在 IG 看 Case Study</a>
+                <a href="https://www.threads.net/@kirsten_uxui" target="_blank" class="cta-btn btn-threads">在 Threads 看工作碎碎念</a>
+            </div>
+        </section>
 
         <div class="back-link-container">
             <a href="blog.html" class="back-link">← BACK TO BLOG</a>
@@ -216,13 +143,8 @@
         const slug = urlParams.get('slug');
 
         async function loadPost() {
-            if (!slug) {
-                window.location.href = 'blog.html';
-                return;
-            }
-
+            if (!slug) { window.location.href = 'blog.html'; return; }
             try {
-                // 加一個時間戳避免瀏覽器快取舊資料
                 const res = await fetch(`posts/posts.json?t=${Date.now()}`);
                 const posts = await res.json();
                 const post = posts.find(p => p.slug === slug);
@@ -235,30 +157,18 @@
                     const contentRes = await fetch(`posts/${post.slug}.md?t=${Date.now()}`);
                     if (contentRes.ok) {
                         let markdownText = await contentRes.text();
-
-                        // 移除 Front Matter (YAML 標籤資訊)
                         markdownText = markdownText
                             .replace(/---[\s\S]*?---/, '')    
                             .replace(/title:\s*".*?"/g, '')  
                             .replace(/date:\s*".*?"/g, '')   
-                            .replace(/^#\s+.*/m, '')         // 移除正文可能重複的大標題
+                            .replace(/^#\s+.*/m, '')
                             .trim();                         
                         
-                        const contentEl = document.getElementById('content');
-                        contentEl.classList.remove('loading-text');
-                        contentEl.innerHTML = marked.parse(markdownText);
-                    } else {
-                        throw new Error("MD file not found");
+                        document.getElementById('content').innerHTML = marked.parse(markdownText);
                     }
-                } else {
-                    throw new Error("Post not found in JSON");
                 }
-            } catch (e) { 
-                console.error(e); 
-                document.getElementById('content').innerHTML = "抱歉，文章載入失敗。";
-            }
+            } catch (e) { console.error(e); }
         }
-
         loadPost();
     </script>
 </body>
