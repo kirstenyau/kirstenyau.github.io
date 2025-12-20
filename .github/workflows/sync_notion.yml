@@ -1,16 +1,15 @@
-- name: Install Dependencies
-        run: npm install @notionhq/client notion-to-md
+name: Notion Sync
 
 on:
-  workflow_dispatch: # 允許手動觸發
+  workflow_dispatch: # 手動觸發
   schedule:
-    - cron: '0 * * * *' # 每小時自動執行一次
+    - cron: '0 * * * *' # 每小時執行一次
 
 jobs:
   notion-sync:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # 💡 關鍵：給予寫入權限
+      contents: write # 確保有權限推送到倉庫
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -21,7 +20,8 @@ jobs:
           node-version: '18'
 
       - name: Install Dependencies
-        run: npm install @notionhq/client @notion-to-markdown/js
+        # 💡 已修正套件名稱為 notion-to-md
+        run: npm install @notionhq/client notion-to-md
 
       - name: Run Sync Script
         env:
