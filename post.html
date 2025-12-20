@@ -11,13 +11,12 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
         body { 
-            font-family: "Noto Sans TC", "PingFang TC", sans-serif; 
+            font-family: "Noto Sans TC", sans-serif; 
             background-color: #fcfcfc; 
             margin: 0; color: #333; 
             padding-top: 100px;
         }
 
-        /* 導覽列：維持原本設計 */
         nav { 
             position: fixed; top: 0; left: 0; width: 100%; height: 75px; 
             background: rgba(252, 252, 252, 0.85); 
@@ -34,46 +33,34 @@
         }
         nav a:hover { color: #111; }
 
-        .container { max-width: 700px; margin: 0 auto; padding: 20px 25px; }
+        .container { max-width: 680px; margin: 0 auto; padding: 20px 25px; }
         
-        /* 頁面標題區塊樣式 */
-        #date { font-size: 11px; color: #bbb; letter-spacing: 0.2em; display: block; margin-bottom: 12px; text-transform: uppercase; }
-        #title { font-size: 2rem; font-weight: 500; color: #111; line-height: 1.4; margin: 0 0 45px 0; letter-spacing: 0.02em; }
+        #date { font-size: 11px; color: #bbb; letter-spacing: 0.2em; display: block; margin-bottom: 15px; text-transform: uppercase; }
+        #title { font-size: 2.1rem; font-weight: 500; color: #111; line-height: 1.4; margin: 0 0 50px 0; letter-spacing: -0.01em; }
         
-        /* 內文設計：優化字體權重與行距 */
         #content { 
-            line-height: 2; 
-            font-size: 15px; 
+            line-height: 2.1; 
+            font-size: 16px; 
             color: #444; 
-            font-weight: 300; /* 使用細體增加高級感 */
+            font-weight: 300;
         }
         
-        /* Markdown 元素樣式微調 */
-        #content p { margin-bottom: 28px; text-align: justify; }
-        #content h1, #content h2, #content h3 { 
-            color: #111; font-weight: 500; margin: 40px 0 20px; line-height: 1.4; 
-        }
+        #content p { margin-bottom: 30px; text-align: justify; }
+        #content h1, #content h2 { font-size: 1.5rem; color: #111; margin-top: 50px; font-weight: 500; }
         #content img { 
             max-width: 100%; height: auto; display: block; 
-            margin: 40px auto; border-radius: 2px;
+            margin: 45px auto; border-radius: 4px;
         }
-        #content a { color: #111; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: #eee; transition: 0.3s; }
-        #content a:hover { text-decoration-color: #111; }
 
         .back-link { 
-            display: inline-block; margin-top: 60px; padding-top: 25px; 
+            display: inline-block; margin-top: 70px; padding-top: 25px; 
             border-top: 1px solid #f0f0f0; width: 100%; 
             text-decoration: none; color: #bbb; font-size: 11px; 
             letter-spacing: 0.1em; transition: 0.3s;
         }
         .back-link:hover { color: #111; }
 
-        footer { padding: 60px 0 40px; text-align: center; font-size: 9px; color: #ccc; letter-spacing: 0.3em; text-transform: uppercase; }
-
-        @media (max-width: 600px) {
-            #title { font-size: 1.6rem; }
-            body { padding-top: 80px; }
-        }
+        footer { padding: 60px 0 40px; text-align: center; font-size: 9px; color: #ccc; letter-spacing: 0.3em; }
     </style>
 </head>
 <body>
@@ -110,25 +97,24 @@
                     document.getElementById('title').textContent = post.title;
                     document.getElementById('date').textContent = post.date;
 
-                    const contentPath = `posts/${post.slug}.md?t=${Date.now()}`;
-                    const contentRes = await fetch(contentPath);
-                    
+                    const contentRes = await fetch(`posts/${post.slug}.md?t=${Date.now()}`);
                     if (contentRes.ok) {
                         let markdownText = await contentRes.text();
                         
-                        // ✨ 核心修正：使用正則表達式刪除 Markdown 第一行的 # 標題
-                        // 這樣就不會跟頁面原本顯示的標題重複
-                        markdownText = markdownText.replace(/^#\s+.*/, '');
+                        // ✨ 強力過濾：移除 Markdown 檔案中重複的標籤資訊 (Front Matter)
+                        // 它會移除開頭的 title: "..." 和 date: "..." 以及 # 大標題
+                        markdownText = markdownText
+                            .replace(/title:\s*".*?"/g, '')  // 移除 title 標籤
+                            .replace(/date:\s*".*?"/g, '')   // 移除 date 標籤
+                            .replace(/^#\s+.*/m, '')         // 移除第一行 # 大標題
+                            .trim();                         // 移除首尾多餘空格
 
                         document.getElementById('content').innerHTML = marked.parse(markdownText);
                     } else {
                         document.getElementById('content').innerHTML = "Content not found.";
                     }
                 }
-            } catch (e) {
-                console.error(e);
-                document.getElementById('content').innerHTML = "Error loading content.";
-            }
+            } catch (e) { console.error(e); }
         }
         loadPost();
     </script>
