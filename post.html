@@ -16,7 +16,7 @@
             padding-top: 100px;
         }
 
-        /* 導覽列：保持你原本的樣式不變 */
+        /* 導覽列：維持原本樣式 */
         nav { 
             position: fixed; top: 0; left: 0; width: 100%; height: 75px; 
             background: rgba(252, 252, 252, 0.85); 
@@ -35,9 +35,9 @@
 
         .container { max-width: 750px; margin: 0 auto; padding: 20px 25px; }
         
-        /* 內文樣式 */
         #date { font-size: 12px; color: #bbb; letter-spacing: 0.15em; display: block; margin-bottom: 10px; text-transform: uppercase; }
         #title { font-size: 2.2rem; font-weight: 500; color: #111; line-height: 1.3; margin: 0 0 40px 0; }
+        
         #content { line-height: 2; font-size: 16px; color: #444; font-weight: 300; }
         #content p { margin-bottom: 25px; text-align: justify; }
         #content img { max-width: 100%; height: auto; display: block; margin: 30px auto; border: 1px solid #eee; }
@@ -70,7 +70,7 @@
     <main class="container">
         <span id="date"></span>
         <h1 id="title"></h1>
-        <div id="content"></div>
+        <div id="content">載入中...</div>
 
         <a href="blog.html" class="back-link">← Back to Blog</a>
     </main>
@@ -82,9 +82,12 @@
         const slug = urlParams.get('slug');
 
         async function loadPost() {
-            if (!slug) return;
+            if (!slug) {
+                document.getElementById('content').innerHTML = "網址缺少 slug 參數";
+                return;
+            }
             try {
-                // ✨ 加上時間戳記，確保抓到最新的標題和清單
+                // 1. 抓取目錄 JSON (防緩存)
                 const res = await fetch(`posts/posts.json?t=${new Date().getTime()}`);
                 const posts = await res.json();
                 const post = posts.find(p => p.slug === slug);
@@ -94,17 +97,31 @@
                     document.getElementById('title').textContent = post.title;
                     document.getElementById('date').textContent = post.date;
 
-                    // ✨ 抓取內文 HTML，同樣加上時間戳記防緩存
-                    const contentRes = await fetch(`posts/${post.slug}.html?t=${new Date().getTime()}`);
+                    // 2. 抓取內文 HTML (防緩存)
+                    const contentPath = `posts/${post.slug}.html?t=${new Date().getTime()}`;
+                    const contentRes = await fetch(contentPath);
+                    
                     if (contentRes.ok) {
                         const contentHtml = await contentRes.text();
                         document.getElementById('content').innerHTML = contentHtml;
                     } else {
-                        document.getElementById('content').innerHTML = "內文檔案讀取失敗";
+                        // 如果讀取不到檔案，顯示偵錯訊息
+                        document.getElementById('content').innerHTML = 
+                            `<div style="color:#888; font-size:14px; padding:20px; border:1px solid #eee;">
+                                內文檔案讀取失敗。<br><br>
+                                <strong>偵錯資訊：</strong><br>
+                                程式正在尋找：<code style="background:#eee;">${contentPath}</code><br><br>
+                                <strong>請檢查：</strong><br>
+                                1. GitHub 的 posts 資料夾內是否有 <b>${post.slug}.html</b><br>
+                                2. 大小寫必須完全一樣
+                            </div>`;
                     }
+                } else {
+                    document.getElementById('content').innerHTML = "在 JSON 中找不到對應的文章。";
                 }
             } catch (e) {
                 console.error("載入失敗:", e);
+                document.getElementById('content').innerHTML = "載入失敗，請檢查網路或 JSON 格式。";
             }
         }
 
