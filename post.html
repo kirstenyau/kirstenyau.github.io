@@ -1,40 +1,21 @@
-// 1. 從網址取得 slug (例如: ?slug=career-change-uxui)
 const urlParams = new URLSearchParams(window.location.search);
-const currentSlug = urlParams.get('slug');
+const slug = urlParams.get('slug');
 
-if (currentSlug) {
-    // 2. 讀取 posts.json 獲取標題與日期
-    fetch('posts/posts.json')
-        .then(response => response.json())
-        .then(posts => {
-            // 💡 關鍵：在清單中尋找與網址 slug 匹配的那一篇文章
-            const postData = posts.find(p => p.slug === currentSlug);
+if (slug) {
+    // 同時抓取 JSON (拿正確標題) 和 MD (拿正確內文)
+    Promise.all([
+        fetch('posts/posts.json').then(res => res.json()),
+        fetch(`posts/${slug}.md`).then(res => res.text())
+    ]).then(([posts, mdText]) => {
+        // 💡 關鍵：從 JSON 中找出 slug 匹配的那一筆
+        const currentPost = posts.find(p => p.slug === slug);
+        
+        if (currentPost) {
+            document.getElementById('post-title').innerText = currentPost.title;
+            document.getElementById('post-date').innerText = currentPost.date;
+        }
 
-            if (postData) {
-                // 更新頁面上的標題與日期
-                document.getElementById('post-title').innerText = postData.title;
-                document.getElementById('post-date').innerText = postData.date;
-                // 設定瀏覽器分頁標題
-                document.title = `${postData.title} | Kirsten's Blog`;
-            }
-        })
-        .catch(err => console.error("讀取 JSON 失敗:", err));
-
-    // 3. 讀取對應的 .md 檔案內容
-    fetch(`posts/${currentSlug}.md`)
-        .then(response => {
-            if (!response.ok) throw new Error("找不到文章檔案");
-            return response.text();
-        })
-        .then(mdText => {
-            // 移除 Markdown 中的 Front Matter (--- 之間的內容)
-            const cleanMd = mdText.replace(/^---[\s\S]+?---/, '');
-            // 轉換為 HTML 並渲染到頁面
-            document.getElementById('post-content').innerHTML = marked.parse(cleanMd);
-        })
-        .catch(err => {
-            document.getElementById('post-content').innerHTML = "<p>抱歉，找不到該文章內容。</p>";
-        });
-} else {
-    window.location.href = 'index.html'; // 如果沒有 slug，退回首頁
+        const cleanMd = mdText.replace(/^---[\s\S]+?---/, '');
+        document.getElementById('post-content').innerHTML = marked.parse(cleanMd);
+    });
 }
