@@ -2,19 +2,28 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>DESIGN WITH KIRSTEN</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post | DESIGN WITH KIRSTEN</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
         * { box-sizing: border-box; }
         body { font-family: "Noto Sans TC", sans-serif; background-color: #fcfcfc; margin: 0; padding-top: 100px; }
+        
+        /* 導覽列：維持原本樣式 */
         nav { position: fixed; top: 0; left: 0; width: 100%; height: 75px; background: rgba(252,252,252,0.85); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; border-bottom: 0.5px solid rgba(0,0,0,0.06); z-index: 9999; }
         nav a { margin: 0 18px; text-decoration: none; color: #999; font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase; }
+        
         .container { max-width: 750px; margin: 0 auto; padding: 20px 25px; }
         #date { font-size: 12px; color: #bbb; display: block; margin-bottom: 10px; }
-        #title { font-size: 2.2rem; font-weight: 500; margin-bottom: 40px; }
-        #content { line-height: 2; font-size: 16px; color: #444; }
-        #content img { max-width: 100%; height: auto; }
+        #title { font-size: 2.2rem; font-weight: 500; margin-bottom: 40px; color: #111; }
+        
+        /* 文章內容樣式優化 */
+        #content { line-height: 1.8; font-size: 16px; color: #444; }
+        #content h1, #content h2 { color: #111; margin-top: 30px; }
+        #content p { margin-bottom: 20px; }
+        #content img { max-width: 100%; height: auto; display: block; margin: 30px auto; }
+        
         .back-link { display: inline-block; margin-top: 50px; padding-top: 20px; border-top: 1px solid #eee; width: 100%; text-decoration: none; color: #bbb; font-size: 11px; }
     </style>
 </head>
@@ -25,34 +34,47 @@
         <a href="resources.html">Resources</a>
         <a href="about.html">About</a>
     </nav>
+
     <main class="container">
         <span id="date"></span>
         <h1 id="title"></h1>
         <div id="content">載入中...</div>
         <a href="blog.html" class="back-link">← Back to Blog</a>
     </main>
+
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const slug = urlParams.get('slug');
+
         async function loadPost() {
             if (!slug) return;
             try {
-                // 1. 抓取目錄 (防緩存)
+                // 1. 從 posts/ 資料夾抓取最新 json
                 const res = await fetch(`posts/posts.json?t=${Date.now()}`);
                 const posts = await res.json();
                 const post = posts.find(p => p.slug === slug);
+
                 if (post) {
                     document.getElementById('title').textContent = post.title;
                     document.getElementById('date').textContent = post.date;
-                    // 2. 直接在根目錄讀取檔案 (防緩存)
-                    const contentRes = await fetch(`${post.slug}.html?t=${Date.now()}`);
+
+                    // 2. 關鍵修正：去讀取截圖中顯示的 .md 檔案路徑
+                    // 根據截圖，檔案路徑應為 posts/Blog.md
+                    const contentPath = `posts/${post.slug}.md?t=${Date.now()}`;
+                    const contentRes = await fetch(contentPath);
+                    
                     if (contentRes.ok) {
-                        document.getElementById('content').innerHTML = await contentRes.text();
+                        const markdownText = await contentRes.text();
+                        // 使用 marked 將 Markdown 轉換為 HTML 並放入頁面
+                        document.getElementById('content').innerHTML = marked.parse(markdownText);
                     } else {
-                        document.getElementById('content').innerHTML = "找不到文章內容檔案，請檢查檔名是否為 " + post.slug + ".html";
+                        document.getElementById('content').innerHTML = "找不到檔案：" + contentPath;
                     }
                 }
-            } catch (e) { console.error(e); }
+            } catch (e) {
+                console.error("載入失敗:", e);
+                document.getElementById('content').innerHTML = "載入失敗，請確認 JSON 格式是否正確。";
+            }
         }
         loadPost();
     </script>
