@@ -16,7 +16,7 @@
             padding-top: 100px;
         }
 
-        /* 導覽列：維持原本樣式 */
+        /* 導覽列：完全保留你原本的樣式 */
         nav { 
             position: fixed; top: 0; left: 0; width: 100%; height: 75px; 
             background: rgba(252, 252, 252, 0.85); 
@@ -82,12 +82,9 @@
         const slug = urlParams.get('slug');
 
         async function loadPost() {
-            if (!slug) {
-                document.getElementById('content').innerHTML = "網址缺少 slug 參數";
-                return;
-            }
+            if (!slug) return;
             try {
-                // 1. 抓取目錄 JSON (防緩存)
+                // 1. 依然去 posts/ 資料夾抓目錄 JSON
                 const res = await fetch(`posts/posts.json?t=${new Date().getTime()}`);
                 const posts = await res.json();
                 const post = posts.find(p => p.slug === slug);
@@ -97,34 +94,26 @@
                     document.getElementById('title').textContent = post.title;
                     document.getElementById('date').textContent = post.date;
 
-                    // 2. 抓取內文 HTML (防緩存)
-                    const contentPath = `posts/${post.slug}.html?t=${new Date().getTime()}`;
+                    // ✨ 方案 B 修正：直接在根目錄找檔案，不加 posts/
+                    const contentPath = `${post.slug}.html?t=${new Date().getTime()}`;
                     const contentRes = await fetch(contentPath);
                     
                     if (contentRes.ok) {
                         const contentHtml = await contentRes.text();
                         document.getElementById('content').innerHTML = contentHtml;
                     } else {
-                        // 如果讀取不到檔案，顯示偵錯訊息
                         document.getElementById('content').innerHTML = 
                             `<div style="color:#888; font-size:14px; padding:20px; border:1px solid #eee;">
-                                內文檔案讀取失敗。<br><br>
-                                <strong>偵錯資訊：</strong><br>
-                                程式正在尋找：<code style="background:#eee;">${contentPath}</code><br><br>
-                                <strong>請檢查：</strong><br>
-                                1. GitHub 的 posts 資料夾內是否有 <b>${post.slug}.html</b><br>
-                                2. 大小寫必須完全一樣
+                                內文讀取失敗。<br>
+                                嘗試路徑: <strong>${contentPath}</strong><br>
+                                請確保該 HTML 檔案位於根目錄 (與 index.html 同一層)。
                             </div>`;
                     }
-                } else {
-                    document.getElementById('content').innerHTML = "在 JSON 中找不到對應的文章。";
                 }
             } catch (e) {
                 console.error("載入失敗:", e);
-                document.getElementById('content').innerHTML = "載入失敗，請檢查網路或 JSON 格式。";
             }
         }
-
         loadPost();
     </script>
 </body>
