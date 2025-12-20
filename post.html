@@ -3,130 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Article | DESIGN WITH KIRSTEN</title>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <title>DESIGN WITH KIRSTEN</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
-
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        
-        body { 
-            font-family: "Noto Sans TC", "PingFang TC", sans-serif; 
-            background-color: #fcfcfc; 
-            margin: 0; color: #333; 
-            padding-top: 100px;
-            line-height: 1.9;
-        }
+        body { font-family: "Noto Sans TC", sans-serif; background-color: #fcfcfc; margin: 0; color: #333; padding-top: 100px; }
 
-        /* 導覽列 (全站統一) */
-        nav { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 75px; 
-            background: rgba(252, 252, 252, 0.85); 
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            display: flex; align-items: center; justify-content: center; 
-            border-bottom: 0.5px solid rgba(0,0,0,0.06); 
-            z-index: 9999; 
-        }
-        nav a { 
-            margin: 0 18px; text-decoration: none; 
-            color: #999; font-size: 13px; font-weight: 400;
-            transition: 0.3s; letter-spacing: 0.15em;
-            text-transform: uppercase;
-        }
+        /* 統一導覽列 */
+        nav { position: fixed; top: 0; left: 0; width: 100%; height: 75px; background: rgba(252, 252, 252, 0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; border-bottom: 0.5px solid rgba(0,0,0,0.06); z-index: 9999; }
+        nav a { margin: 0 18px; text-decoration: none; color: #999; font-size: 13px; font-weight: 400; transition: 0.3s; letter-spacing: 0.15em; text-transform: uppercase; }
         nav a:hover { color: #111; }
 
-        .container { max-width: 750px; margin: 0 auto; padding: 40px 25px; }
+        .container { max-width: 750px; margin: 0 auto; padding: 20px 25px; }
+        #date { font-size: 12px; color: #bbb; letter-spacing: 0.15em; display: block; margin-bottom: 10px; text-transform: uppercase; }
+        #title { font-size: 2.2rem; font-weight: 500; color: #111; line-height: 1.3; margin: 0 0 40px 0; }
+        #content { line-height: 2; font-size: 16px; color: #444; font-weight: 300; }
+        #content p { margin-bottom: 25px; text-align: justify; }
+        #content img { max-width: 100%; height: auto; display: block; margin: 30px auto; border: 1px solid #eee; }
 
-        /* 文章標題區 */
-        .post-header { margin-bottom: 50px; }
-        .post-title { 
-            font-size: 2.2rem; font-weight: 500; color: #111; 
-            margin: 0 0 30px 0; line-height: 1.3; letter-spacing: 0.05em;
-        }
+        .back-link { display: inline-block; margin-top: 50px; padding-top: 20px; border-top: 1px solid #eee; width: 100%; text-decoration: none; color: #bbb; font-size: 11px; letter-spacing: 0.1em; transition: 0.3s; }
+        .back-link:hover { color: #111; }
 
-        /* 作者欄位 */
-        .author-meta {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 40px;
-            padding-bottom: 30px;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        .author-pic {
-            width: 48px; height: 48px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 1px solid #eee;
-            background-color: #f0f0f0;
-        }
-        .author-info { display: flex; flex-direction: column; }
-        .author-name { font-size: 14px; font-weight: 500; color: #111; letter-spacing: 0.05em; }
-        .post-date { font-size: 12px; color: #bbb; letter-spacing: 0.1em; }
-
-        /* 文章內文 */
-        #post-content { font-size: 1.05rem; color: #444; font-weight: 300; }
-        #post-content h1, #post-content h2, #post-content h3 { color: #111; font-weight: 500; margin: 45px 0 20px; }
-        #post-content p { margin-bottom: 25px; }
-        #post-content img { max-width: 100%; height: auto; margin: 30px 0; border: 1px solid #eee; }
-        #post-content blockquote {
-            border-left: 2px solid #111;
-            margin: 30px 0; padding: 10px 0 10px 25px;
-            color: #777; background: #f9f9f9;
-        }
-
-        /* CTA Card */
-        .cta-card {
-            background: #fff;
-            border: 1px solid #111;
-            padding: 50px 40px;
-            margin: 80px 0 40px;
-            text-align: center;
-        }
-        .cta-text { 
-            font-size: 16px; font-weight: 500; color: #111; 
-            margin-bottom: 30px; letter-spacing: 0.15em; 
-        }
-        .cta-btns {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-        .cta-btn-link {
-            padding: 12px 25px;
-            border: 1px solid #111;
-            color: #111;
-            text-decoration: none;
-            font-size: 11px;
-            font-weight: 500;
-            letter-spacing: 0.1em;
-            transition: 0.3s;
-            display: inline-block;
-        }
-        .cta-btn-link:hover {
-            background: #111;
-            color: #fff;
-        }
-
-        /* 頁尾 */
-        footer {
-            padding: 60px 0 40px;
-            text-align: center; font-size: 9px; color: #ccc;
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
-        }
+        footer { padding: 60px 0 40px; text-align: center; font-size: 9px; color: #ccc; letter-spacing: 0.3em; text-transform: uppercase; }
 
         @media (max-width: 600px) {
-            .post-title { font-size: 1.75rem; }
-            .cta-card { padding: 40px 20px; }
-            .cta-btns { flex-direction: column; align-items: center; }
-            .cta-btn-link { width: 100%; max-width: 280px; }
+            nav { height: 65px; }
+            nav a { margin: 0 12px; font-size: 11px; }
+            #title { font-size: 1.7rem; }
         }
     </style>
 </head>
 <body>
-
     <nav>
         <a href="index.html">Home</a>
         <a href="blog.html">Blog</a>
@@ -134,79 +41,41 @@
         <a href="about.html">About</a>
     </nav>
 
-    <article class="container">
-        <header class="post-header">
-            <h1 id="post-title" class="post-title">——</h1>
-            
-            <div class="author-meta">
-                <img src="profile.png" alt="Kirsten" class="author-pic">
-                <div class="author-info">
-                    <span class="author-name">kirsten_uxui</span>
-                    <span id="post-date" class="post-date">YYYY-MM-DD</span>
-                </div>
-            </div>
-        </header>
+    <main class="container">
+        <span id="date"></span>
+        <h1 id="title"></h1>
+        <div id="content"></div>
+        <a href="blog.html" class="back-link">← Back to Blog</a>
+    </main>
 
-        <div id="post-content">
-            <p style="color: #ccc;">Loading content...</p>
-        </div>
-
-        <div class="cta-card">
-            <div class="cta-text">追蹤我看更多 UXUI 設計筆記</div>
-            <div class="cta-btns">
-                <a href="https://www.instagram.com/kirsten_uxui/" target="_blank" class="cta-btn-link">在 Instagram 看 Case Study</a>
-                <a href="https://www.threads.net/@kirsten_uxui" target="_blank" class="cta-btn-link">在 Threads 看工作碎碎念</a>
-            </div>
-        </div>
-
-        <div style="text-align: center; margin-top: 40px;">
-            <a href="blog.html" style="font-size: 11px; color: #bbb; text-decoration: none; letter-spacing: 0.2em;">← BACK TO BLOG</a>
-        </div>
-    </article>
-
-    <footer>
-        &copy; 2025 DESIGN WITH KIRSTEN
-    </footer>
+    <footer>&copy; 2025 DESIGN WITH KIRSTEN</footer>
 
     <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const slug = urlParams.get('slug');
+
         async function loadPost() {
-            const params = new URLSearchParams(window.location.search);
-            const slug = params.get('slug');
-            if (!slug) { window.location.href = 'blog.html'; return; }
-
+            if (!slug) return;
             try {
-                // 1. 抓取 posts.json 取得元數據
-                const resList = await fetch('posts/posts.json');
-                const posts = await resList.json();
-                const postInfo = posts.find(p => p.slug === slug);
+                // ✨ 加入 Date.now() 避免瀏覽器抓到舊的 JSON 緩存
+                const res = await fetch(`posts/posts.json?v=${Date.now()}`);
+                const posts = await res.json();
+                const post = posts.find(p => p.slug === slug);
 
-                if (postInfo) {
-                    document.getElementById('post-title').innerText = postInfo.title;
-                    document.getElementById('post-date').innerText = postInfo.date;
-                    document.title = `${postInfo.title} | Kirsten`;
+                if (post) {
+                    document.title = post.title + " | DESIGN WITH KIRSTEN";
+                    document.getElementById('title').textContent = post.title;
+                    document.getElementById('date').textContent = post.date;
+
+                    // 同樣為內文 HTML 加入防緩存
+                    const contentRes = await fetch(`posts/${post.slug}.html?v=${Date.now()}`);
+                    if (contentRes.ok) {
+                        const contentHtml = await contentRes.resText ? await contentRes.text() : await contentRes.text();
+                        document.getElementById('content').innerHTML = contentHtml;
+                    }
                 }
-
-                // 2. 抓取 Markdown 內容
-                const resContent = await fetch(`posts/${slug}.md`);
-                let markdown = await resContent.text();
-
-                /** * 自動化過濾邏輯：
-                 * 移除 Notion 匯出時自動帶入的 Front Matter (title, date 等)
-                 */
-                if (markdown.trim().startsWith('---')) {
-                    // 過濾 --- 格式
-                    markdown = markdown.replace(/^---[\s\S]*?---/, '');
-                } else {
-                    // 過濾開頭直接顯示的 title: 或 date: 行
-                    markdown = markdown.replace(/^(title:|date:|slug:|layout:).*\n?/gm, '');
-                }
-
-                // 3. 渲染並注入 HTML
-                document.getElementById('post-content').innerHTML = marked.parse(markdown.trim());
-
             } catch (e) {
-                console.error(e);
-                document.getElementById('post-content').innerHTML = '<p style="color: #999;">內容載入失敗。</p>';
+                console.error("Load failed:", e);
             }
         }
         loadPost();
