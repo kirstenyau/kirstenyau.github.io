@@ -36,16 +36,16 @@
 
         .container { max-width: 680px; margin: 0 auto; padding: 20px 25px; }
         
-        /* 標題區塊：縮小下方間距 */
+        /* 標題區塊 */
         #page-title { font-size: 2.1rem; font-weight: 500; color: #111; line-height: 1.3; margin: 0 0 30px 0; letter-spacing: -0.01em; }
         
-        /* 作者資訊區塊：精簡設計 */
+        /* 作者資訊區塊 */
         .author-info {
             display: flex;
             align-items: center;
-            margin-bottom: 40px; /* 減少與內文的間距 */
+            margin-bottom: 30px; /* 已調整為 30px */
             padding-bottom: 25px; 
-            border-bottom: 0.5px solid rgba(0,0,0,0.06); /* 僅保留這一條細線 */
+            border-bottom: 0.5px solid rgba(0,0,0,0.06); 
         }
         .author-profile-pic {
             width: 44px;
@@ -85,18 +85,22 @@
         }
         #content strong { font-weight: 500; color: #111; }
 
+        /* Back to Blog 按鈕優化 */
         .back-link { 
             display: inline-block; margin-top: 60px; padding-top: 25px; 
             border-top: 1px solid #f0f0f0; width: 100%; 
             text-decoration: none; color: #bbb; font-size: 11px; 
-            letter-spacing: 0.1em;
+            letter-spacing: 0.1em; transition: 0.3s ease; /* 平滑過渡 */
+        }
+        .back-link:hover { 
+            color: #111; /* Hover 時加深顏色 */
         }
 
         footer { padding: 60px 0 40px; text-align: center; font-size: 9px; color: #ccc; letter-spacing: 0.3em; }
 
         @media (max-width: 600px) {
             #page-title { font-size: 1.7rem; margin-bottom: 20px; }
-            .author-info { margin-bottom: 30px; }
+            .author-info { margin-bottom: 25px; }
         }
     </style>
 </head>
@@ -146,7 +150,7 @@
                     if (contentRes.ok) {
                         let markdownText = await contentRes.text();
                         
-                        // 過濾重複的標題資訊
+                        // 移除重複標題與 Front Matter
                         markdownText = markdownText
                             .replace(/title:\s*".*?"/g, '')  
                             .replace(/date:\s*".*?"/g, '')   
