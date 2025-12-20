@@ -16,7 +16,7 @@
             padding-top: 100px;
         }
 
-        /* 統一導覽列規範 */
+        /* 導覽列：對齊 Resources 標準 */
         nav { 
             position: fixed; top: 0; left: 0; width: 100%; height: 75px; 
             background: rgba(252, 252, 252, 0.85); 
@@ -33,56 +33,128 @@
         }
         nav a:hover { color: #111; }
 
-        .container { max-width: 700px; margin: 0 auto; padding: 40px 25px; }
+        .container { max-width: 700px; margin: 0 auto; padding: 60px 25px; }
 
+        /* 個人檔案卡片 */
         .profile-card {
-            background: #fff; border: 1px solid #111; padding: 80px 50px 50px;
-            margin-top: 70px; position: relative; text-align: center;
+            background: #fff;
+            border: 1px solid #111;
+            padding: 80px 50px 50px;
+            margin-top: 70px;
+            position: relative;
+            text-align: center;
         }
+
         .profile-pic {
-            width: 130px; height: 130px; border-radius: 50%; object-fit: cover;
-            border: 1px solid #111; position: absolute; top: -65px; left: 50%;
-            transform: translateX(-50%); background: #fff;
+            width: 130px; height: 130px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid #111;
+            position: absolute;
+            top: -65px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fff;
         }
-        .about-title { font-size: 1.5rem; font-weight: 500; color: #111; margin-bottom: 35px; letter-spacing: 0.1em; }
-        .about-content { text-align: justify; font-size: 1rem; color: #444; font-weight: 300; line-height: 2; }
+
+        .about-title {
+            font-size: 1.5rem; font-weight: 500; color: #111;
+            margin-bottom: 35px; letter-spacing: 0.1em;
+        }
+
+        .about-content {
+            text-align: justify;
+            font-size: 1rem; color: #444; font-weight: 300;
+            line-height: 2;
+        }
         .about-content p { margin-bottom: 25px; }
 
-        .cta-btns { display: flex; justify-content: center; gap: 20px; margin-top: 40px; border-top: 1px solid #eee; padding-top: 40px; }
-        .cta-link { flex: 1; max-width: 250px; padding: 15px 10px; border: 1px solid #111; color: #111; text-decoration: none; font-size: 11px; font-weight: 500; letter-spacing: 0.05em; transition: 0.3s; }
+        /* ✨ 更新的 CTA 按鈕區 */
+        .cta-btns {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+            border-top: 1px solid #eee;
+            padding-top: 40px;
+        }
+        .cta-link {
+            flex: 1; /* 讓兩個按鈕等寬 */
+            max-width: 250px;
+            padding: 15px 10px;
+            border: 1px solid #111;
+            color: #111;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            transition: 0.3s;
+            display: inline-block;
+        }
         .cta-link:hover { background: #111; color: #fff; }
 
-        footer { padding: 60px 0 40px; text-align: center; font-size: 9px; color: #ccc; letter-spacing: 0.3em; text-transform: uppercase; }
+        footer {
+            padding: 60px 0 40px;
+            text-align: center; font-size: 9px; color: #ccc;
+            letter-spacing: 0.3em; text-transform: uppercase;
+        }
 
         @media (max-width: 650px) {
             nav { height: 65px; }
-            nav a { margin: 0 12px; font-size: 11px; }
-            .cta-btns { flex-direction: column; align-items: center; gap: 12px; }
-            .cta-link { width: 100%; max-width: 100%; }
+            .profile-card { padding: 70px 25px 40px; }
+            .about-title { font-size: 1.3rem; }
+            /* 手機端改為垂直排列，避免文字太擠 */
+            .cta-btns { 
+                flex-direction: column; 
+                align-items: center; 
+                gap: 12px;
+            }
+            .cta-link {
+                width: 100%;
+                max-width: 100%;
+            }
         }
     </style>
 </head>
 <body>
+
     <nav>
         <a href="index.html">Home</a>
         <a href="blog.html">Blog</a>
         <a href="resources.html">Resources</a>
-        <a href="about.html">About</a>
+        <a href="about.html" style="color:#111;">About</a>
     </nav>
+
     <main class="container">
         <div class="profile-card">
             <img src="profile.png" alt="Kirsten" class="profile-pic">
+
             <h1 class="about-title">你好，我是來自香港的 Kirsten！</h1>
+
             <div class="about-content">
-                <p>我原本是一位 Content Editor，每天寫文章、影相拍片、管理內容平台，直到 2022 年我開始研究世界各地的新聞平台 App...</p>
-                <p>作為 INFJ，天生對美感和整齊有莫名執著...</p>
+                <p>
+                    我原本是一位 Content Editor，每天寫文章、影相拍片、管理內容平台，直到 2022 年我開始研究世界各地的新聞平台 App，比較誰的設計比較出色，又思考用戶喜歡在哪個 App 看新聞⋯⋯我漸漸投入了 UXUI Design 世界，在網上自學設計流程、理論和概念。
+                </p>
+                <p>
+                    作為 INFJ，天生對美感和整齊有莫名執著，思考和解難是最令我著迷的事，加上雙魚座的 MAX 共情力，UXUI Design 像是我的天職一樣（已由 Gemini 證實是 Perfect Match）！
+                </p>
+                <p>
+                    最近醉心研究將 AI 應用在 UXUI Design 之中，這個 Website 也是我學 Vibe Coding 的練習！我認為 AI 是 UXUI Designer 的武器，如何好好利用是每個設計師也要做的功課。
+                </p>
             </div>
+
             <div class="cta-btns">
-                <a href="https://www.instagram.com/kirsten_uxui/" target="_blank" class="cta-link">在 Instagram 看 Case Study</a>
-                <a href="https://www.threads.net/@kirsten_uxui" target="_blank" class="cta-link">在 Threads 看 工作碎碎念</a>
+                <a href="https://www.instagram.com/kirsten_uxui/" target="_blank" class="cta-link">
+                    在 Instagram 看 Case Study
+                </a>
+                <a href="https://www.threads.net/@kirsten_uxui" target="_blank" class="cta-link">
+                    在 Threads 看 工作碎碎念
+                </a>
             </div>
         </div>
     </main>
+
     <footer>&copy; 2025 DESIGN WITH KIRSTEN</footer>
+
 </body>
 </html>
