@@ -17,6 +17,7 @@
             padding-top: 100px;
         }
 
+        /* 導覽列 */
         nav { 
             position: fixed; top: 0; left: 0; width: 100%; height: 75px; 
             background: rgba(252, 252, 252, 0.85); 
@@ -35,22 +36,58 @@
 
         .container { max-width: 680px; margin: 0 auto; padding: 20px 25px; }
         
-        #date { font-size: 11px; color: #bbb; letter-spacing: 0.2em; display: block; margin-bottom: 15px; text-transform: uppercase; }
-        #title { font-size: 2.1rem; font-weight: 500; color: #111; line-height: 1.4; margin: 0 0 50px 0; letter-spacing: -0.01em; }
+        /* 標題與日期區塊 */
+        #page-title { font-size: 2.1rem; font-weight: 500; color: #111; line-height: 1.4; margin: 0 0 40px 0; letter-spacing: -0.01em; }
         
+        /* ✨ 作者資訊區塊 */
+        .author-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 60px; /* 標題與作者之間留更多空間 */
+            padding-bottom: 30px; /* 作者資訊下方間距 */
+            border-bottom: 0.5px solid rgba(0,0,0,0.06); /* 分隔線 */
+        }
+        .author-profile-pic {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: #eee; /* 預設背景，如果圖片載入失敗 */
+            margin-right: 15px;
+            object-fit: cover; /* 確保圖片不變形 */
+        }
+        .author-details {
+            display: flex;
+            flex-direction: column;
+        }
+        .author-name {
+            font-size: 15px;
+            font-weight: 500;
+            color: #111;
+            line-height: 1.4;
+        }
+        .post-date {
+            font-size: 12px;
+            color: #888;
+            letter-spacing: 0.05em;
+            line-height: 1.4;
+        }
+
+        /* 內文風格 */
         #content { 
             line-height: 2.1; 
             font-size: 16px; 
             color: #444; 
             font-weight: 300;
         }
-        
         #content p { margin-bottom: 30px; text-align: justify; }
         #content h1, #content h2 { font-size: 1.5rem; color: #111; margin-top: 50px; font-weight: 500; }
         #content img { 
             max-width: 100%; height: auto; display: block; 
             margin: 45px auto; border-radius: 4px;
         }
+        #content strong { font-weight: 500; color: #111; }
+        #content a { color: #111; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: #eee; transition: 0.3s; }
+        #content a:hover { text-decoration-color: #111; }
 
         .back-link { 
             display: inline-block; margin-top: 70px; padding-top: 25px; 
@@ -61,6 +98,14 @@
         .back-link:hover { color: #111; }
 
         footer { padding: 60px 0 40px; text-align: center; font-size: 9px; color: #ccc; letter-spacing: 0.3em; }
+
+        @media (max-width: 600px) {
+            #page-title { font-size: 1.7rem; }
+            .container { padding: 15px 20px; }
+            .author-profile-pic { width: 40px; height: 40px; }
+            .author-name { font-size: 14px; }
+            .post-date { font-size: 11px; }
+        }
     </style>
 </head>
 <body>
@@ -73,8 +118,14 @@
     </nav>
 
     <main class="container">
-        <span id="date"></span>
-        <h1 id="title"></h1>
+        <h1 id="page-title"></h1> 
+        
+        <div class="author-info">
+            <img src="profile.png" alt="Author Profile Picture" class="author-profile-pic">
+            <div class="author-details">
+                <span class="author-name">Kirsten Yau</span> <span id="post-date" class="post-date"></span> </div>
+        </div>
+        
         <div id="content">載入中...</div>
         <a href="blog.html" class="back-link">← BACK TO BLOG</a>
     </main>
@@ -94,20 +145,18 @@
 
                 if (post) {
                     document.title = post.title + " | DESIGN WITH KIRSTEN";
-                    document.getElementById('title').textContent = post.title;
-                    document.getElementById('date').textContent = post.date;
+                    document.getElementById('page-title').textContent = post.title;
+                    document.getElementById('post-date').textContent = post.date; // ✨ 更新日期顯示位置
 
                     const contentRes = await fetch(`posts/${post.slug}.md?t=${Date.now()}`);
                     if (contentRes.ok) {
                         let markdownText = await contentRes.text();
                         
-                        // ✨ 強力過濾：移除 Markdown 檔案中重複的標籤資訊 (Front Matter)
-                        // 它會移除開頭的 title: "..." 和 date: "..." 以及 # 大標題
                         markdownText = markdownText
-                            .replace(/title:\s*".*?"/g, '')  // 移除 title 標籤
-                            .replace(/date:\s*".*?"/g, '')   // 移除 date 標籤
-                            .replace(/^#\s+.*/m, '')         // 移除第一行 # 大標題
-                            .trim();                         // 移除首尾多餘空格
+                            .replace(/title:\s*".*?"/g, '')  
+                            .replace(/date:\s*".*?"/g, '')   
+                            .replace(/^#\s+.*/m, '')         
+                            .trim();                         
 
                         document.getElementById('content').innerHTML = marked.parse(markdownText);
                     } else {
