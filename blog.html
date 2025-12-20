@@ -16,7 +16,7 @@
             padding-top: 100px;
         }
 
-        /* 導覽列：對齊 Resources 頁面 */
+        /* 保持你原本的導覽列樣式，不作任何修改 */
         nav { 
             position: fixed; top: 0; left: 0; width: 100%; height: 75px; 
             background: rgba(252, 252, 252, 0.85); 
@@ -33,32 +33,28 @@
         }
         nav a:hover { color: #111; }
 
-        /* 調整容器寬度以配合大標題 (與截圖 Resources 比例對齊) */
         .container { max-width: 850px; margin: 0 auto; padding: 40px 25px; }
 
-        /* ✨ 標題區 UI 修正：對齊 Resources 樣式 */
         .page-header { text-align: center; margin-bottom: 80px; }
         .page-title { 
-            font-size: 2rem; /* 增大字級 */
+            font-size: 2rem; 
             font-weight: 500; 
             color: #111; 
-            letter-spacing: 0.45em; /* 增大字距，營造高級感 */
+            letter-spacing: 0.45em; 
             margin: 0 0 18px 0;
-            text-indent: 0.45em; /* 修正因字距導致的中心偏離 */
+            text-indent: 0.45em; 
         }
         .page-subtitle { 
             font-size: 12px; 
-            color: #ccc; /* 使用較淺的顏色 */
-            letter-spacing: 0.25em; /* 增大英文描述字距 */
+            color: #ccc; 
+            letter-spacing: 0.25em; 
             text-transform: uppercase; 
             font-weight: 300;
         }
 
-        /* 文章清單 (維持 700px 寬度讓卡片不會太闊) */
         .post-list-wrapper { max-width: 700px; margin: 0 auto; }
         #post-list { display: flex; flex-direction: column; gap: 25px; }
 
-        /* 精簡卡片 */
         .post-item {
             display: block; text-decoration: none; color: inherit;
             background: #fff; border: 1px solid #eee;
@@ -78,7 +74,7 @@
             nav { height: 65px; }
             nav a { margin: 0 10px; font-size: 11px; }
             .page-title { font-size: 1.6rem; letter-spacing: 0.3em; text-indent: 0.3em; }
-            .page-subtitle { font-size: 10px; letter-spacing: 0.15em; padding: 0 10px; }
+            .page-subtitle { font-size: 10px; letter-spacing: 0.15em; }
             .post-item { padding: 30px 25px; }
         }
     </style>
@@ -99,22 +95,21 @@
         </header>
 
         <div class="post-list-wrapper">
-            <div id="post-list">
-                </div>
+            <div id="post-list"></div>
         </div>
     </main>
 
-    <footer>
-        &copy; 2025 DESIGN WITH KIRSTEN
-    </footer>
+    <footer>&copy; 2025 DESIGN WITH KIRSTEN</footer>
 
     <script>
         async function loadPosts() {
             try {
-                const res = await fetch('posts/posts.json');
+                // ✨ 修正重點：在路徑後加上 timestamp 確保抓到 GitHub 最新版的 JSON
+                const res = await fetch(`posts/posts.json?t=${new Date().getTime()}`);
                 const posts = await res.json();
                 const list = document.getElementById('post-list');
                 list.innerHTML = '';
+                
                 posts.forEach(post => {
                     const item = document.createElement('a');
                     item.href = `post.html?slug=${post.slug}`;
