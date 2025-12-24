@@ -1,146 +1,126 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>DESIGN WITH KIRSTEN</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+<style>
+    /* 引入 Noto Serif JP 提升質感 */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Noto+Serif+JP:wght@400;700&display=swap');
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        
-        body { 
-            font-family: "Noto Sans TC", "PingFang TC", sans-serif; 
-            background-color: #fcfcfc; 
-            margin: 0; color: #333; 
-            display: flex; flex-direction: column; min-height: 100vh;
-        }
+    :root {
+        --washi: #f9f8f6;
+        --ink: #2c2c2c;
+        --stone: #78716c;
+        --moss: #849b87;
+        --sand: #e7e5e4;
+    }
 
-        /* 導覽列：對齊 Resources 頁面標準 */
-        nav { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 75px; 
-            background: rgba(252, 252, 252, 0.85); 
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            display: flex; align-items: center; justify-content: center; 
-            border-bottom: 0.5px solid rgba(0,0,0,0.06); 
-            z-index: 9999; 
-        }
-        nav a { 
-            margin: 0 18px; text-decoration: none; 
-            color: #999; font-size: 13px; font-weight: 400;
-            transition: 0.3s; letter-spacing: 0.15em;
-            text-transform: uppercase;
-        }
-        nav a:hover { color: #111; }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    
+    body { 
+        font-family: 'Inter', "PingFang TC", sans-serif; 
+        background-color: var(--washi); 
+        margin: 0; 
+        color: var(--ink); 
+        display: flex; flex-direction: column; min-height: 100vh;
+        /* 平滑滾動與字體渲染優化 */
+        scroll-behavior: smooth;
+        -webkit-font-smoothing: antialiased;
+    }
 
-        .hero {
-            flex-grow: 1;
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            text-align: center; padding: 120px 20px 60px;
-        }
+    /* 導覽列：Washi 風格調整 */
+    nav { 
+        position: fixed; top: 0; left: 0; width: 100%; height: 75px; 
+        background: rgba(249, 248, 246, 0.85); /* 換成 Washi 色 */
+        backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+        display: flex; align-items: center; justify-content: center; 
+        border-bottom: 1px solid var(--sand); 
+        z-index: 9999; 
+    }
+    nav a { 
+        margin: 0 18px; text-decoration: none; 
+        color: var(--stone); font-size: 13px; font-weight: 400;
+        transition: 0.3s; letter-spacing: 0.15em;
+        text-transform: uppercase;
+    }
+    nav a:hover { color: var(--moss); } /* Hover 換成 Moss 綠 */
 
-        .profile-pic {
-            width: 110px; height: 110px;
-            border-radius: 50%; object-fit: cover;
-            border: 1px solid #eee; margin-bottom: 30px;
-        }
+    /* Hero 區域動畫 */
+    .hero {
+        flex-grow: 1;
+        display: flex; flex-direction: column;
+        justify-content: center; align-items: center;
+        text-align: center; padding: 120px 20px 60px;
+        animation: fadeIn 1.2s ease-out forwards;
+    }
 
-        .hero h1 {
-            font-size: 1.8rem; font-weight: 500;
-            letter-spacing: 0.4em; margin-bottom: 12px; color: #111;
-        }
+    @keyframes fadeIn {
+        0% { opacity: 0; transform: translateY(15px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
 
-        .hero p {
-            font-size: 0.8rem; font-weight: 300; color: #aaa;
-            letter-spacing: 0.25em; margin-bottom: 45px;
-        }
+    .profile-pic {
+        width: 115px; height: 115px;
+        border-radius: 50%; object-fit: cover;
+        border: 1px solid var(--sand); margin-bottom: 30px;
+        padding: 5px; /* 增加一點點留白感 */
+        background: white;
+    }
 
-        .btn-group {
-            display: flex; flex-direction: column;
-            gap: 15px; width: 100%; max-width: 320px;
-            margin-bottom: 40px;
-        }
+    .hero h1 {
+        font-family: 'Noto Serif JP', serif; /* 標題使用襯線體 */
+        font-size: 2rem; font-weight: 700;
+        letter-spacing: 0.2em; margin-bottom: 15px; color: var(--ink);
+    }
 
-        .cta-btn {
-            display: block; padding: 16px 20px;
-            border: 1px solid #111; text-decoration: none;
-            color: #111; font-size: 11px; font-weight: 500;
-            letter-spacing: 0.15em; transition: 0.3s;
-            background: #fff;
-        }
-        .cta-btn:hover { background: #111; color: #fff; }
+    .hero p {
+        font-size: 0.85rem; font-weight: 400; color: var(--stone);
+        letter-spacing: 0.2em; margin-bottom: 45px;
+    }
 
-        /* 社交 Icon 區域 (使用之前成功的 Flex 設定) */
-        .social-links {
-            display: flex;
-            gap: 30px;
-            margin-top: 10px;
-        }
+    .btn-group {
+        display: flex; flex-direction: column;
+        gap: 16px; width: 100%; max-width: 320px;
+        margin-bottom: 45px;
+    }
 
-        .social-links a {
-            color: #bbb;
-            font-size: 22px; /* 調整為適合的大小 */
-            transition: 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
+    /* 按鈕調整為更加柔和的設計 */
+    .cta-btn {
+        display: block; padding: 16px 20px;
+        border: 1px solid var(--ink); text-decoration: none;
+        color: var(--ink); font-size: 12px; font-weight: 500;
+        letter-spacing: 0.1em; transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        background: transparent;
+    }
+    .cta-btn:hover { 
+        background: var(--ink); color: var(--washi); 
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
 
-        .social-links a:hover {
-            color: #111;
-            transform: translateY(-2px);
-        }
+    .social-links {
+        display: flex; gap: 35px; margin-top: 10px;
+    }
 
-        footer {
-            padding: 40px 0;
-            text-align: center; font-size: 9px; color: #ccc;
-            letter-spacing: 0.3em; text-transform: uppercase;
-        }
+    .social-links a {
+        color: var(--stone);
+        font-size: 24px;
+        transition: 0.3s;
+        text-decoration: none;
+        display: inline-block;
+    }
 
-        @media (max-width: 600px) {
-            nav { height: 65px; }
-            nav a { margin: 0 12px; font-size: 11px; }
-            .hero h1 { font-size: 1.4rem; }
-            .btn-group { max-width: 280px; }
-            .social-links { gap: 25px; }
-        }
-    </style>
-</head>
-<body>
+    .social-links a:hover {
+        color: var(--moss);
+        transform: scale(1.1);
+    }
 
-    <nav>
-        <a href="index.html" style="color:#111;">Home</a>
-        <a href="blog.html">Blog</a>
-        <a href="resources.html">Resources</a>
-        <a href="about.html">About</a>
-    </nav>
+    footer {
+        padding: 60px 0 40px;
+        text-align: center; font-size: 10px; color: var(--stone);
+        letter-spacing: 0.25em; text-transform: uppercase;
+        opacity: 0.6;
+    }
 
-    <section class="hero">
-        <img src="profile.png" alt="Kirsten" class="profile-pic">
-        
-        <h1>DESIGN WITH KIRSTEN</h1>
-        <p>UXUI DESIGN ｜ AI TIPS ｜ TECH LIFESTYLE</p>
-        
-        <div class="btn-group">
-            <a href="blog.html" class="cta-btn">在 Blog 看 UX & AI 學習筆記</a>
-            <a href="resources.html" class="cta-btn">學習 UXUI 必備資源</a>
-            <a href="about.html" class="cta-btn">想認識我更多嗎？</a>
-        </div>
-
-        <div class="social-links">
-            <a href="https://www.instagram.com/kirsten_uxui/" target="_blank">
-                <i class="fa-brands fa-instagram"></i>
-            </a>
-            <a href="https://www.threads.net/@kirsten_uxui" target="_blank">
-                <i class="fa-brands fa-threads"></i>
-            </a>
-        </div>
-    </section>
-
-    <footer>
-        &copy; 2025 DESIGN WITH KIRSTEN
-    </footer>
-
-</body>
-</html>
+    @media (max-width: 600px) {
+        nav { height: 65px; }
+        nav a { margin: 0 10px; font-size: 11px; }
+        .hero h1 { font-size: 1.6rem; letter-spacing: 0.15em; }
+        .btn-group { max-width: 280px; }
+    }
+</style>
